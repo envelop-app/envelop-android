@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+repositories {
+  maven { url 'https://jitpack.io' }
+}
+
+android {
+  compileSdkVersion 28
+  defaultConfig {
+    applicationId "app.envelop"
+    minSdkVersion 21
+    targetSdkVersion 28
+    versionCode 1
+    versionName "0.1"
+    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  }
+  buildTypes {
+    release {
+    }
+  }
+  lintOptions {
+    disable 'CheckResult'
+  }
+}
+
+dependencies {
+  implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+  implementation 'androidx.appcompat:appcompat:1.0.2'
+  implementation 'androidx.core:core-ktx:1.0.2'
+  implementation 'com.google.android.material:material:1.1.0-alpha06'
+
+  // Architecture Components
+  implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+  implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+  kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+  // Logging
+  implementation 'com.jakewharton.timber:timber:4.7.0'
+
+  // Serialization
+  implementation 'com.google.code.gson:gson:2.8.5'
+
+  // Blockstack
+  implementation 'com.eclipsesource.j2v8:j2v8:4.8.4@aar'
+  implementation 'com.github.blockstack:blockstack-android:0.4.5'
+
+  // Dependency Injection
+  implementation 'com.google.dagger:dagger:2.22.1'
+  kapt 'com.google.dagger:dagger-compiler:2.22.1'
+
+  // Rx
+  implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
+  implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+  implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
+  implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
+  implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2'
+  implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.0.0'
+  implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
+
+  // Testing
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation 'androidx.test:runner:1.1.1'
+  androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+  androidTestImplementation 'com.google.truth:truth:0.44'
+}

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Envelop</string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="login_progress">Logging in</string>
+    <string name="login_error">Error logging in with Blockstack</string>
+
+    <!-- Main -->
+    <string name="logout">Logout</string>
+</resources>

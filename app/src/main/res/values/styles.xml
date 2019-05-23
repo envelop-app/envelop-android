@@ -1,0 +1,35 @@
+<resources>
+
+  <!-- Theme -->
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+
+    <!-- Original AppCompat attributes. -->
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorSecondary">@color/secondary</item>
+    <item name="android:colorBackground">@color/surface</item>
+    <item name="colorError">@color/error</item>
+
+    <!-- New MaterialComponents attributes. -->
+    <item name="colorPrimaryVariant">@color/primaryDark</item>
+    <item name="colorSecondaryVariant">@color/secondaryDark</item>
+    <item name="colorSurface">@color/surface</item>
+    <item name="colorOnPrimary">@color/foreground</item>
+    <item name="colorOnSecondary">@color/foreground</item>
+    <item name="colorOnBackground">@color/foreground</item>
+    <item name="colorOnError">@color/foreground</item>
+    <item name="colorOnSurface">@color/foreground</item>
+    <item name="scrimBackground">@color/foregroundLight</item>
+
+  </style>
+
+  <!-- Main -->
+
+  <style name="CoordinatorLayout">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">match_parent</item>
+  </style>
+
+</resources>
