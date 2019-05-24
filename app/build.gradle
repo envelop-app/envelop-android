@@ -10,7 +10,7 @@ repositories {
 android {
   compileSdkVersion 28
   defaultConfig {
-    applicationId "app.envelop"
+    applicationId 'app.envelop'
     minSdkVersion 21
     targetSdkVersion 28
     versionCode 1
@@ -38,7 +38,7 @@ dependencies {
   kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
   // Logging
-  implementation 'com.jakewharton.timber:timber:4.7.0'
+  implementation 'com.jakewharton.timber:timber:4.7.1'
 
   // Serialization
   implementation 'com.google.code.gson:gson:2.8.5'

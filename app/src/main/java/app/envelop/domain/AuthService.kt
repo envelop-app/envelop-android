@@ -1,14 +1,12 @@
 package app.envelop.domain
 
 import app.envelop.common.Operation
-import app.envelop.common.di.PerActivity
 import app.envelop.data.models.Profile
 import app.envelop.data.models.User
 import app.envelop.data.repositories.UserRepository
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.blockstack.android.sdk.BlockstackSession
-import org.blockstack.android.sdk.model.BlockstackConfig
 import org.blockstack.android.sdk.model.UserData
 import javax.inject.Inject
 
@@ -26,9 +24,9 @@ class AuthService
           return@create
         }
 
-        val authResponseTokens = response.split(':')
+        val authResponseTokens = response.split("authResponse=", ignoreCase = true)
         if (authResponseTokens.size > 1) {
-          blockstack.handlePendingSignIn(authResponseTokens[1]) { userData ->
+          blockstack.handlePendingSignIn(authResponseTokens.last()) { userData ->
             if (userData.hasValue) {
               userRepository.setUser(userData.value?.toUser())
               emitter.onSuccess(Operation.success(Unit))

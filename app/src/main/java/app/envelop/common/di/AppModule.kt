@@ -1,5 +1,6 @@
 package app.envelop.common.di
 
+import android.content.ContentResolver
 import android.content.Context
 import app.envelop.App
 import com.google.gson.FieldNamingPolicy
@@ -26,10 +27,14 @@ class AppModule(
   fun resources(context: Context) = context.resources
 
   @Provides
+  fun contentResolver(context: Context) = context.contentResolver
+
+  @Provides
   @Singleton
   fun gson() =
     GsonBuilder()
       .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
       .create()
 
 }

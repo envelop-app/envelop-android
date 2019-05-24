@@ -8,4 +8,7 @@
 
     <!-- Main -->
     <string name="logout">Logout</string>
+    <string name="upload">Upload</string>
+    <string name="uploading">Uploading file</string>
+    <string name="upload_error">Error uploading file</string>
 </resources>

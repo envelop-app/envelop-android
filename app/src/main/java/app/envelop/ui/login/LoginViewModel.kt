@@ -7,6 +7,7 @@ import app.envelop.ui.common.*
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel
@@ -30,6 +31,7 @@ class LoginViewModel
       .flatMapSingle { loginService.login() }
       .subscribe {
         if (it.isError) {
+          Timber.e(it.throwable())
           errors.onNext(Error.LoginError)
         }
         isLoggingIn.idle()
@@ -44,6 +46,7 @@ class LoginViewModel
         if (it.isSuccessful) {
           finishToMain.finish()
         } else {
+          Timber.e(it.throwable())
           errors.onNext(Error.LoginError)
         }
       }
