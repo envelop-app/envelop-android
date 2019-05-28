@@ -66,7 +66,7 @@ class LoginActivity : BaseActivity() {
       .observeOnUI()
       .subscribe {
         startActivity(MainActivity.getIntent(this))
-        finish()
+        finish(it)
       }
 
     if (intent?.action == Intent.ACTION_VIEW) {

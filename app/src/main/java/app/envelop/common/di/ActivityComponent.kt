@@ -1,10 +1,9 @@
 package app.envelop.common.di
 
-import app.envelop.data.BlockstackModule
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.main.MainActivity
+import app.envelop.ui.upload.UploadActivity
 import dagger.Subcomponent
-import org.blockstack.android.sdk.BlockstackSession
 
 @PerActivity
 @Subcomponent(
@@ -20,5 +19,6 @@ interface ActivityComponent {
 
   fun inject(mainActivity: MainActivity)
   fun inject(loginActivity: LoginActivity)
+  fun inject(uploadActivity: UploadActivity)
 
 }

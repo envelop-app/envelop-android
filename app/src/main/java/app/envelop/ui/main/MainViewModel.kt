@@ -6,11 +6,14 @@ import app.envelop.data.models.User
 import app.envelop.domain.AuthService
 import app.envelop.domain.UploadService
 import app.envelop.ui.BaseViewModel
-import app.envelop.ui.common.*
+import app.envelop.ui.common.Click
+import app.envelop.ui.common.Finish
+import app.envelop.ui.common.click
+import app.envelop.ui.common.finish
+import app.envelop.ui.upload.UploadActivity
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel
@@ -23,8 +26,7 @@ class MainViewModel
   private val uploadFileReceived = PublishSubject.create<Uri>()
 
   private val user = BehaviorSubject.create<User>()
-  private val isUploading = BehaviorSubject.create<LoadingState>()
-  private val error = PublishSubject.create<Error>()
+  private val openUpload = BehaviorSubject.create<UploadActivity.Extras>()
   private val finishToLogin = BehaviorSubject.create<Finish>()
 
   init {
@@ -39,7 +41,7 @@ class MainViewModel
     authService
       .user()
       .filter { it is Optional.None }
-      .subscribe { finishToLogin.finish() }
+      .subscribe { finishToLogin.finish(Finish.Result.Canceled) }
       .addTo(disposables)
 
     logoutClicks
@@ -48,16 +50,8 @@ class MainViewModel
       .addTo(disposables)
 
     uploadFileReceived
-      .doOnNext { isUploading.loading() }
-      .flatMapSingle { uploadService.upload(it) }
       .subscribe {
-        if (it.isSuccessful) {
-          Timber.i("File uploaded: %s", it.result())
-        } else {
-          Timber.e(it.throwable())
-          error.onNext(Error.UploadError)
-        }
-        isUploading.idle()
+        openUpload.onNext(UploadActivity.Extras(it))
       }
   }
 
@@ -69,11 +63,6 @@ class MainViewModel
   // Outputs
 
   fun user() = user.hide()!!
-  fun isUploading() = isUploading.hide()!!
-  fun error() = error.hide()!!
+  fun openUpload() = openUpload.hide()!!
   fun finishToLogin() = finishToLogin.hide()!!
-
-  sealed class Error {
-    object UploadError : Error()
-  }
 }

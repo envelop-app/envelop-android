@@ -44,7 +44,7 @@ class LoginViewModel
       .subscribe {
         isLoggingIn.idle()
         if (it.isSuccessful) {
-          finishToMain.finish()
+          finishToMain.finish(Finish.Result.Ok)
         } else {
           Timber.e(it.throwable())
           errors.onNext(Error.LoginError)
