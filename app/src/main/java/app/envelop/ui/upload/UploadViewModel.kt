@@ -2,12 +2,13 @@ package app.envelop.ui.upload
 
 import android.net.Uri
 import app.envelop.common.Optional
-import app.envelop.domain.AuthService
 import app.envelop.domain.UploadService
+import app.envelop.domain.UserService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
 import app.envelop.ui.common.Finish.Result.Canceled
 import app.envelop.ui.common.Finish.Result.Ok
+import app.envelop.ui.doc.DocActivity
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 class UploadViewModel
 @Inject constructor(
-  authService: AuthService,
+  userService: UserService,
   uploadService: UploadService
 ) : BaseViewModel() {
 
@@ -25,11 +26,12 @@ class UploadViewModel
   private val isUploading = BehaviorSubject.create<LoadingState>()
   private val error = PublishSubject.create<Error>()
   private val openLogin = PublishSubject.create<Open>()
+  private val openDoc = PublishSubject.create<DocActivity.Extras>()
   private val finish = PublishSubject.create<Finish>()
 
   init {
 
-    authService
+    userService
       .user()
       .filter { it is Optional.None }
       .subscribe {
@@ -44,7 +46,7 @@ class UploadViewModel
       .subscribe {
         isUploading.idle()
         if (it.isSuccessful) {
-          Timber.i("File uploaded: %s", it.result())
+          openDoc.onNext(DocActivity.Extras(it.result()))
           finish.finish(Ok)
         } else {
           Timber.e(it.throwable())
@@ -63,6 +65,7 @@ class UploadViewModel
   fun isUploading() = isUploading.hide()!!
   fun error() = error.hide()!!
   fun openLogin() = openLogin.hide()!!
+  fun openDoc() = openDoc.hide()!!
   fun finish() = finish.hide()!!
 
   sealed class Error {

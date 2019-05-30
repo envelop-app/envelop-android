@@ -8,6 +8,10 @@ object Click
 
 fun PublishSubject<Click>.click() = onNext(Click)
 
+object Refresh
+
+fun PublishSubject<Refresh>.refresh() = onNext(Refresh)
+
 data class Finish(
   val result: Result = Result.Canceled
 ) {

@@ -1,6 +1,5 @@
 package app.envelop.ui.login
 
-import app.envelop.domain.AuthService
 import app.envelop.domain.LoginService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
@@ -11,9 +10,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class LoginViewModel
-@Inject constructor(
-  authService: AuthService
-) : BaseViewModel() {
+@Inject constructor() : BaseViewModel() {
 
   lateinit var loginService: LoginService // this must be provided by the activity
 
@@ -40,7 +37,7 @@ class LoginViewModel
 
     authDataReceived
       .doOnNext { isLoggingIn.loading() }
-      .flatMapSingle { authService.finishLogin(it) }
+      .flatMapSingle { loginService.finishLogin(it) }
       .subscribe {
         isLoggingIn.idle()
         if (it.isSuccessful) {

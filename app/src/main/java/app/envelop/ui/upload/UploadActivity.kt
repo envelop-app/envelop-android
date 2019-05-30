@@ -8,8 +8,9 @@ import android.os.Parcelable
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.ui.BaseActivity
-import app.envelop.ui.common.ErrorManager
+import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.loading.LoadingManager
+import app.envelop.ui.doc.DocActivity
 import app.envelop.ui.login.LoginActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import javax.inject.Inject
@@ -19,7 +20,7 @@ class UploadActivity : BaseActivity() {
   @Inject
   lateinit var loadingManager: LoadingManager
   @Inject
-  lateinit var errorManager: ErrorManager
+  lateinit var messageManager: MessageManager
 
   private val viewModel by lazy {
     component.viewModelProvider()[UploadViewModel::class.java]
@@ -51,7 +52,7 @@ class UploadActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
-        errorManager.show(
+        messageManager.showError(
           when (it) {
             UploadViewModel.Error.UploadError -> R.string.upload_error
           }
@@ -63,6 +64,12 @@ class UploadActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { startActivity(LoginActivity.getIntent(this)) }
+
+    viewModel
+      .openDoc()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe { startActivity(DocActivity.getIntent(this, it)) }
 
     viewModel
       .finish()

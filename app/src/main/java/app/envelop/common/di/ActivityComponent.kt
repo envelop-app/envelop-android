@@ -1,5 +1,6 @@
 package app.envelop.common.di
 
+import app.envelop.ui.doc.DocActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.main.MainActivity
 import app.envelop.ui.upload.UploadActivity
@@ -20,5 +21,6 @@ interface ActivityComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(loginActivity: LoginActivity)
   fun inject(uploadActivity: UploadActivity)
+  fun inject(docActivity: DocActivity)
 
 }

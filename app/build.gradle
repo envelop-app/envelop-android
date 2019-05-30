@@ -13,8 +13,8 @@ android {
     applicationId 'app.envelop'
     minSdkVersion 21
     targetSdkVersion 28
-    versionCode 1
-    versionName "0.1"
+    versionCode 2
+    versionName "0.2"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -23,6 +23,12 @@ android {
   }
   lintOptions {
     disable 'CheckResult'
+  }
+  kapt {
+    correctErrorTypes = true
+    arguments {
+      arg("room.schemaLocation", "$projectDir/schemas".toString())
+    }
   }
 }
 
@@ -45,21 +51,34 @@ dependencies {
 
   // Blockstack
   implementation 'com.eclipsesource.j2v8:j2v8:4.8.4@aar'
-  implementation 'com.github.blockstack:blockstack-android:0.4.5'
+  // implementation 'com.github.blockstack:blockstack-android:0.4.5'
+  implementation 'com.github.blockstack:blockstack-android:8a9f5da4392e7fd355fd650f97d32130d2986ea7'
 
   // Dependency Injection
-  implementation 'com.google.dagger:dagger:2.22.1'
-  kapt 'com.google.dagger:dagger-compiler:2.22.1'
+  implementation 'com.google.dagger:dagger:2.23'
+  kapt 'com.google.dagger:dagger-compiler:2.23'
+
+  // Database ORM
+  def room_version = '2.1.0-beta01'
+  implementation "androidx.room:room-runtime:$room_version"
+  implementation "androidx.room:room-rxjava2:$room_version"
+  kapt "androidx.room:room-compiler:$room_version"
 
   // Rx
   implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
   implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
   implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-  implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.0.0-alpha2'
-  implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0-alpha2'
-  implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.0.0-alpha2'
   implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.0.0'
   implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.0'
+  def rxbinding_version = '3.0.0-alpha2'
+  implementation "com.jakewharton.rxbinding3:rxbinding-core:$rxbinding_version"
+  implementation "com.jakewharton.rxbinding3:rxbinding-appcompat:$rxbinding_version"
+  implementation "com.jakewharton.rxbinding3:rxbinding-material:$rxbinding_version"
+  implementation "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:$rxbinding_version"
+
+  // Lists
+  implementation 'com.airbnb.android:epoxy:3.5.1'
+  kapt 'com.airbnb.android:epoxy-processor:3.5.1'
 
   // Testing
   testImplementation 'junit:junit:4.12'

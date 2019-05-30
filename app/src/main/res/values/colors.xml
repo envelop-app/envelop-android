@@ -5,8 +5,11 @@
   <color name="secondary">#1DE9B6</color>
   <color name="secondaryDark">#1BD0A3</color>
 
+  <color name="background">#FAFAFA</color>
   <color name="surface">#FFFFFF</color>
   <color name="foreground">#111111</color>
   <color name="foregroundLight">#999999</color>
   <color name="error">#FF0000</color>
+
+  <color name="ic_launcher_background">#D81B60</color>
 </resources>

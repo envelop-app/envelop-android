@@ -2,6 +2,7 @@ package app.envelop.common.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import app.envelop.ui.doc.DocViewModel
 import app.envelop.ui.login.LoginViewModel
 import app.envelop.ui.main.MainViewModel
 import app.envelop.ui.upload.UploadViewModel
@@ -29,5 +30,10 @@ abstract class ViewModelModule {
   @IntoMap
   @ViewModelKey(UploadViewModel::class)
   abstract fun uploadViewModel(viewModel: UploadViewModel): ViewModel
+
+  @Binds
+  @IntoMap
+  @ViewModelKey(DocViewModel::class)
+  abstract fun docViewModel(viewModel: DocViewModel): ViewModel
 
 }

@@ -7,7 +7,7 @@ import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.domain.LoginService
 import app.envelop.ui.BaseActivity
-import app.envelop.ui.common.ErrorManager
+import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.loading.LoadingManager
 import app.envelop.ui.main.MainActivity
@@ -22,7 +22,7 @@ class LoginActivity : BaseActivity() {
   @Inject
   lateinit var loadingManager: LoadingManager
   @Inject
-  lateinit var errorManager: ErrorManager
+  lateinit var messageManager: MessageManager
 
   private val viewModel by lazy {
     component.viewModelProvider()[LoginViewModel::class.java].also {
@@ -53,7 +53,7 @@ class LoginActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
-        errorManager.show(
+        messageManager.showError(
           when (it) {
             LoginViewModel.Error.LoginError -> R.string.login_error
           }

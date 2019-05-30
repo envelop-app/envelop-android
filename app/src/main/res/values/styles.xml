@@ -3,13 +3,10 @@
   <!-- Theme -->
   <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
-    <item name="windowActionBar">false</item>
-    <item name="windowNoTitle">true</item>
-
     <!-- Original AppCompat attributes. -->
     <item name="colorPrimary">@color/primary</item>
     <item name="colorSecondary">@color/secondary</item>
-    <item name="android:colorBackground">@color/surface</item>
+    <item name="android:colorBackground">@color/background</item>
     <item name="colorError">@color/error</item>
 
     <!-- New MaterialComponents attributes. -->

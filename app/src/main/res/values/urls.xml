@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="blockstack_app_url">https://envelop.app</string>
+  <string name="doc_url">https://envelop.app/d/%1$s/%2$s</string>
+</resources>
