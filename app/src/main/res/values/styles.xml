@@ -1,25 +1,39 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- Theme -->
-  <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+  <style name="AppTheme" parent="Theme.MaterialComponents.Light">
 
-    <!-- Original AppCompat attributes. -->
+    <item name="windowActionBar">false</item>
+    <item name="windowNoTitle">true</item>
+
     <item name="colorPrimary">@color/primary</item>
     <item name="colorSecondary">@color/secondary</item>
-    <item name="android:colorBackground">@color/background</item>
-    <item name="colorError">@color/error</item>
 
-    <!-- New MaterialComponents attributes. -->
     <item name="colorPrimaryVariant">@color/primaryDark</item>
     <item name="colorSecondaryVariant">@color/secondaryDark</item>
+    <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    <item name="colorOnSecondary">@color/colorOnSecondary</item>
+    <item name="colorOnError">@color/colorOnPrimary</item>
+
     <item name="colorSurface">@color/surface</item>
-    <item name="colorOnPrimary">@color/foreground</item>
-    <item name="colorOnSecondary">@color/foreground</item>
-    <item name="colorOnBackground">@color/foreground</item>
-    <item name="colorOnError">@color/foreground</item>
-    <item name="colorOnSurface">@color/foreground</item>
+    <item name="colorOnSurface">@color/colorOnSurface</item>
+    <item name="colorOnSurfaceEmphasisMedium">@color/colorOnSurfaceMedium</item>
+    <item name="colorOnSurfaceDisabled">@color/colorOnSurfaceDisabled</item>
+
+    <item name="android:colorBackground">@color/background</item>
+    <item name="colorOnBackground">@color/colorOnSurface</item>
     <item name="scrimBackground">@color/foregroundLight</item>
 
+    <item name="android:statusBarColor">@color/primary</item>
+    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    <item name="colorError">@color/error</item>
+
+    <item name="fontFamily">@font/poppins_medium</item>
+
+  </style>
+
+  <style name="AppTheme.Color">
+    <item name="android:colorBackground">@color/primary</item>
   </style>
 
   <!-- Main -->

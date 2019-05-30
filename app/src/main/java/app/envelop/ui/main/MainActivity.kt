@@ -18,6 +18,7 @@ import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.shared_appbar.*
 
 class MainActivity : BaseActivity() {
 
@@ -29,7 +30,12 @@ class MainActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_main)
+    toolbar.setupMenu(R.menu.main)
 
+    toolbar
+      .itemClicks(R.id.logout)
+      .bindToLifecycle(this)
+      .subscribe { viewModel.logoutClick() }
 
     upload
       .clicksThrottled()
@@ -54,7 +60,7 @@ class MainActivity : BaseActivity() {
       .user()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { title = it.displayName }
+      .subscribe { toolbar.setTitle(it.displayName) }
 
     viewModel
       .docs()

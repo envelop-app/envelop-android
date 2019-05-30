@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="primary">#D81B60</color>
-  <color name="primaryDark">#BF1854</color>
-  <color name="secondary">#1DE9B6</color>
-  <color name="secondaryDark">#1BD0A3</color>
+  <color name="primary">#FBC02D</color>
+  <color name="primaryDark">#F26717</color>
+  <color name="secondary">#000000</color>
+  <color name="secondaryDark">#000000</color>
 
-  <color name="background">#FAFAFA</color>
+  <color name="background">#FFFFFF</color>
   <color name="surface">#FFFFFF</color>
-  <color name="foreground">#111111</color>
-  <color name="foregroundLight">#999999</color>
+  <color name="colorOnPrimary">#DE000000</color>
+  <color name="colorOnSecondary">#FFFFFF</color>
+  <color name="colorOnSurface">@color/colorOnPrimary</color>
+  <color name="colorOnSurfaceMedium">#99000000</color>
+  <color name="colorOnSurfaceDisabled">#61000000</color>
+  <color name="foregroundLight">#F5F5F5</color>
   <color name="error">#FF0000</color>
 
-  <color name="ic_launcher_background">#D81B60</color>
+  <color name="ic_launcher_background">@color/primary</color>
+  <color name="blockstack">#211F6D</color>
 </resources>

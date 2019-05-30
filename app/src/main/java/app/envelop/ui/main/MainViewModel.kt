@@ -49,18 +49,23 @@ class MainViewModel
       .subscribe { finishToLogin.finish(Finish.Result.Canceled) }
       .addTo(disposables)
 
-    logoutClicks
+    val ifLoggedIn = user.take(1)
+
+    ifLoggedIn
+      .flatMap { logoutClicks }
       .flatMapCompletable { logoutService.logout() }
       .subscribe()
       .addTo(disposables)
 
-    uploadFileReceived
+    ifLoggedIn
+      .flatMap { uploadFileReceived }
       .subscribe {
         openUpload.onNext(UploadActivity.Extras(it))
       }
       .addTo(disposables)
 
-    refreshes
+    ifLoggedIn
+      .flatMap { refreshes }
       .startWith(Refresh)
       .doOnNext { isRefreshing.loading() }
       .flatMapSingle { indexService.download() }
@@ -73,8 +78,8 @@ class MainViewModel
       }
       .addTo(disposables)
 
-    indexService
-      .get()
+    ifLoggedIn
+      .flatMap { indexService.get() }
       .subscribe(docs::onNext)
       .addTo(disposables)
   }

@@ -14,6 +14,7 @@ import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.loading.LoadingManager
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_doc.*
+import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
 class DocActivity : BaseActivity() {
@@ -35,8 +36,7 @@ class DocActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_doc)
-    supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_close)
-    supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
 
     viewModel
       .doc()

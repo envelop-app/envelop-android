@@ -1,59 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:gravity="center_vertical"
-    android:background="@color/surface"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="?attr/selectableItemBackground"
+  android:gravity="center_vertical"
+  android:orientation="horizontal"
+  android:padding="8dp"
+  >
 
   <ImageView
-      android:id="@+id/icon"
-      android:layout_width="24dp"
-      android:layout_height="24dp"
-      android:src="@drawable/ic_type_file"
-      android:layout_marginEnd="8dp"
-      />
+    android:id="@+id/icon"
+    android:layout_width="24dp"
+    android:layout_height="24dp"
+    android:layout_marginEnd="8dp"
+    android:src="@drawable/ic_type_file"
+    />
 
   <TextView
-      android:id="@+id/name"
-      android:layout_width="0dp"
-      android:layout_weight="1"
-      android:layout_height="wrap_content"
-      android:maxLines="2"
-      android:ellipsize="middle"
-      tools:text="awesome.jpg"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-      />
+    android:id="@+id/name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:ellipsize="middle"
+    android:maxLines="2"
+    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+    tools:text="awesome.jpg"
+    />
 
   <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:gravity="end"
+    android:orientation="vertical"
+    >
+
+    <TextView
+      android:id="@+id/uploadDate"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:layout_marginStart="8dp"
-      android:gravity="end"
-      >
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+      tools:text="3 days"
+      />
 
     <TextView
-        android:id="@+id/uploadDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/foregroundLight"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        tools:text="3 days"
-        />
-
-    <TextView
-        android:id="@+id/size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/foregroundLight"
-        tools:text="2 MB"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        />
+      android:id="@+id/size"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+      tools:text="2 MB"
+      />
 
   </LinearLayout>
 </LinearLayout>
