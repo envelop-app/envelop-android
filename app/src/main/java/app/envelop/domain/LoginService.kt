@@ -43,7 +43,7 @@ class LoginService
           return@create
         }
 
-        val authResponseTokens = response.split("authResponse=", ignoreCase = true)
+        val authResponseTokens = response.split("/")
         if (authResponseTokens.size > 1) {
           blockstack.handlePendingSignIn(authResponseTokens.last()) { userData ->
             if (userData.hasValue) {

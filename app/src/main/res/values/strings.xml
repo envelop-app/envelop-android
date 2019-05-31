@@ -1,11 +1,12 @@
 <resources>
   <!-- Common -->
-  <string name="app_name">envelop</string>
+  <string name="app_name">Envelop</string>
   <string name="back">Back</string>
   <string name="close">Close</string>
 
   <!-- Login -->
   <string name="login">Sign in</string>
+  <string name="login_title">Sign in on Envelop</string>
   <string name="login_button">Sign in with Blockstack</string>
   <string name="login_progress">Signing in</string>
   <string name="login_error">Error signing in with Blockstack</string>

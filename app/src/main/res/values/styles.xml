@@ -30,10 +30,22 @@
 
     <item name="fontFamily">@font/poppins_medium</item>
 
+    <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Envelop.LargeComponent</item>
+
   </style>
 
   <style name="AppTheme.Color">
     <item name="android:colorBackground">@color/primary</item>
+  </style>
+
+  <!-- Shapes -->
+
+  <style name="ShapeAppearance.Envelop.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopLeft">4dp</item>
+    <item name="cornerSizeBottomLeft">4dp</item>
+    <item name="cornerSizeBottomRight">4dp</item>
+    <item name="cornerSizeTopRight">0dp</item>
   </style>
 
   <!-- Main -->

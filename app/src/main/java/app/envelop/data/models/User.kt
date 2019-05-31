@@ -7,7 +7,13 @@ data class User(
   val profile: Profile?
 ) {
 
-  val displayName get() = profile?.name ?: profile?.email ?: decentralizedId
+  val displayName
+    get() =
+      profile?.name?.ifBlank { null }
+        ?: usernameShort
+        ?: profile?.email?.ifBlank { null }
+        ?: decentralizedId
+
   val usernameShort = username.replace(".id.blockstack", "")
 
 }
