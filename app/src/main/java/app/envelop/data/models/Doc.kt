@@ -1,8 +1,10 @@
 package app.envelop.data.models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Entity(
@@ -11,13 +13,14 @@ import java.util.*
     Index(value = ["createdAt"], unique = false)
   ]
 )
+@Parcelize
 data class Doc(
   @PrimaryKey val id: String = "",
   val url: String = "",
   val size: Long = 0,
   val contentType: String? = null,
   val createdAt: Date = Date()
-) {
+) : Parcelable {
 
   val name get() = url.split("/").last()
 

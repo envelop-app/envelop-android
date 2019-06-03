@@ -30,6 +30,9 @@ android {
   lintOptions {
     disable 'CheckResult'
   }
+  androidExtensions {
+    experimental = true
+  }
   kapt {
     correctErrorTypes = true
     arguments {

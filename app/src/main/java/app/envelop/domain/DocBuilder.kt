@@ -22,7 +22,7 @@ class DocBuilder
         contentResolver
           .query(fileUri, null, null, null, null)
           ?.use { cursor ->
-            cursor.moveToFirst();
+            cursor.moveToFirst()
             val name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             val size = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
 

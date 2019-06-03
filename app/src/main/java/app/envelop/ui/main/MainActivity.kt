@@ -12,7 +12,6 @@ import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.LoadingState
 import app.envelop.ui.common.clicksThrottled
-import app.envelop.ui.doc.DocActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
@@ -108,7 +107,7 @@ class MainActivity : BaseActivity() {
         docItemView {
           id(doc.id)
           item(doc)
-          clickListener(View.OnClickListener { openDoc(doc) })
+          clickListener(View.OnClickListener { openDocMenu(doc) })
         }
       }
     }
@@ -118,17 +117,19 @@ class MainActivity : BaseActivity() {
     startActivityForResult(
       Intent(Intent.ACTION_GET_CONTENT).apply {
         type = "*/*"
+        addCategory(Intent.CATEGORY_OPENABLE)
       },
       REQUEST_FILE
     )
   }
 
-  private fun openDoc(doc: Doc) {
-    startActivity(DocActivity.getIntent(this, DocActivity.Extras(doc)))
+  private fun openDocMenu(doc: Doc) {
+    DocMenuFragment.newInstance(doc).show(supportFragmentManager, FRAGMENT_DOC_MENU_TAG)
   }
 
   companion object {
     private const val REQUEST_FILE = 1001
+    private const val FRAGMENT_DOC_MENU_TAG = "doc_menu"
 
     fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
   }

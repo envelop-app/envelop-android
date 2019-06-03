@@ -3,7 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   style="@style/CoordinatorLayout"
-  tools:context=".ui.doc.DocActivity"
+  tools:context=".ui.docuploaded.DocUploadedActivity"
   >
 
   <include layout="@layout/shared_appbar" />
@@ -34,13 +34,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/doc_share"
-      />
-
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/delete"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/doc_delete"
       />
 
   </LinearLayout>

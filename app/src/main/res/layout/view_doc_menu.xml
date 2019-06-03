@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:paddingTop="8dp"
+  android:paddingBottom="8dp"
+  >
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/copyLink"
+    style="@style/MenuButton"
+    android:text="@string/doc_copy_link"
+    app:icon="@drawable/ic_copy"
+    />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/share"
+    style="@style/MenuButton"
+    android:text="@string/doc_share"
+    app:icon="@drawable/ic_share"
+    />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/openLink"
+    style="@style/MenuButton"
+    android:text="@string/doc_open_download"
+    app:icon="@drawable/ic_open"
+    />
+
+  <com.google.android.material.button.MaterialButton
+    android:id="@+id/delete"
+    style="@style/MenuButton"
+    android:text="@string/doc_delete"
+    app:icon="@drawable/ic_delete"
+    />
+
+</LinearLayout>

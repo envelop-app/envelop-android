@@ -20,7 +20,7 @@ class DocLinkBuilder
       .take(1)
       .singleOrError()
       .map { user ->
-        resources.getString(R.string.doc_url, user.element()?.username, doc.id)
+        resources.getString(R.string.doc_url, user.element()?.usernameShort, doc.id)
       }
 
 }

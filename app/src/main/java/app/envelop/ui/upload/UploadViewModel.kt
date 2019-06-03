@@ -8,7 +8,7 @@ import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
 import app.envelop.ui.common.Finish.Result.Canceled
 import app.envelop.ui.common.Finish.Result.Ok
-import app.envelop.ui.doc.DocActivity
+import app.envelop.ui.docuploaded.DocUploadedActivity
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -26,7 +26,7 @@ class UploadViewModel
   private val isUploading = BehaviorSubject.create<LoadingState>()
   private val error = PublishSubject.create<Error>()
   private val openLogin = PublishSubject.create<Open>()
-  private val openDoc = PublishSubject.create<DocActivity.Extras>()
+  private val openDoc = PublishSubject.create<DocUploadedActivity.Extras>()
   private val finish = PublishSubject.create<Finish>()
 
   init {
@@ -46,7 +46,7 @@ class UploadViewModel
       .subscribe {
         isUploading.idle()
         if (it.isSuccessful) {
-          openDoc.onNext(DocActivity.Extras(it.result()))
+          openDoc.onNext(DocUploadedActivity.Extras(it.result()))
           finish.finish(Ok)
         } else {
           Timber.e(it.throwable())

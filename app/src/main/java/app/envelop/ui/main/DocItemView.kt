@@ -2,6 +2,7 @@ package app.envelop.ui.main
 
 import android.content.Context
 import android.text.format.DateUtils
+import android.text.format.DateUtils.MINUTE_IN_MILLIS
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import app.envelop.R
@@ -40,7 +41,7 @@ constructor(
 
   private fun Date.toRelativeString() =
     DateUtils
-      .getRelativeTimeSpanString(time, System.currentTimeMillis(), 0L, DateUtils.FORMAT_ABBREV_ALL)
+      .getRelativeTimeSpanString(time, System.currentTimeMillis(), MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_ALL)
       .replace(Regex("\\sago"), "")
 
 }

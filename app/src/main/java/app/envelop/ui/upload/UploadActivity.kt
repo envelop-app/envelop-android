@@ -10,7 +10,7 @@ import app.envelop.common.rx.observeOnUI
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.loading.LoadingManager
-import app.envelop.ui.doc.DocActivity
+import app.envelop.ui.docuploaded.DocUploadedActivity
 import app.envelop.ui.login.LoginActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import javax.inject.Inject
@@ -69,7 +69,7 @@ class UploadActivity : BaseActivity() {
       .openDoc()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { startActivity(DocActivity.getIntent(this, it)) }
+      .subscribe { startActivity(DocUploadedActivity.getIntent(this, it)) }
 
     viewModel
       .finish()

@@ -55,4 +55,15 @@
     <item name="android:layout_height">match_parent</item>
   </style>
 
+  <style name="MenuButton" parent="Widget.MaterialComponents.Button.TextButton">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">40dp</item>
+    <item name="android:paddingStart">16dp</item>
+    <item name="android:paddingEnd">16dp</item>
+    <item name="android:textColor">@color/colorOnSurface</item>
+    <item name="android:gravity">start|center_vertical</item>
+    <item name="iconTint">@color/menuIconTint</item>
+    <item name="iconPadding">24dp</item>
+  </style>
+
 </resources>

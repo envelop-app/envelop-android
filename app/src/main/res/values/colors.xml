@@ -17,4 +17,5 @@
 
   <color name="ic_launcher_background">@color/primary</color>
   <color name="blockstack">#211F6D</color>
+  <color name="menuIconTint">#87000000</color>
 </resources>
