@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="primary">#FBC02D</color>
-  <color name="primaryDark">#F26717</color>
+  <color name="primaryDark">#f9a825</color>
   <color name="secondary">#000000</color>
   <color name="secondaryDark">#000000</color>
 
@@ -17,5 +17,6 @@
 
   <color name="ic_launcher_background">@color/primary</color>
   <color name="blockstack">#211F6D</color>
-  <color name="menuIconTint">#87000000</color>
+  <color name="iconTint">#87000000</color>
+  <color name="divider">#18000000</color>
 </resources>

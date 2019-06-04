@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
   <!-- Theme -->
   <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -24,13 +24,15 @@
     <item name="colorOnBackground">@color/colorOnSurface</item>
     <item name="scrimBackground">@color/foregroundLight</item>
 
-    <item name="android:statusBarColor">@color/primary</item>
-    <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+    <item name="android:statusBarColor">@color/primaryDark</item>
     <item name="colorError">@color/error</item>
 
-    <item name="fontFamily">@font/poppins_medium</item>
+    <item name="fontFamily">@font/questrial</item>
 
     <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Envelop.LargeComponent</item>
+    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Envelop.MediumComponent</item>
+
+    <item name="materialCardViewStyle">@style/Envelop.CardView</item>
 
   </style>
 
@@ -38,9 +40,21 @@
     <item name="android:colorBackground">@color/primary</item>
   </style>
 
+  <style name="AppTheme.Splash">
+    <item name="android:windowBackground">@drawable/splash</item>
+  </style>
+
   <!-- Shapes -->
 
   <style name="ShapeAppearance.Envelop.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSizeTopLeft">4dp</item>
+    <item name="cornerSizeBottomLeft">4dp</item>
+    <item name="cornerSizeBottomRight">4dp</item>
+    <item name="cornerSizeTopRight">0dp</item>
+  </style>
+
+  <style name="ShapeAppearance.Envelop.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
     <item name="cornerFamily">rounded</item>
     <item name="cornerSizeTopLeft">4dp</item>
     <item name="cornerSizeBottomLeft">4dp</item>
@@ -55,15 +69,23 @@
     <item name="android:layout_height">match_parent</item>
   </style>
 
+  <style name="Envelop.CardView" parent="Widget.MaterialComponents.CardView">
+    <item name="rippleColor">@color/primary</item>
+  </style>
+
+
   <style name="MenuButton" parent="Widget.MaterialComponents.Button.TextButton">
     <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">40dp</item>
+    <item name="android:layout_height">48dp</item>
     <item name="android:paddingStart">16dp</item>
     <item name="android:paddingEnd">16dp</item>
-    <item name="android:textColor">@color/colorOnSurface</item>
     <item name="android:gravity">start|center_vertical</item>
-    <item name="iconTint">@color/menuIconTint</item>
+    <item name="android:textColor">@color/colorOnSurface</item>
+    <item name="android:textAllCaps">false</item>
+    <item name="android:insetTop">0dp</item>
+    <item name="android:insetBottom">0dp</item>
     <item name="iconPadding">24dp</item>
+    <item name="iconTint">@color/iconTint</item>
   </style>
 
 </resources>

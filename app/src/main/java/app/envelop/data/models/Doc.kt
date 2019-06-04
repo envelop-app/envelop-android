@@ -26,11 +26,13 @@ data class Doc(
 
   val humanSize: String
     get() {
-      val unit = 1024.0
+      val unit = 1000.0
       if (size < unit) return "$size B";
       val exp = (Math.log(size.toDouble()) / Math.log(unit)).toInt()
-      val pre = "KMGTPE"[exp - 1]
+      val pre = "kMGTPE"[exp - 1]
       return "%.1f %sB".format(size / Math.pow(unit, exp.toDouble()), pre)
     }
+
+  val fileType get() = FileType.fromContentType(contentType)
 
 }

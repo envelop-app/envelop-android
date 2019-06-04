@@ -29,6 +29,8 @@ class MainViewModel
 
   private val user = BehaviorSubject.create<User>()
   private val docs = BehaviorSubject.create<List<Doc>>()
+  private val isEmptyVisible = BehaviorSubject.createDefault<VisibleState>(VisibleState.Hidden)
+  private val isUploadButtonVisible = BehaviorSubject.createDefault<VisibleState>(VisibleState.Visible)
   private val isRefreshing = BehaviorSubject.create<LoadingState>()
   private val errors = PublishSubject.create<Error>()
   private val openUpload = BehaviorSubject.create<UploadActivity.Extras>()
@@ -80,7 +82,11 @@ class MainViewModel
 
     ifLoggedIn
       .flatMap { indexService.get() }
-      .subscribe(docs::onNext)
+      .subscribe {
+        docs.onNext(it)
+        isEmptyVisible.next(it.isEmpty())
+        isUploadButtonVisible.next(it.isNotEmpty())
+      }
       .addTo(disposables)
   }
 
@@ -94,6 +100,8 @@ class MainViewModel
 
   fun user() = user.hide()!!
   fun docs() = docs.hide()!!
+  fun isEmptyVisible() = isEmptyVisible.hide()!!
+  fun isUploadButtonVisible() = isUploadButtonVisible.hide()!!
   fun isRefreshing() = isRefreshing.hide()!!
   fun errors() = errors.hide()!!
   fun openUpload() = openUpload.hide()!!

@@ -5,16 +5,22 @@
   <string name="close">Close</string>
   <string name="delete">Delete</string>
   <string name="cancel">Cancel</string>
+  <string name="menu">Menu</string>
 
   <!-- Login -->
   <string name="login">Sign in</string>
   <string name="login_title">Sign in on Envelop</string>
+  <string name="login_tagline">Share private files easily,\nwithout losing their ownership.</string>
   <string name="login_button">Sign in with Blockstack</string>
   <string name="login_progress">Signing in</string>
   <string name="login_error">Error signing in with Blockstack</string>
 
   <!-- Main -->
+  <string name="main_title">Your Files</string>
+  <string name="main_empty">Upload your file</string>
+  <string name="main_refresh_error">Error updating files</string>
   <string name="logout">Logout</string>
+  <string name="logout_confirm">Are you sure?</string>
 
   <!-- Upload -->
   <string name="upload_title">Upload with Envelop</string>
@@ -24,10 +30,10 @@
   <string name="uploaded">File Uploaded</string>
 
   <!-- Doc -->
-  <string name="doc_copy_link">Copy Link</string>
+  <string name="doc_copy_link">Copy link</string>
   <string name="doc_copy_link_done">Link copied to clipboard</string>
   <string name="doc_share">Share</string>
-  <string name="doc_share_chooser">Share File URL</string>
+  <string name="doc_share_chooser">Share file link</string>
   <string name="doc_open_download">Open download link</string>
   <string name="doc_delete">Delete file</string>
   <string name="doc_delete_title">Are you sure?</string>

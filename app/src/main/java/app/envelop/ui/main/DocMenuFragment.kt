@@ -90,7 +90,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            DocMenuViewModel.Error.DeleteError -> R.string.doc_delete_error
+            DocMenuViewModel.Error.DeleteError -> R.string.main_refresh_error
           }
         )
       }
@@ -103,12 +103,20 @@ class DocMenuFragment : BottomSheetDialogFragment() {
 
     arguments?.getParcelable<Doc>(EXTRA_DOC)?.let {
       viewModel.docReceived(it)
+      setDocInfo(it)
     } ?: dismiss()
   }
 
   override fun onDestroy() {
     super.onDestroy()
     loadingManager.hide()
+  }
+
+  private fun setDocInfo(it: Doc) {
+    icon.contentDescription = it.contentType
+    icon.setImageResource(it.fileType.iconRes)
+    name.text = it.name
+    size.text = it.humanSize
   }
 
   private fun openDeleteConfirm() {

@@ -1,6 +1,8 @@
 package app.envelop.ui.common
 
 import android.app.Activity
+import android.view.View
+import androidx.core.view.isVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 
@@ -41,6 +43,20 @@ sealed class LoadingState {
 
 fun BehaviorSubject<LoadingState>.loading() = onNext(LoadingState.Loading)
 fun BehaviorSubject<LoadingState>.idle() = onNext(LoadingState.Idle)
+
+sealed class VisibleState {
+  object Visible : VisibleState()
+  object Hidden : VisibleState()
+}
+
+fun BehaviorSubject<VisibleState>.visible() = onNext(VisibleState.Visible)
+fun BehaviorSubject<VisibleState>.hidden() = onNext(VisibleState.Hidden)
+fun BehaviorSubject<VisibleState>.next(isVisible: Boolean) =
+  onNext(if (isVisible) VisibleState.Visible else VisibleState.Hidden)
+
+fun View.setVisible(state: VisibleState) {
+  isVisible = state == VisibleState.Visible
+}
 
 fun BehaviorSubject<Unit>.next() = onNext(Unit)
 fun PublishSubject<Unit>.next() = onNext(Unit)

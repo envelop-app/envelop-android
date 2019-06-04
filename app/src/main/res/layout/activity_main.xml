@@ -3,10 +3,22 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   style="@style/CoordinatorLayout"
+  android:background="@color/primary"
   tools:context=".ui.main.MainActivity"
   >
 
   <include layout="@layout/shared_appbar" />
+
+  <ImageView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_marginTop="?actionBarSize"
+    android:contentDescription="@null"
+    android:padding="16dp"
+    android:scaleType="fitCenter"
+    android:src="@drawable/main_background"
+    />
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/refresh"
@@ -14,14 +26,43 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
-
     <com.airbnb.epoxy.EpoxyRecyclerView
       android:id="@+id/list"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:itemSpacing="1dp"
+      android:paddingBottom="96dp"
       />
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+  <LinearLayout
+    android:id="@+id/empty"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:foreground="?selectableItemBackgroundBorderless"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:visibility="gone"
+    tools:visibility="visible"
+    >
+
+    <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:layout_marginBottom="16dp"
+      android:contentDescription="@null"
+      android:src="@drawable/main_empty_icon"
+      />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/main_empty"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+      />
+  </LinearLayout>
 
   <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
     android:id="@+id/upload"
@@ -30,7 +71,7 @@
     android:layout_gravity="bottom|center_horizontal"
     android:layout_margin="24dp"
     android:text="@string/upload"
-    app:icon="@drawable/ic_upload"
+    app:icon="@drawable/ic_add"
     />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

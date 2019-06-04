@@ -1,43 +1,57 @@
 package app.envelop.ui.main
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.LoadingState
+import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
+import app.envelop.ui.common.setVisible
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.shared_appbar.*
+import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
+
+  @Inject
+  lateinit var messageManager: MessageManager
 
   private val viewModel by lazy {
     component.viewModelProvider()[MainViewModel::class.java]
   }
 
+  private var logoutDialog: Dialog? = null
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_main)
+    toolbar.setTitle(R.string.main_title)
     toolbar.setupMenu(R.menu.main)
 
     toolbar
       .itemClicks(R.id.logout)
       .bindToLifecycle(this)
-      .subscribe { viewModel.logoutClick() }
+      .subscribe { openLogoutConfirm() }
 
-    upload
-      .clicksThrottled()
+    Observable
+      .merge(
+        upload.clicksThrottled(),
+        empty.clicksThrottled()
+      )
       .bindToLifecycle(this)
       .subscribe { openFileIntent() }
 
@@ -59,7 +73,7 @@ class MainActivity : BaseActivity() {
       .user()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { toolbar.setTitle(it.displayName) }
+      .subscribe { toolbar.menu.findItem(R.id.user).title = it.displayName }
 
     viewModel
       .docs()
@@ -68,10 +82,34 @@ class MainActivity : BaseActivity() {
       .subscribe(this::setListModels)
 
     viewModel
+      .isEmptyVisible()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe(empty::setVisible)
+
+    viewModel
+      .isUploadButtonVisible()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe(upload::setVisible)
+
+    viewModel
       .isRefreshing()
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { refresh.isRefreshing = it is LoadingState.Loading }
+
+    viewModel
+      .errors()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe {
+        messageManager.showError(
+          when (it) {
+            MainViewModel.Error.RefreshError -> R.string.doc_delete_error
+          }
+        )
+      }
 
     viewModel
       .openUpload()
@@ -89,16 +127,10 @@ class MainActivity : BaseActivity() {
       }
   }
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.main, menu)
-
-    menu
-      .findItem(R.id.logout)
-      .clicksThrottled()
-      .bindToLifecycle(this)
-      .subscribe { viewModel.logoutClick() }
-
-    return true
+  override fun onDestroy() {
+    super.onDestroy()
+    logoutDialog?.dismiss()
+    logoutDialog = null
   }
 
   private fun setListModels(docs: List<Doc>) {
@@ -111,6 +143,15 @@ class MainActivity : BaseActivity() {
         }
       }
     }
+  }
+
+  private fun openLogoutConfirm() {
+    logoutDialog?.dismiss()
+    logoutDialog = AlertDialog.Builder(this)
+      .setTitle(R.string.logout_confirm)
+      .setNegativeButton(R.string.cancel, null)
+      .setPositiveButton(R.string.logout) { _, _ -> viewModel.logoutClick() }
+      .show()
   }
 
   private fun openFileIntent() {
