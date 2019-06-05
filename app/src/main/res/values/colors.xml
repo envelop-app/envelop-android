@@ -19,4 +19,5 @@
   <color name="blockstack">#211F6D</color>
   <color name="iconTint">#87000000</color>
   <color name="divider">#18000000</color>
+  <color name="containerBackground">#FDDA8B</color>
 </resources>

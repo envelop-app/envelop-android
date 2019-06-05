@@ -60,7 +60,7 @@ class RemoteRepository
             blockstack.putFile(
               doc.url,
               content,
-              PutFileOptions(encrypt = false, contentType = doc.contentType)
+              PutFileOptions(encrypt = false, contentType = "application/octet-stream")
             ) { result ->
               if (result.hasValue) {
                 emitter.onSuccess(Operation.success(doc))

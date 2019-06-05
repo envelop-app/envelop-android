@@ -16,8 +16,6 @@ import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.loading.LoadingManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
-import kotlinx.android.synthetic.main.activity_doc.copyLink
-import kotlinx.android.synthetic.main.activity_doc.share
 import kotlinx.android.synthetic.main.view_doc_menu.*
 import javax.inject.Inject
 

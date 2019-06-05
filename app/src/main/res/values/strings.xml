@@ -27,12 +27,14 @@
   <string name="upload">Upload</string>
   <string name="uploading">Uploading file</string>
   <string name="upload_error">Error uploading file</string>
-  <string name="uploaded">File Uploaded</string>
+  <string name="uploaded">File uploaded!</string>
 
   <!-- Doc -->
+  <string name="doc_link">Link</string>
   <string name="doc_copy_link">Copy link</string>
   <string name="doc_copy_link_done">Link copied to clipboard</string>
   <string name="doc_share">Share</string>
+  <string name="doc_share_link">Share link</string>
   <string name="doc_share_chooser">Share file link</string>
   <string name="doc_open_download">Open download link</string>
   <string name="doc_delete">Delete file</string>

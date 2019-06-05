@@ -7,6 +7,7 @@ import android.webkit.MimeTypeMap
 import app.envelop.common.Optional
 import app.envelop.data.models.Doc
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
@@ -17,25 +18,27 @@ class DocBuilder
 ) {
 
   fun build(fileUri: Uri) =
-    Single.fromCallable {
-      Optional.create(
-        contentResolver
-          .query(fileUri, null, null, null, null)
-          ?.use { cursor ->
-            cursor.moveToFirst()
-            val name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
-            val size = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
+    Single
+      .fromCallable {
+        Optional.create(
+          contentResolver
+            .query(fileUri, null, null, null, null)
+            ?.use { cursor ->
+              cursor.moveToFirst()
+              val name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+              val size = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
 
-            Doc(
-              id = generateShortId(),
-              url = "${generateSecretId()}/$name",
-              size = size,
-              contentType = fileUri.contentType(),
-              createdAt = Date()
-            )
-          }
-      )
-    }
+              Doc(
+                id = generateShortId(),
+                url = "${generateSecretId()}/$name",
+                size = size,
+                contentType = fileUri.contentType(),
+                createdAt = Date()
+              )
+            }
+        )
+      }
+      .subscribeOn(Schedulers.io())
 
   private fun generateSecretId() = hashGenerator.generate(SECRET_HASH_SIZE)
   private fun generateShortId() = hashGenerator.generate(SHORT_HASH_SIZE)

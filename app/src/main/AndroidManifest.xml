@@ -57,7 +57,7 @@
 
     <activity
       android:name=".ui.docuploaded.DocUploadedActivity"
-      android:label="@string/uploaded"
+      android:label="@string/doc_share"
       android:parentActivityName=".ui.main.MainActivity"
       />
 

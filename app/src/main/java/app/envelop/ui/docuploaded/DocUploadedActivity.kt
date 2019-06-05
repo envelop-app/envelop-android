@@ -10,7 +10,7 @@ import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.DocActions
 import app.envelop.ui.common.clicksThrottled
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
-import kotlinx.android.synthetic.main.activity_doc.*
+import kotlinx.android.synthetic.main.activity_doc_uploaded.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
@@ -30,14 +30,18 @@ class DocUploadedActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
-    setContentView(R.layout.activity_doc)
+    setContentView(R.layout.activity_doc_uploaded)
     toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
 
     viewModel
       .doc()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { name.text = it.name }
+      .subscribe {
+        icon.contentDescription = it.contentType
+        icon.setImageResource(it.fileType.iconRes)
+        name.text = it.name
+      }
 
     copyLink
       .clicksThrottled()
@@ -52,6 +56,12 @@ class DocUploadedActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe(docActions::share)
+
+    viewModel
+      .link()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe { link.setText(it.replace(Regex("https://"), "")) }
 
     viewModel
       .finish()
