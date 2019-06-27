@@ -45,7 +45,7 @@ dependencies {
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   implementation 'androidx.appcompat:appcompat:1.0.2'
   implementation 'androidx.core:core-ktx:1.0.2'
-  implementation 'com.google.android.material:material:1.1.0-alpha06'
+  implementation 'com.google.android.material:material:1.1.0-alpha07'
 
   // Architecture Components
   implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
@@ -59,15 +59,14 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.5'
 
   // Blockstack
-  // implementation 'com.github.blockstack:blockstack-android:0.4.5'
-  implementation 'com.github.blockstack:blockstack-android:8a9f5da4392e7fd355fd650f97d32130d2986ea7'
+  implementation 'com.github.blockstack:blockstack-android:0.4.6'
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.23'
   kapt 'com.google.dagger:dagger-compiler:2.23'
 
   // Database ORM
-  def room_version = '2.1.0-beta01'
+  def room_version = '2.1.0'
   implementation "androidx.room:room-runtime:$room_version"
   implementation "androidx.room:room-rxjava2:$room_version"
   kapt "androidx.room:room-compiler:$room_version"
@@ -90,7 +89,7 @@ dependencies {
 
   // Testing
   testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'androidx.test:runner:1.1.1'
+  androidTestImplementation 'androidx.test:runner:1.2.0'
   androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
