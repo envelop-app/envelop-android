@@ -2,6 +2,8 @@
 
 # Android app 🤖
 
+[![Build Status](https://travis-ci.org/envelop-app/envelop-android.svg?branch=master)](https://travis-ci.org/envelop-app/envelop-android)
+
 ![Envelop - Share and upload private files easily](https://envelop.app/images/og-image.png)
 
 Share private files easily, without losing their ownership.
