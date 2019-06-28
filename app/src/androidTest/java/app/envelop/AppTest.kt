@@ -1,8 +1,8 @@
 package app.envelop
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.envelop.test.AppHelper.getApplication
-import com.google.common.truth.Truth.assertThat
+import app.envelop.test.AppHelper.application
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -11,7 +11,7 @@ class AppTest {
 
   @Test
   fun mode() {
-    assertThat(getApplication().mode).isEqualTo(App.Mode.Test)
+    assertEquals(application.mode, App.Mode.Test)
   }
 
 }

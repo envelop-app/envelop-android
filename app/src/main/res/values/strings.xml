@@ -3,7 +3,6 @@
   <string name="app_name">Envelop</string>
   <string name="back">Back</string>
   <string name="close">Close</string>
-  <string name="delete">Delete</string>
   <string name="cancel">Cancel</string>
   <string name="menu">Menu</string>
 
@@ -19,6 +18,7 @@
   <string name="main_title">Your Files</string>
   <string name="main_empty">Upload your file</string>
   <string name="main_refresh_error">Error updating files</string>
+  <string name="main_username">username</string>
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
 

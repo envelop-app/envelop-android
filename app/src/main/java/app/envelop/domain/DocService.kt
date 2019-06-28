@@ -24,7 +24,8 @@ class DocService
       .toObservable()
 
   fun delete(doc: Doc) =
-    remoteRepository.deleteFile(doc.url)
+    remoteRepository
+      .deleteFile(doc.url)
       .flatMapIfSuccessful { remoteRepository.deleteFile(doc.id) }
       .observeOnIO()
       .doIfSuccessful { docRepository.delete(doc) }

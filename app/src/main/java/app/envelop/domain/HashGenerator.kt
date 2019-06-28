@@ -11,7 +11,7 @@ class HashGenerator
   }
 
   fun generate(size: Int) =
-    (0..size).map {
+    (1..size).map {
       HASH_CHARS[random.nextInt(HASH_CHARS.length)]
     }.joinToString("")
 

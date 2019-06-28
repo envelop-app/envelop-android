@@ -23,6 +23,7 @@
       android:gravity="center_vertical"
       android:orientation="horizontal"
       android:padding="16dp"
+      tools:ignore="UseCompoundDrawables"
       >
 
       <ImageView
@@ -63,6 +64,7 @@
           android:layout_height="match_parent"
           android:gravity="center"
           android:orientation="horizontal"
+          tools:ignore="UseCompoundDrawables"
           >
 
           <ImageView
@@ -70,6 +72,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"
+            android:contentDescription="@null"
             android:src="@drawable/ic_type_file"
             app:tint="@color/iconTint"
             />

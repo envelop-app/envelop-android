@@ -17,8 +17,6 @@
 
     <item name="colorSurface">@color/surface</item>
     <item name="colorOnSurface">@color/colorOnSurface</item>
-    <item name="colorOnSurfaceEmphasisMedium">@color/colorOnSurfaceMedium</item>
-    <item name="colorOnSurfaceDisabled">@color/colorOnSurfaceDisabled</item>
 
     <item name="android:colorBackground">@color/background</item>
     <item name="colorOnBackground">@color/colorOnSurface</item>

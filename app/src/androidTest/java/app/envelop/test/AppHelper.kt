@@ -4,8 +4,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import app.envelop.App
 
 object AppHelper {
-  fun getContext() = InstrumentationRegistry.getInstrumentation().targetContext
-  fun getApplication() = getContext().applicationContext as App
-  fun getAppComponent() = getApplication().component
-  fun getResources() = getContext().resources
+  val context get() = InstrumentationRegistry.getInstrumentation().targetContext!!
+  val application get() = context.applicationContext as App
 }

@@ -5,13 +5,13 @@
   <item
     android:icon="@drawable/ic_more"
     android:title="@string/menu"
-    app:showAsAction="always"
+    app:showAsAction="ifRoom"
     >
     <menu>
       <item
         android:id="@+id/user"
         android:enabled="false"
-        android:title="username"
+        android:title="@string/main_username"
         app:showAsAction="withText"
         />
       <item

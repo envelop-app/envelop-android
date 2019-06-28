@@ -11,7 +11,6 @@
   <color name="colorOnSecondary">#FFFFFF</color>
   <color name="colorOnSurface">@color/colorOnPrimary</color>
   <color name="colorOnSurfaceMedium">#99000000</color>
-  <color name="colorOnSurfaceDisabled">#61000000</color>
   <color name="foregroundLight">#F5F5F5</color>
   <color name="error">#FF0000</color>
 
