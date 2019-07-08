@@ -27,7 +27,6 @@ class DocService
     remoteRepository
       .deleteFile(doc.url)
       .flatMapIfSuccessful { remoteRepository.deleteFile(doc.id) }
-      .observeOnIO()
       .doIfSuccessful { docRepository.delete(doc) }
       .flatMapCompletableIfSuccessful { indexService.upload() }
 

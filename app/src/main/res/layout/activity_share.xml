@@ -3,7 +3,7 @@
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   style="@style/CoordinatorLayout"
-  tools:context=".ui.docuploaded.DocUploadedActivity"
+  tools:context=".ui.share.ShareActivity"
   >
 
   <include layout="@layout/shared_appbar" />
@@ -18,12 +18,40 @@
     >
 
     <LinearLayout
+      android:id="@+id/uploading"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center_vertical"
       android:orientation="horizontal"
       android:padding="16dp"
       tools:ignore="UseCompoundDrawables"
+      >
+
+      <ProgressBar
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="12dp"
+        android:indeterminate="true"
+        />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/uploading"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+      android:id="@+id/uploaded"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="horizontal"
+      android:padding="16dp"
+      android:visibility="gone"
+      tools:ignore="UseCompoundDrawables"
+      tools:visibility="visible"
       >
 
       <ImageView
@@ -88,7 +116,7 @@
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>
 
-      <app.envelop.ui.docuploaded.InterceptView
+      <app.envelop.ui.share.InterceptView
         android:id="@+id/copyLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,7 +145,7 @@
             tools:text="@string/doc_url"
             />
         </com.google.android.material.textfield.TextInputLayout>
-      </app.envelop.ui.docuploaded.InterceptView>
+      </app.envelop.ui.share.InterceptView>
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/share"

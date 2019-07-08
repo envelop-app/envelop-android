@@ -59,7 +59,8 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.5'
 
   // Blockstack
-  implementation 'com.github.blockstack:blockstack-android:0.4.6'
+  // implementation 'com.github.blockstack:blockstack-android:0.4.6'
+  implementation 'com.github.sdsantos:blockstack-android:3fbd12cfb31c1ee2696f67535ea27652341f243e'
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.23'

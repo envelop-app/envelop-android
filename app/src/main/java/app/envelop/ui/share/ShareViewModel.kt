@@ -1,4 +1,4 @@
-package app.envelop.ui.docuploaded
+package app.envelop.ui.share
 
 import app.envelop.common.Optional
 import app.envelop.data.models.Doc
@@ -12,7 +12,7 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
-class DocUploadedViewModel
+class ShareViewModel
 @Inject constructor(
   docService: DocService,
   docLinkBuilder: DocLinkBuilder

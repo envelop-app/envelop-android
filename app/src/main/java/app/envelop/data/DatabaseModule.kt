@@ -18,4 +18,8 @@ class DatabaseModule {
   fun docRepository(database: Database) =
     database.docRepository()
 
+  @Provides
+  fun uploadRepository(database: Database) =
+    database.uploadRepository()
+
 }

@@ -19,8 +19,17 @@ interface DocRepository {
   @Insert(onConflict = OnConflictStrategy.REPLACE)
   fun save(docs: List<Doc>)
 
+  @Transaction
+  fun delete(doc: Doc) {
+    deleteDoc(doc)
+    deleteUpload(doc.id)
+  }
+
   @Delete
-  fun delete(doc: Doc)
+  fun deleteDoc(doc: Doc)
+
+  @Query("DELETE FROM Upload WHERE docId = :id")
+  fun deleteUpload(id: String)
 
   @Query("DELETE FROM doc")
   fun deleteAll()

@@ -106,7 +106,7 @@ class MainActivity : BaseActivity() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            MainViewModel.Error.RefreshError -> R.string.doc_delete_error
+            MainViewModel.Error.RefreshError -> R.string.main_refresh_error
           }
         )
       }

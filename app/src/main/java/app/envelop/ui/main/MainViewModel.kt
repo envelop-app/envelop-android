@@ -6,6 +6,7 @@ import app.envelop.data.models.Doc
 import app.envelop.data.models.User
 import app.envelop.domain.IndexService
 import app.envelop.domain.LogoutService
+import app.envelop.domain.PreUploadService
 import app.envelop.domain.UserService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
@@ -20,7 +21,8 @@ class MainViewModel
 @Inject constructor(
   userService: UserService,
   logoutService: LogoutService,
-  indexService: IndexService
+  indexService: IndexService,
+  preUploadService: PreUploadService
 ) : BaseViewModel() {
 
   private val logoutClicks = PublishSubject.create<Click>()
@@ -87,6 +89,13 @@ class MainViewModel
         isEmptyVisible.next(it.isEmpty())
         isUploadButtonVisible.next(it.isNotEmpty())
       }
+      .addTo(disposables)
+
+    // Check for pending uploads after the first refresh returns
+    ifLoggedIn
+      .flatMap { docs.take(1) }
+      .flatMapCompletable { preUploadService.startBackgroundIfNeeded() }
+      .subscribe()
       .addTo(disposables)
   }
 

@@ -31,7 +31,11 @@ constructor(
     icon.setImageResource(doc.fileType.iconRes)
     name.text = doc.name
     size.text = doc.humanSize
-    uploadDate.text = doc.createdAt.toRelativeString()
+    uploadDate.text = if (doc.uploadedNonNull) {
+      doc.createdAt.toRelativeString()
+    } else {
+      resources.getString(R.string.uploading)
+    }
   }
 
   @CallbackProp

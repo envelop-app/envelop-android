@@ -1,4 +1,4 @@
-package app.envelop.ui.docuploaded
+package app.envelop.ui.share
 
 import android.content.Context
 import android.util.AttributeSet

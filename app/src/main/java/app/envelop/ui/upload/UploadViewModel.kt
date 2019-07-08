@@ -2,13 +2,13 @@ package app.envelop.ui.upload
 
 import android.net.Uri
 import app.envelop.common.Optional
-import app.envelop.domain.UploadService
+import app.envelop.domain.PreUploadService
 import app.envelop.domain.UserService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
 import app.envelop.ui.common.Finish.Result.Canceled
 import app.envelop.ui.common.Finish.Result.Ok
-import app.envelop.ui.docuploaded.DocUploadedActivity
+import app.envelop.ui.share.ShareActivity
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -18,15 +18,15 @@ import javax.inject.Inject
 class UploadViewModel
 @Inject constructor(
   userService: UserService,
-  uploadService: UploadService
+  preUploadService: PreUploadService
 ) : BaseViewModel() {
 
   private val fileToUploadReceived = PublishSubject.create<Uri>()
 
-  private val isUploading = BehaviorSubject.create<LoadingState>()
+  private val isPreparingUpload = BehaviorSubject.create<LoadingState>()
   private val error = PublishSubject.create<Error>()
   private val openLogin = PublishSubject.create<Open>()
-  private val openDoc = PublishSubject.create<DocUploadedActivity.Extras>()
+  private val openDoc = PublishSubject.create<ShareActivity.Extras>()
   private val finish = PublishSubject.create<Finish>()
 
   init {
@@ -41,12 +41,12 @@ class UploadViewModel
       .addTo(disposables)
 
     fileToUploadReceived
-      .doOnNext { isUploading.loading() }
-      .flatMapSingle { uploadService.upload(it) }
+      .doOnNext { isPreparingUpload.loading() }
+      .flatMapSingle { preUploadService.prepareUpload(it) }
       .subscribe {
-        isUploading.idle()
+        isPreparingUpload.idle()
         if (it.isSuccessful) {
-          openDoc.onNext(DocUploadedActivity.Extras(it.result()))
+          openDoc.onNext(ShareActivity.Extras(it.result()))
           finish.finish(Ok)
         } else {
           Timber.e(it.throwable())
@@ -62,7 +62,7 @@ class UploadViewModel
 
   // Outputs
 
-  fun isUploading() = isUploading.hide()!!
+  fun isPreparingUpload() = isPreparingUpload.hide()!!
   fun error() = error.hide()!!
   fun openLogin() = openLogin.hide()!!
   fun openDoc() = openDoc.hide()!!

@@ -14,6 +14,12 @@ sealed class Optional<out T> {
     }
   }
 
+  fun <K> map(mapper: ((T) -> K)): Optional<K> =
+    when (this) {
+      is Some -> create(mapper.invoke(element))
+      is None -> None
+    }
+
   override fun equals(other: Any?): Boolean {
     return this === other || (
         other is Optional<*> && (

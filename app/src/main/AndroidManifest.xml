@@ -4,15 +4,17 @@
   package="app.envelop"
   >
 
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
   <application
     android:name=".App"
+    android:allowBackup="true"
+    android:fullBackupContent="@xml/backup_descriptor"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme"
-    android:allowBackup="true"
-    android:fullBackupContent="@xml/backup_descriptor"
     >
 
     <activity
@@ -61,10 +63,12 @@
     </activity>
 
     <activity
-      android:name=".ui.docuploaded.DocUploadedActivity"
+      android:name=".ui.share.ShareActivity"
       android:label="@string/doc_share"
       android:parentActivityName=".ui.main.MainActivity"
       />
+
+    <service android:name=".background.UploadBackgroundService" />
 
     <meta-data
       android:name="preloaded_fonts"

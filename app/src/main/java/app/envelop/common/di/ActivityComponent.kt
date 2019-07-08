@@ -1,7 +1,7 @@
 package app.envelop.common.di
 
 import app.envelop.ui.common.Toolbar
-import app.envelop.ui.docuploaded.DocUploadedActivity
+import app.envelop.ui.share.ShareActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.main.DocMenuFragment
 import app.envelop.ui.main.MainActivity
@@ -28,5 +28,5 @@ interface ActivityComponent {
   fun inject(mainActivity: MainActivity)
   fun inject(loginActivity: LoginActivity)
   fun inject(uploadActivity: UploadActivity)
-  fun inject(docUploadedActivity: DocUploadedActivity)
+  fun inject(shareActivity: ShareActivity)
 }

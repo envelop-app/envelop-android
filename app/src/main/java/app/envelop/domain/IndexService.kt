@@ -1,5 +1,6 @@
 package app.envelop.domain
 
+import app.envelop.common.doIfSuccessful
 import app.envelop.data.models.Index
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.RemoteRepository
@@ -15,11 +16,8 @@ class IndexService
   fun download() =
     remoteRepository
       .getJson(INDEX_FILE_NAME, Index::class, true)
-      .observeOn(Schedulers.io())
-      .doOnSuccess {
-        if (it.isSuccessful) {
-          docRepository.replace(it.result().element()?.docs ?: emptyList())
-        }
+      .doIfSuccessful {
+        docRepository.replace(it.element()?.docs ?: emptyList())
       }
 
   fun upload() =

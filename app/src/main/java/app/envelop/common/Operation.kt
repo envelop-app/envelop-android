@@ -4,7 +4,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 
-class Operation<T>(
+class Operation<out T>(
   private val result: T? = null,
   private val throwable: Throwable? = null
 ) {
@@ -40,6 +40,15 @@ fun <T, R> Single<Operation<T>>.flatMapIfSuccessful(mapper: ((T) -> SingleSource
     }
   }
 
+fun <T, R> Single<Operation<T>>.mapIfSuccessful(mapper: ((T) -> R)): Single<Operation<R>> =
+  map {
+    if (it.isSuccessful) {
+      Operation.success(mapper.invoke(it.result()))
+    } else {
+      Operation.error(it.throwable())
+    }
+  }
+
 fun <T> Single<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
   doOnSuccess { if (it.isSuccessful) mapper.invoke(it.result()) }
 
@@ -51,3 +60,7 @@ fun <T> Single<Operation<T>>.flatMapCompletableIfSuccessful(mapper: ((T) -> Comp
       Single.just(it)
     }
   }
+
+fun <T> Single<T>.toOperation() =
+  map { Operation.success(it) }
+    .onErrorReturn { Operation.error(it) }

@@ -2,7 +2,7 @@ package app.envelop.common.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import app.envelop.ui.docuploaded.DocUploadedViewModel
+import app.envelop.ui.share.ShareViewModel
 import app.envelop.ui.login.LoginViewModel
 import app.envelop.ui.main.DocMenuViewModel
 import app.envelop.ui.main.MainViewModel
@@ -34,8 +34,8 @@ abstract class ViewModelModule {
 
   @Binds
   @IntoMap
-  @ViewModelKey(DocUploadedViewModel::class)
-  abstract fun docUploadedViewModel(viewModel: DocUploadedViewModel): ViewModel
+  @ViewModelKey(ShareViewModel::class)
+  abstract fun docUploadedViewModel(viewModel: ShareViewModel): ViewModel
 
   @Binds
   @IntoMap
