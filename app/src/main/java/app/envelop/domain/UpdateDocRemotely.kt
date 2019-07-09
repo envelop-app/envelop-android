@@ -1,6 +1,7 @@
 package app.envelop.domain
 
-import app.envelop.common.flatMapCompletableIfSuccessful
+import app.envelop.common.flatMapIfSuccessful
+import app.envelop.common.mapIfSuccessful
 import app.envelop.data.models.Doc
 import app.envelop.data.repositories.RemoteRepository
 import javax.inject.Inject
@@ -13,10 +14,13 @@ class UpdateDocRemotely
 
   fun update(doc: Doc) =
     remoteRepository.uploadJson(doc.id, doc, false)
-      .flatMapCompletableIfSuccessful { indexService.upload() }
+      .flatMapIfSuccessful { indexService.uploadWithDoc(doc) }
+      .mapIfSuccessful { doc }
+
 
   fun delete(doc: Doc) =
     remoteRepository.deleteFile(doc.id)
-      .flatMapCompletableIfSuccessful { indexService.upload() }
+      .flatMapIfSuccessful { indexService.uploadWithDoc(doc) }
+      .mapIfSuccessful { doc }
 
 }
