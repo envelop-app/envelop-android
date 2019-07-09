@@ -19,6 +19,8 @@
   <string name="main_empty">Upload your file</string>
   <string name="main_refresh_error">Error refreshing files</string>
   <string name="main_username">username</string>
+  <string name="main_feedback">Send us feedback</string>
+  <string name="main_feedback_email_subject">Envelop feedback</string>
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
 
