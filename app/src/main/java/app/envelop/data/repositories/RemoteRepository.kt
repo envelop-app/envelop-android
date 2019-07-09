@@ -108,7 +108,7 @@ class RemoteRepository
                 emitter.onSuccess(Operation.success())
               } else {
                 Timber.e(it.error)
-                emitter.onSuccess(Operation.error(DeleteError("Error deleting $fileName: ${it.error}")))
+                emitter.onSuccess(Operation.error(DeleteError(it.error)))
               }
             } else {
               emitter.onSuccess(Operation.success())

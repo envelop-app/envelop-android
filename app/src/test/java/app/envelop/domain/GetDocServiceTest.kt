@@ -15,7 +15,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class DocServiceTest {
+class GetDocServiceTest {
 
   @MockK
   lateinit var docRepository: DocRepository
@@ -24,7 +24,7 @@ class DocServiceTest {
   @MockK
   lateinit var remoteRepository: RemoteRepository
   @InjectMockKs
-  lateinit var service: DocService
+  lateinit var serviceGet: GetDocService
 
   @Before
   fun setUp() {
@@ -37,7 +37,7 @@ class DocServiceTest {
     every { indexService.upload() } returns Completable.complete()
 
     assertTrue(
-      service.delete(Doc()).blockingGet().isSuccessful
+      serviceGet.delete(Doc()).blockingGet().isSuccessful
     )
 
     verify { docRepository.delete(any()) }
@@ -49,7 +49,7 @@ class DocServiceTest {
     every { remoteRepository.deleteFile(any()) } returns Single.just(Operation.error(Exception()))
 
     assertTrue(
-      service.delete(Doc()).blockingGet().isError
+      serviceGet.delete(Doc()).blockingGet().isError
     )
 
     verify(exactly = 0) { docRepository.delete(any()) }

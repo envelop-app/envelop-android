@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
@@ -139,7 +138,6 @@ class MainActivity : BaseActivity() {
         docItemView {
           id(doc.id)
           item(doc)
-          clickListener(View.OnClickListener { openDocMenu(doc) })
         }
       }
     }
@@ -164,13 +162,8 @@ class MainActivity : BaseActivity() {
     )
   }
 
-  private fun openDocMenu(doc: Doc) {
-    DocMenuFragment.newInstance(doc).show(supportFragmentManager, FRAGMENT_DOC_MENU_TAG)
-  }
-
   companion object {
     private const val REQUEST_FILE = 1001
-    private const val FRAGMENT_DOC_MENU_TAG = "doc_menu"
 
     fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
   }

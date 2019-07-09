@@ -1,6 +1,7 @@
 package app.envelop.common
 
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 
@@ -49,8 +50,17 @@ fun <T, R> Single<Operation<T>>.mapIfSuccessful(mapper: ((T) -> R)): Single<Oper
     }
   }
 
+fun <T> Observable<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
+  doOnNext { if (it.isSuccessful) mapper.invoke(it.result()) }
+
+fun <T> Observable<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
+  doOnNext { if (it.isError) mapper.invoke(it.throwable()) }
+
 fun <T> Single<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
   doOnSuccess { if (it.isSuccessful) mapper.invoke(it.result()) }
+
+fun <T> Single<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
+  doOnSuccess { if (it.isError) mapper.invoke(it.throwable()) }
 
 fun <T> Single<Operation<T>>.flatMapCompletableIfSuccessful(mapper: ((T) -> Completable)) =
   flatMap {

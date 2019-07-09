@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "33a556af4e60dd3fecd033e3e0f07d2b",
+    "identityHash": "8193cceed3f9d7cc4b639e53fa5030c7",
     "entities": [
       {
         "tableName": "Doc",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `url` TEXT NOT NULL, `size` INTEGER NOT NULL, `contentType` TEXT, `createdAt` INTEGER NOT NULL, `uploaded` INTEGER, `parts` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `url` TEXT NOT NULL, `size` INTEGER NOT NULL, `contentType` TEXT, `createdAt` INTEGER NOT NULL, `uploaded` INTEGER, `parts` INTEGER, `deleted` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -47,6 +47,12 @@
           {
             "fieldPath": "parts",
             "columnName": "parts",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deleted",
+            "columnName": "deleted",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -134,7 +140,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '33a556af4e60dd3fecd033e3e0f07d2b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8193cceed3f9d7cc4b639e53fa5030c7')"
     ]
   }
 }

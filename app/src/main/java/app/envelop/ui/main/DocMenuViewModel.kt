@@ -1,8 +1,8 @@
 package app.envelop.ui.main
 
 import app.envelop.data.models.Doc
+import app.envelop.domain.DeleteDocService
 import app.envelop.domain.DocLinkBuilder
-import app.envelop.domain.DocService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
 import io.reactivex.rxkotlin.addTo
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class DocMenuViewModel
 @Inject constructor(
-  docService: DocService,
+  deleteDocService: DeleteDocService,
   docLinkBuilder: DocLinkBuilder
 ) : BaseViewModel() {
 
@@ -33,7 +33,8 @@ class DocMenuViewModel
     deleteClicks
       .doOnNext { isDeleting.loading() }
       .flatMap { docReceived.take(1) }
-      .flatMapSingle { docService.delete(it) }
+      .filter { it.uploadedNonNull }
+      .flatMapSingle { deleteDocService.markAsDeleted(it) }
       .subscribe {
         isDeleting.idle()
         if (it.isSuccessful) {

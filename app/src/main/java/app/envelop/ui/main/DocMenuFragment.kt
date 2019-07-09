@@ -115,6 +115,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
     icon.setImageResource(it.fileType.iconRes)
     name.text = it.name
     size.text = it.humanSize
+    delete.isEnabled = it.uploadedNonNull
   }
 
   private fun openDeleteConfirm() {

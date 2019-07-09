@@ -22,7 +22,7 @@ class IndexService
 
   fun upload() =
     docRepository
-      .getAll()
+      .list()
       .firstOrError()
       .map { Index(it) }
       .flatMap {
@@ -33,7 +33,7 @@ class IndexService
       .subscribeOn(Schedulers.io())
 
   fun get() =
-    docRepository.getAll().toObservable()
+    docRepository.listVisible().toObservable()
 
   companion object {
     private const val INDEX_FILE_NAME = "index"

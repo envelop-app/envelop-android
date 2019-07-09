@@ -2,7 +2,6 @@ package app.envelop.domain
 
 import app.envelop.common.FileHandler
 import app.envelop.common.doIfSuccessful
-import app.envelop.data.models.Doc
 import app.envelop.data.models.UploadPart
 import app.envelop.data.models.UploadState
 import app.envelop.data.models.UploadWithDoc
@@ -26,8 +25,8 @@ class UploadService
   private val remoteRepository: RemoteRepository,
   private val docRepository: DocRepository,
   private val uploadRepository: UploadRepository,
-  private val indexService: IndexService,
-  private val fileHandler: FileHandler
+  private val fileHandler: FileHandler,
+  private val updateDocRemotely: UpdateDocRemotely
 ) {
 
   private val disposables = CompositeDisposable()
@@ -86,12 +85,12 @@ class UploadService
   private fun uploadNextFile(item: UploadWithDoc) =
     Observable
       .fromIterable(item.missingParts)
-      .concatMapSingle { part ->
-        uploadPart(part)
+      .concatMapSingle { uploadPart ->
+        uploadPart(uploadPart)
           .flatMap {
             if (it.isError) throw UploadPartError(it.throwable())
-            markPartAsUploaded(item, part.part)
-              .toSingleDefault(part)
+            markPartAsUploaded(item, uploadPart.docPart.part)
+              .toSingleDefault(uploadPart)
           }
       }
       .flatMap { updateUploadState() }
@@ -125,19 +124,12 @@ class UploadService
     Single
       .just(item.doc.copy(uploaded = true))
       .doOnSuccess(docRepository::save)
-      .flatMap(this::updateRemotely)
+      .flatMap(updateDocRemotely::update)
       .doIfSuccessful {
         fileHandler.deleteLocalFile(item.upload.fileUri)
         uploadRepository.delete(item.upload)
       }
       .ignoreElement()
-
-  private fun updateRemotely(doc: Doc) =
-    uploadDocJson(doc)
-      .flatMap { indexService.upload().toSingleDefault(it) }
-
-  private fun uploadDocJson(doc: Doc) =
-    remoteRepository.uploadJson(doc.id, doc, false)
 
   class UploadPartError(throwable: Throwable) : Exception(throwable)
 

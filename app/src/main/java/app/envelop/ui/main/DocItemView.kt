@@ -4,9 +4,9 @@ import android.content.Context
 import android.text.format.DateUtils.*
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import app.envelop.R
 import app.envelop.data.models.Doc
-import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import kotlinx.android.synthetic.main.item_doc.view.*
@@ -36,11 +36,15 @@ constructor(
     } else {
       resources.getString(R.string.uploading)
     }
+    getChildAt(0).setOnClickListener {
+      openMenu(doc)
+    }
   }
 
-  @CallbackProp
-  fun setClickListener(listener: OnClickListener?) {
-    getChildAt(0).setOnClickListener(listener)
+  fun openMenu(doc: Doc) {
+    DocMenuFragment
+      .newInstance(doc)
+      .show((context as AppCompatActivity).supportFragmentManager, FRAGMENT_DOC_MENU_TAG)
   }
 
   private fun Date.toRelativeString() =
@@ -48,5 +52,9 @@ constructor(
       .split(",")
       .first()
       .replace(Regex("(\\.|\\sago)"), "")
+
+  companion object {
+    private const val FRAGMENT_DOC_MENU_TAG = "doc_menu"
+  }
 
 }

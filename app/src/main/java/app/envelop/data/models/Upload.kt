@@ -39,10 +39,12 @@ data class UploadWithDoc(
         .map { part ->
           UploadPart(
             fileUri = Uri.parse(upload.fileUriPath),
-            part = part,
-            partSize = upload.partSize,
-            baseDestinationUrl = doc.url,
-            onlyOnePart = totalParts == 1
+            docPart = DocPart(
+              part = part,
+              baseUrl = doc.url,
+              onlyOnePart = totalParts == 1
+            ),
+            partSize = upload.partSize
           )
         }
 
@@ -50,21 +52,12 @@ data class UploadWithDoc(
 
 data class UploadPart(
   val fileUri: Uri,
-  val part: Int,
-  val partSize: Long,
-  val baseDestinationUrl: String,
-  val onlyOnePart: Boolean
+  val docPart: DocPart,
+  val partSize: Long
 ) {
 
-  val partStart get() = (part - 1) * partSize
-
-  val destinationUrl
-    get() = if (onlyOnePart) {
-      baseDestinationUrl
-    } else {
-      "$baseDestinationUrl.part$part"
-    }
-
+  val partStart get() = (docPart.part - 1) * partSize
+  val destinationUrl get() = docPart.url
 }
 
 sealed class UploadState {

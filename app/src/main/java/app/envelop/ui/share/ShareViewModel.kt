@@ -3,7 +3,7 @@ package app.envelop.ui.share
 import app.envelop.common.Optional
 import app.envelop.data.models.Doc
 import app.envelop.domain.DocLinkBuilder
-import app.envelop.domain.DocService
+import app.envelop.domain.GetDocService
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.Finish
 import app.envelop.ui.common.finish
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ShareViewModel
 @Inject constructor(
-  docService: DocService,
+  getDocService: GetDocService,
   docLinkBuilder: DocLinkBuilder
 ) : BaseViewModel() {
 
@@ -26,7 +26,7 @@ class ShareViewModel
 
   init {
     docIdReceived
-      .flatMap { docService.get(it) }
+      .flatMap { getDocService.get(it) }
       .subscribe {
         when (it) {
           is Optional.Some -> doc.onNext(it.element)

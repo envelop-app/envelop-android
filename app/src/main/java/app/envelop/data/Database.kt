@@ -42,6 +42,7 @@ abstract class Database : RoomDatabase() {
       override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE Doc ADD COLUMN uploaded BOOLEAN DEFAULT 1")
         database.execSQL("ALTER TABLE Doc ADD COLUMN parts INTEGER")
+        database.execSQL("ALTER TABLE Doc ADD COLUMN deleted BOOLEAN DEFAULT 0")
       }
     }
   }
