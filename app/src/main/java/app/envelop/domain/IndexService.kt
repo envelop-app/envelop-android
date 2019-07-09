@@ -18,6 +18,7 @@ class IndexService
       .getJson(INDEX_FILE_NAME, Index::class, true)
       .doIfSuccessful {
         docRepository.replace(it.element()?.docs ?: emptyList())
+        remoteRepository.printListFiles()
       }
 
   fun upload() =

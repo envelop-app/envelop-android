@@ -33,7 +33,6 @@ class DocMenuViewModel
     deleteClicks
       .doOnNext { isDeleting.loading() }
       .flatMap { docReceived.take(1) }
-      .filter { it.uploadedNonNull }
       .flatMapSingle { deleteDocService.markAsDeleted(it) }
       .subscribe {
         isDeleting.idle()

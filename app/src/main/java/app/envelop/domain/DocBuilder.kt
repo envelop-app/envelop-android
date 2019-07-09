@@ -31,6 +31,8 @@ class DocBuilder
             val name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             val size = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
 
+            if (size == 0L) return@use Operation.error<Doc>(Error("Empty file"))
+
             Operation.success(
               Doc(
                 id = generateShortId(),

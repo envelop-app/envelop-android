@@ -23,7 +23,7 @@
   <string name="logout_confirm">Are you sure?</string>
 
   <!-- Upload -->
-  <string name="upload_title">Upload with Envelop</string>
+  <string name="upload_title">Envelop Upload</string>
   <string name="upload">Upload</string>
   <string name="preparing_upload">Preparing file upload</string>
   <string name="upload_error">Error uploading file</string>

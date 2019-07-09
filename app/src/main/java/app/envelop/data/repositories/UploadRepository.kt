@@ -12,6 +12,9 @@ interface UploadRepository {
   @Query("SELECT * FROM Upload WHERE Upload.id = :id LIMIT 1")
   fun get(id: Long): Flowable<List<Upload>>
 
+  @Query("SELECT * FROM Upload WHERE Upload.docId = :docId LIMIT 1")
+  fun getByDocId(docId: String): Flowable<List<Upload>>
+
   @Query("SELECT * FROM Upload ORDER BY Upload.id ASC")
   @Transaction
   fun getAll(): Flowable<List<UploadWithDocQuery>>

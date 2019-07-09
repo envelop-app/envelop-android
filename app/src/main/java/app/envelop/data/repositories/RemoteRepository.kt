@@ -1,10 +1,10 @@
 package app.envelop.data.repositories
 
-import app.envelop.common.FileHandler
 import app.envelop.common.Operation
 import app.envelop.common.Optional
+import app.envelop.common.mapIfSuccessful
 import app.envelop.common.rx.observeOnIO
-import app.envelop.data.models.Doc
+import app.envelop.common.rx.observeOnUI
 import com.google.gson.Gson
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -120,6 +120,38 @@ class RemoteRepository
       }
       .subscribeOn(AndroidSchedulers.mainThread())
       .observeOnIO()
+
+  fun getFilesList() =
+    Single
+      .create<Operation<List<String>>> { emitter ->
+        val list = mutableListOf<String>()
+        try {
+          blockstack.listFiles({ result ->
+            result.value?.let { list.add(it) }
+            true
+          }, {
+            emitter.onSuccess(Operation.success(list))
+          })
+        } catch (t: Throwable) {
+          emitter.onSuccess(Operation.error(t))
+        }
+      }
+      .subscribeOn(AndroidSchedulers.mainThread())
+      .observeOnIO()
+
+  fun getFilesList(prefix: String) =
+    getFilesList()
+      .mapIfSuccessful { list -> list.filter { it.startsWith(prefix) } }
+
+  fun printListFiles() {
+    getFilesList()
+      .observeOnUI()
+      .subscribe({
+        if (it.isSuccessful) it.result().forEach { file -> Timber.d("File: $file") }
+        // Careful: uncomment to delete all files in your hub
+        // if (it.isSuccessful) it.result().forEach { file -> blockstack.deleteFile(file) {} }
+      }, {})
+  }
 
   class GetError(message: String?) : Exception(message)
   class UploadError(message: String?) : Exception(message)
