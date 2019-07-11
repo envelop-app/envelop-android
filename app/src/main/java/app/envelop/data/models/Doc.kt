@@ -24,7 +24,7 @@ data class Doc(
   val contentType: String? = null,
   val createdAt: Date = Date(),
   val uploaded: Boolean? = null,
-  val parts: Int? = null,
+  val numParts: Int? = null,
   val deleted: Boolean? = null
 ) : Parcelable {
 
@@ -43,17 +43,17 @@ data class Doc(
 
   val fileType get() = FileType.fromContentType(contentType)
 
-  fun calculateParts(partSize: Long) = calculateParts(size, partSize)
+  fun calculateParts(partSize: Long) = calculateNumParts(size, partSize)
 
   fun allParts() =
-    if (parts == null || parts <= 1) {
+    if (numParts == null || numParts <= 1) {
       listOf(DocPart(1, url, true))
     } else {
-      (1..parts).map { DocPart(it, url, false) }
+      (0 until numParts).map { DocPart(it, url, false) }
     }
 
   companion object {
-    fun calculateParts(size: Long, partSize: Long) =
+    fun calculateNumParts(size: Long, partSize: Long) =
       ceil(size.toDouble() / partSize).toInt()
   }
 

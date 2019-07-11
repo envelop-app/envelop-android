@@ -34,7 +34,7 @@ data class UploadWithDoc(
 
   val missingParts
     get() =
-      (1..totalParts)
+      (0 until totalParts)
         .filterNot { upload.partsUploaded.contains(it) }
         .map { part ->
           UploadPart(
@@ -56,7 +56,7 @@ data class UploadPart(
   val partSize: Long
 ) {
 
-  val partStart get() = (docPart.part - 1) * partSize
+  val partStart get() = docPart.part * partSize
   val destinationUrl get() = docPart.url
 }
 

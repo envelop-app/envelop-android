@@ -4,6 +4,7 @@ import app.envelop.common.flatMapIfSuccessful
 import app.envelop.common.mapIfSuccessful
 import app.envelop.data.models.Doc
 import app.envelop.data.repositories.RemoteRepository
+import io.reactivex.Single
 import javax.inject.Inject
 
 class UpdateDocRemotely
@@ -20,7 +21,13 @@ class UpdateDocRemotely
 
   fun delete(doc: Doc) =
     remoteRepository.deleteFile(doc.id)
-      .flatMapIfSuccessful { indexService.uploadWithDoc(doc) }
+      .flatMap {
+        if (it.isSuccessful || it.is404) {
+          indexService.uploadWithDoc(doc)
+        } else {
+          Single.just(it)
+        }
+      }
       .mapIfSuccessful { doc }
 
 }

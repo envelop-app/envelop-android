@@ -12,6 +12,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DeleteDocService
@@ -35,13 +36,12 @@ class DeleteDocService
   fun deletePending() =
     docRepository
       .countDeleted()
-      .filter { it > 0 }
-      .onBackpressureDrop()
       .toObservable()
-      .flatMap { docRepository.listDeleted().toObservable().take(1) }
+      .filter { it > 0 }
+      .flatMap { getFilesToDelete() }
       .filter { it.isNotEmpty() }
       .map { it.first() }
-      .flatMapSingle { delete(it) }
+      .concatMapSingle { delete(it) }
       .doIfError { Timber.e(it, "Delete error") }
       .ignoreElements()
 
@@ -50,9 +50,10 @@ class DeleteDocService
       .getFilesList(prefix = doc.url)
       .doOnSuccess { if (it.isError) throw DeleteError(it.throwable()) }
       .flatMapObservable { Observable.fromIterable(it.result()) }
+      .delay(DELETE_THROTTLE, TimeUnit.MILLISECONDS)
       .concatMapSingle { remoteRepository.deleteFile(it) }
       // If we can't delete one part and it's not a 404 (already deleted), break the chain
-      .doOnNext { if (!it.shouldContinue()) throw DeleteError(it.throwable()) }
+      .doOnNext { if (!it.isSuccessful && !it.is404) throw DeleteError(it.throwable()) }
       .ignoreElements()
       .andThen(deleteLocalUploadFileIfNeeded(doc))
       .doOnComplete { docRepository.delete(doc) }
@@ -68,9 +69,13 @@ class DeleteDocService
       .doOnNext { if (it.isNotEmpty()) fileHandler.deleteLocalFile(it.first().fileUri) }
       .ignoreElements()
 
-  private fun Operation<Unit>.shouldContinue() =
-    isSuccessful || throwable().message?.contains("404") == true
+  private fun getFilesToDelete() =
+    docRepository.listDeleted().toObservable().take(1)
 
   class DeleteError(throwable: Throwable? = null) : Exception(throwable)
+
+  companion object {
+    private const val DELETE_THROTTLE = 2000L // ms
+  }
 
 }

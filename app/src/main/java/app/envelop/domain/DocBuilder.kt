@@ -41,7 +41,7 @@ class DocBuilder
                 contentType = name.getExtension() ?: fileUri.contentType(),
                 createdAt = Date(),
                 uploaded = false,
-                parts = Doc.calculateParts(size, FILE_PART_SIZE)
+                numParts = Doc.calculateNumParts(size, FILE_PART_SIZE)
               )
             )
           }

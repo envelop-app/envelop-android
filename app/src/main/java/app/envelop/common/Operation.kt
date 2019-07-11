@@ -23,6 +23,8 @@ class Operation<out T>(
       throwable
     )
 
+  val is404 get() = throwable().message?.contains("404") == true
+
   companion object {
     fun success() = Operation(Unit)
     fun <T> success(result: T) = Operation(result = result)
