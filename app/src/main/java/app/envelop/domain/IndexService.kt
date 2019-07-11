@@ -25,7 +25,6 @@ class IndexService
             .filterNot { docReceived -> docsToIgnoreIds.contains(docReceived.id) }
               + docsToKeep
         )
-        remoteRepository.printListFiles()
       }
 
   fun uploadKeepingDoc(docToUpload: Doc) =

@@ -140,6 +140,10 @@ class MainActivity : BaseActivity() {
 
   private fun setListModels(docs: List<Doc>) {
     list.withModels {
+      // Invisible top view to make sure new items are visible when added
+      dummyItemView {
+        id("top")
+      }
       docs.forEach { doc ->
         docItemView {
           id(doc.id)
