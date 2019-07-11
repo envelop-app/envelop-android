@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - Unreleased
 
 ### Added
-- Large file upload - now you can upload files larger than 25 MB, through file partition (seamless to the user)
+- Large file upload - now you can upload files larger than 25 MB, through file partition (seamless)
 - Feedback button to quickly send an email to the Envelop team
 
 ## [1.0.1] - 2019-06-28

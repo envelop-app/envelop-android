@@ -58,7 +58,7 @@ class LoginService
         val authResponseTokens = response.split("/")
         if (authResponseTokens.size > 1) {
           blockstack.handlePendingSignIn(authResponseTokens.last()) { userData ->
-            if (userData.hasValue) {
+            if (userData.hasValue && userData.value.isComplete()) {
               userRepository.setUser(userData.value?.toUser())
               emitter.onSuccess(Operation.success(Unit))
             } else {
@@ -75,6 +75,11 @@ class LoginService
     Completable
       .fromAction { blockstack.release() }
       .subscribeOn(blockstackScheduler)
+
+  private fun UserData?.isComplete() =
+    this?.let {
+      !it.json.optString("username").isNullOrBlank()
+    } ?: false
 
   private fun UserData.toUser() =
     User(
