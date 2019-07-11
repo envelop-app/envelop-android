@@ -6,26 +6,26 @@ import app.envelop.common.mapIfSuccessful
 import app.envelop.common.rx.observeOnIO
 import app.envelop.common.rx.observeOnUI
 import com.google.gson.Gson
+import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 import org.blockstack.android.sdk.BlockstackSession
 import org.blockstack.android.sdk.model.DeleteFileOptions
 import org.blockstack.android.sdk.model.GetFileOptions
 import org.blockstack.android.sdk.model.PutFileOptions
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 import javax.inject.Provider
 import kotlin.reflect.KClass
 
 class RemoteRepository
 @Inject constructor(
   private val blockstackProvider: Provider<BlockstackSession>,
+  @Named("blockstack") private val blockstackScheduler: Scheduler,
   private val gson: Gson
 ) {
 
-  private val blockstack by lazy {
-    blockstackProvider.get()
-  }
+  private val blockstack by lazy { blockstackProvider.get() }
 
   fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean) =
     Single
@@ -51,7 +51,7 @@ class RemoteRepository
           emitter.onSuccess(Operation.error(t))
         }
       }
-      .subscribeOn(AndroidSchedulers.mainThread())
+      .subscribeOn(blockstackScheduler)
       .observeOnIO()
 
   fun uploadByteArray(url: String, data: ByteArray) =
@@ -73,7 +73,7 @@ class RemoteRepository
           emitter.onSuccess(Operation.error(t))
         }
       }
-      .subscribeOn(AndroidSchedulers.mainThread())
+      .subscribeOn(blockstackScheduler)
       .observeOnIO()
 
   fun <T> uploadJson(fileName: String, content: T, encrypted: Boolean) =
@@ -95,7 +95,7 @@ class RemoteRepository
           emitter.onSuccess(Operation.error(t))
         }
       }
-      .subscribeOn(AndroidSchedulers.mainThread())
+      .subscribeOn(blockstackScheduler)
       .observeOnIO()
 
   fun deleteFile(fileName: String) =
@@ -118,7 +118,7 @@ class RemoteRepository
           emitter.onSuccess(Operation.error(t))
         }
       }
-      .subscribeOn(AndroidSchedulers.mainThread())
+      .subscribeOn(blockstackScheduler)
       .observeOnIO()
 
   fun getFilesList() =
@@ -136,7 +136,7 @@ class RemoteRepository
           emitter.onSuccess(Operation.error(t))
         }
       }
-      .subscribeOn(AndroidSchedulers.mainThread())
+      .subscribeOn(blockstackScheduler)
       .observeOnIO()
 
   fun getFilesList(prefix: String) =

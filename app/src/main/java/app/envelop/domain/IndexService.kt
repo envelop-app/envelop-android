@@ -15,16 +15,25 @@ class IndexService
   private val remoteRepository: RemoteRepository
 ) {
 
-  fun download(keepLocalDocs: List<Doc> = emptyList()) =
+  fun download(docsToKeep: List<Doc> = emptyList(), docsToIgnore: List<Doc> = emptyList()) =
     remoteRepository
       .getJson(INDEX_FILE_NAME, Index::class, true)
       .doIfSuccessful {
-        docRepository.replace((it.element()?.docs ?: emptyList()) + keepLocalDocs)
+        val docsToIgnoreIds = docsToIgnore.map { it.id }
+        docRepository.replace(
+          (it.element()?.docs ?: emptyList())
+            .filterNot { docReceived -> docsToIgnoreIds.contains(docReceived.id) }
+              + docsToKeep
+        )
         remoteRepository.printListFiles()
       }
 
-  fun uploadWithDoc(docToUpload: Doc) =
-    download(listOf(docToUpload))
+  fun uploadKeepingDoc(docToUpload: Doc) =
+    download(docsToKeep = listOf(docToUpload))
+      .flatMapIfSuccessful { upload() }
+
+  fun uploadIgnoringDoc(docToIgnore: Doc) =
+    download(docsToIgnore = listOf(docToIgnore))
       .flatMapIfSuccessful { upload() }
 
   fun get() =

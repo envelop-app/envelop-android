@@ -52,8 +52,11 @@ class LoginViewModel
   }
 
   override fun onCleared() {
+    loginService
+      .cleanUp()
+      .subscribe()
+      .addTo(disposables)
     super.onCleared()
-    loginService.cleanUp()
   }
 
   // Inputs

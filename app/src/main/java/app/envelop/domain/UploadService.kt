@@ -38,9 +38,6 @@ class UploadService
     if (state.value !is UploadState.Idle) return
 
     updateUploadState()
-      // The main thread blocks for a while before each upload starts.
-      // So we delay the upload a bit to give some time for the UI to catch up.
-      .delay(UPLOAD_DELAY, TimeUnit.SECONDS)
       .filter { it is UploadState.Uploading }
       .flatMapCompletable {
         when (it) {
@@ -132,9 +129,5 @@ class UploadService
       .ignoreElement()
 
   class UploadPartError(throwable: Throwable) : Exception(throwable)
-
-  companion object {
-    private const val UPLOAD_DELAY = 2L // Seconds
-  }
 
 }

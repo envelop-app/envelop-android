@@ -15,7 +15,7 @@ class UpdateDocRemotely
 
   fun update(doc: Doc) =
     remoteRepository.uploadJson(doc.id, doc, false)
-      .flatMapIfSuccessful { indexService.uploadWithDoc(doc) }
+      .flatMapIfSuccessful { indexService.uploadKeepingDoc(doc) }
       .mapIfSuccessful { doc }
 
 
@@ -23,7 +23,7 @@ class UpdateDocRemotely
     remoteRepository.deleteFile(doc.id)
       .flatMap {
         if (it.isSuccessful || it.is404) {
-          indexService.uploadWithDoc(doc)
+          indexService.uploadIgnoringDoc(doc)
         } else {
           Single.just(it)
         }
