@@ -28,8 +28,17 @@ class DocBuilder
           .query(fileUri, null, null, null, null)
           ?.use { cursor ->
             cursor.moveToFirst()
-            val name = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+            var name =
+              cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+                ?.ifBlank { null }
+                ?: "file-${Random().nextInt(1000)}"
             val size = cursor.getLong(cursor.getColumnIndex(OpenableColumns.SIZE))
+            val extension = name.getExtension() ?: fileUri.getExtension()
+
+            // Avoid file names without extension
+            if (name.getExtension() == null && !extension.isNullOrBlank()) {
+              name = "$name.$extension"
+            }
 
             if (size == 0L) return@use Operation.error<Doc>(Error("Empty file"))
 
@@ -38,7 +47,7 @@ class DocBuilder
                 id = generateShortId(),
                 url = "${generateSecretId()}/$name",
                 size = size,
-                contentType = name.getExtension() ?: fileUri.contentType(),
+                contentType = extension,
                 createdAt = Date(),
                 uploaded = false,
                 numParts = Doc.calculateNumParts(size, FILE_PART_SIZE)
@@ -58,7 +67,7 @@ class DocBuilder
       split(".").last()
     } else null
 
-  private fun Uri.contentType() =
+  private fun Uri.getExtension() =
     MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(this))
 
   companion object {
