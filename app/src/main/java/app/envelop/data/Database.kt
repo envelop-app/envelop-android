@@ -16,7 +16,8 @@ import app.envelop.data.repositories.UploadRepository
   entities = [
     Doc::class,
     Upload::class
-  ], version = 1
+  ],
+  version = 2
 )
 @TypeConverters(Converters::class)
 abstract class Database : RoomDatabase() {
@@ -30,20 +31,12 @@ abstract class Database : RoomDatabase() {
     fun create(context: Context, appMode: App.Mode) =
       Room
         .databaseBuilder(context, Database::class.java, getName(appMode))
-        .addMigrations(MIGRATION_1_2)
+        .fallbackToDestructiveMigration()
         .build()
 
     private fun getName(appMode: App.Mode) = when (appMode) {
       App.Mode.Normal -> NAME
       App.Mode.Test -> "test_$NAME"
-    }
-
-    private val MIGRATION_1_2 = object : Migration(1, 2) {
-      override fun migrate(database: SupportSQLiteDatabase) {
-        database.execSQL("ALTER TABLE Doc ADD COLUMN uploaded BOOLEAN DEFAULT 1")
-        database.execSQL("ALTER TABLE Doc ADD COLUMN parts INTEGER")
-        database.execSQL("ALTER TABLE Doc ADD COLUMN deleted BOOLEAN DEFAULT 0")
-      }
     }
   }
 }
