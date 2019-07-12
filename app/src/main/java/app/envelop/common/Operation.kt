@@ -1,10 +1,11 @@
 package app.envelop.common
 
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 
-class Operation<T>(
+class Operation<out T>(
   private val result: T? = null,
   private val throwable: Throwable? = null
 ) {
@@ -21,6 +22,8 @@ class Operation<T>(
       result?.let { map.invoke(it) },
       throwable
     )
+
+  val is404 get() = throwable().message?.contains("404") == true
 
   companion object {
     fun success() = Operation(Unit)
@@ -40,8 +43,26 @@ fun <T, R> Single<Operation<T>>.flatMapIfSuccessful(mapper: ((T) -> SingleSource
     }
   }
 
+fun <T, R> Single<Operation<T>>.mapIfSuccessful(mapper: ((T) -> R)): Single<Operation<R>> =
+  map {
+    if (it.isSuccessful) {
+      Operation.success(mapper.invoke(it.result()))
+    } else {
+      Operation.error(it.throwable())
+    }
+  }
+
+fun <T> Observable<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
+  doOnNext { if (it.isSuccessful) mapper.invoke(it.result()) }
+
+fun <T> Observable<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
+  doOnNext { if (it.isError) mapper.invoke(it.throwable()) }
+
 fun <T> Single<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
   doOnSuccess { if (it.isSuccessful) mapper.invoke(it.result()) }
+
+fun <T> Single<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
+  doOnSuccess { if (it.isError) mapper.invoke(it.throwable()) }
 
 fun <T> Single<Operation<T>>.flatMapCompletableIfSuccessful(mapper: ((T) -> Completable)) =
   flatMap {
@@ -51,3 +72,7 @@ fun <T> Single<Operation<T>>.flatMapCompletableIfSuccessful(mapper: ((T) -> Comp
       Single.just(it)
     }
   }
+
+fun <T> Single<T>.toOperation() =
+  map { Operation.success(it) }
+    .onErrorReturn { Operation.error(it) }

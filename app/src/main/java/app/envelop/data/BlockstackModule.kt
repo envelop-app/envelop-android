@@ -2,16 +2,22 @@ package app.envelop.data
 
 import android.content.Context
 import android.content.res.Resources
+import android.os.Handler
+import android.os.HandlerThread
 import android.preference.PreferenceManager
 import app.envelop.R
 import dagger.Module
 import dagger.Provides
-import org.blockstack.android.sdk.BlockstackSession
-import org.blockstack.android.sdk.ISessionStore
-import org.blockstack.android.sdk.Scope
-import org.blockstack.android.sdk.SessionStore
+import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.blockstack.android.sdk.*
 import org.blockstack.android.sdk.model.BlockstackConfig
 import org.blockstack.android.sdk.model.toBlockstackConfig
+import timber.log.Timber
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -29,7 +35,24 @@ class BlockstackModule {
 
   @Provides
   @Singleton
-  fun blockstackSession(context: Context, config: BlockstackConfig, sessionStore: ISessionStore) =
-    BlockstackSession(context, config, sessionStore = sessionStore)
+  @Named("blockstack")
+  fun blockstackScheduler(): Scheduler {
+    val handlerThread = HandlerThread("BlockstackService").apply { start() }
+    val handler = Handler(handlerThread.looper)
+    return Schedulers.from {
+      handler.post(it)
+    }
+  }
+
+  @Provides
+  @Singleton
+  fun blockstackExecutor(context: Context, @Named("blockstack") scheduler: Scheduler): Executor =
+    BlockstackExecutor(context, scheduler)
+
+
+  @Provides
+  @Singleton
+  fun blockstackSession(context: Context, config: BlockstackConfig, sessionStore: ISessionStore, executor: Executor) =
+    BlockstackSession(context, config, sessionStore = sessionStore, executor = executor)
 
 }

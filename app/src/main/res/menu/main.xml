@@ -15,6 +15,11 @@
         app:showAsAction="withText"
         />
       <item
+        android:id="@+id/feedback"
+        android:title="@string/main_feedback"
+        app:showAsAction="withText"
+        />
+      <item
         android:id="@+id/logout"
         android:title="@string/logout"
         app:showAsAction="withText"

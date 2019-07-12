@@ -88,7 +88,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            DocMenuViewModel.Error.DeleteError -> R.string.main_refresh_error
+            DocMenuViewModel.Error.DeleteError -> R.string.doc_delete_error
           }
         )
       }

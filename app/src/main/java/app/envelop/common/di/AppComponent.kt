@@ -1,5 +1,7 @@
 package app.envelop.common.di
 
+import app.envelop.App
+import app.envelop.background.UploadBackgroundService
 import app.envelop.data.BlockstackModule
 import app.envelop.data.DatabaseModule
 import app.envelop.data.PreferencesModule
@@ -15,5 +17,11 @@ import javax.inject.Singleton
 interface AppComponent {
 
   fun plus(activityModule: ActivityModule): ActivityComponent
+
+  fun inject(app: App)
+
+  // Services
+
+  fun inject(service: UploadBackgroundService)
 
 }

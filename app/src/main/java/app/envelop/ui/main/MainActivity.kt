@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
@@ -41,6 +41,11 @@ class MainActivity : BaseActivity() {
     setContentView(R.layout.activity_main)
     toolbar.setTitle(R.string.main_title)
     toolbar.setupMenu(R.menu.main)
+
+    toolbar
+      .itemClicks(R.id.feedback)
+      .bindToLifecycle(this)
+      .subscribe { openFeedback() }
 
     toolbar
       .itemClicks(R.id.logout)
@@ -106,7 +111,7 @@ class MainActivity : BaseActivity() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            MainViewModel.Error.RefreshError -> R.string.doc_delete_error
+            MainViewModel.Error.RefreshError -> R.string.main_refresh_error
           }
         )
       }
@@ -135,14 +140,29 @@ class MainActivity : BaseActivity() {
 
   private fun setListModels(docs: List<Doc>) {
     list.withModels {
+      // Invisible top view to make sure new items are visible when added
+      dummyItemView {
+        id("top")
+      }
       docs.forEach { doc ->
         docItemView {
           id(doc.id)
           item(doc)
-          clickListener(View.OnClickListener { openDocMenu(doc) })
         }
       }
     }
+  }
+
+  private fun openFeedback() {
+    startActivity(
+      Intent.createChooser(
+        Intent(Intent.ACTION_SENDTO).also {
+          it.data = Uri.parse("mailto:${getString(R.string.feedback_email)}")
+          it.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.main_feedback_email_subject))
+        },
+        getString(R.string.main_feedback)
+      )
+    )
   }
 
   private fun openLogoutConfirm() {
@@ -164,13 +184,8 @@ class MainActivity : BaseActivity() {
     )
   }
 
-  private fun openDocMenu(doc: Doc) {
-    DocMenuFragment.newInstance(doc).show(supportFragmentManager, FRAGMENT_DOC_MENU_TAG)
-  }
-
   companion object {
     private const val REQUEST_FILE = 1001
-    private const val FRAGMENT_DOC_MENU_TAG = "doc_menu"
 
     fun getIntent(context: Context) = Intent(context, MainActivity::class.java)
   }

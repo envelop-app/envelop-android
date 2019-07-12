@@ -17,17 +17,27 @@
   <!-- Main -->
   <string name="main_title">Your Files</string>
   <string name="main_empty">Upload your file</string>
-  <string name="main_refresh_error">Error updating files</string>
+  <string name="main_refresh_error">Error refreshing files</string>
   <string name="main_username">username</string>
+  <string name="main_feedback">Send us feedback</string>
+  <string name="main_feedback_email_subject">Envelop feedback</string>
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
 
   <!-- Upload -->
-  <string name="upload_title">Upload with Envelop</string>
+  <string name="upload_title">Envelop Upload</string>
   <string name="upload">Upload</string>
-  <string name="uploading">Uploading file</string>
+  <string name="preparing_upload">Preparing file upload</string>
   <string name="upload_error">Error uploading file</string>
+  <string name="uploading">Uploading</string>
   <string name="uploaded">File uploaded!</string>
+  <plurals name="uploading_files_notification">
+    <item quantity="one">Uploading %d file</item>
+    <item quantity="other">Uploading %d files</item>
+  </plurals>
+
+  <string name="upload_notification_channel">@string/upload</string>
+  <string name="upload_notification_channel_description">File uploading</string>
 
   <!-- Doc -->
   <string name="doc_link">Link</string>

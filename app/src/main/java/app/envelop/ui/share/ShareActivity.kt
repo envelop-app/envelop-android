@@ -1,8 +1,9 @@
-package app.envelop.ui.docuploaded
+package app.envelop.ui.share
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
@@ -10,17 +11,17 @@ import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.DocActions
 import app.envelop.ui.common.clicksThrottled
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
-import kotlinx.android.synthetic.main.activity_doc_uploaded.*
+import kotlinx.android.synthetic.main.activity_share.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
-class DocUploadedActivity : BaseActivity() {
+class ShareActivity : BaseActivity() {
 
   @Inject
   lateinit var docActions: DocActions
 
   private val viewModel by lazy {
-    component.viewModelProvider()[DocUploadedViewModel::class.java]
+    component.viewModelProvider()[ShareViewModel::class.java]
   }
 
   private val docIdReceived by lazy {
@@ -30,7 +31,7 @@ class DocUploadedActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
-    setContentView(R.layout.activity_doc_uploaded)
+    setContentView(R.layout.activity_share)
     toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
 
     viewModel
@@ -38,6 +39,10 @@ class DocUploadedActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
+
+        uploading.isVisible = !it.uploadedNonNull
+        uploaded.isVisible = it.uploadedNonNull
+
         icon.contentDescription = it.contentType
         icon.setImageResource(it.fileType.iconRes)
         name.text = it.name
@@ -78,7 +83,7 @@ class DocUploadedActivity : BaseActivity() {
     private const val EXTRA_DOC_ID = "doc_id"
 
     fun getIntent(context: Context, extras: Extras) =
-      Intent(context, DocUploadedActivity::class.java).also {
+      Intent(context, ShareActivity::class.java).also {
         it.putExtra(EXTRA_DOC_ID, extras.doc.id)
       }
   }
