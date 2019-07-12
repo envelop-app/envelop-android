@@ -141,7 +141,7 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:hint="@string/doc_link"
-            android:inputType="none"
+            android:inputType="textNoSuggestions"
             tools:text="@string/doc_url"
             />
         </com.google.android.material.textfield.TextInputLayout>
