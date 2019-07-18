@@ -50,7 +50,7 @@ class PreUploadService
     Upload(
       docId = id,
       fileUriPath = fileUri.toString(),
-      partSize = DocBuilder.FILE_PART_SIZE
+      partSize = EnvelopSpec.FILE_PART_SIZE
     )
 
   class Error(message: String?) : Exception(message)

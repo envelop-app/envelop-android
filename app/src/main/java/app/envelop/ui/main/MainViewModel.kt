@@ -76,7 +76,7 @@ class MainViewModel
       .subscribe {
         isRefreshing.idle()
         if (it.isError) {
-          Timber.e(it.throwable())
+          Timber.w(it.throwable())
           errors.onNext(Error.RefreshError)
         }
       }

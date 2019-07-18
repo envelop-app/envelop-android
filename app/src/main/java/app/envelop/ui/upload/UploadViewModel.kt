@@ -49,7 +49,7 @@ class UploadViewModel
           openDoc.onNext(ShareActivity.Extras(it.result()))
           finish.finish(Ok)
         } else {
-          Timber.e(it.throwable())
+          Timber.w(it.throwable())
           error.onNext(Error.UploadError)
           finish.finish(Canceled)
         }

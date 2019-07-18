@@ -40,7 +40,7 @@ class DocMenuViewModel
       .addTo(disposables)
 
     doc
-      .flatMapSingle { docLinkBuilder.build(it) }
+      .map { docLinkBuilder.build(it) }
       .subscribe(link::onNext)
       .addTo(disposables)
 
@@ -61,11 +61,10 @@ class DocMenuViewModel
       .flatMapSingle { deleteDocService.markAsDeleted(it) }
       .subscribe {
         isDeleting.idle()
-        if (it.isSuccessful) {
-          finish.finish()
-        } else {
+        if (!it.isSuccessful) {
           errors.onNext(Error.DeleteError)
         }
+        finish.finish()
       }
       .addTo(disposables)
   }

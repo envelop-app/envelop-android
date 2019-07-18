@@ -34,7 +34,7 @@ class AppModule(
   fun gson() =
     GsonBuilder()
       .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+      .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX")
       .create()
 
 }

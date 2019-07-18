@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import app.envelop.BuildConfig
+import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
@@ -36,7 +37,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   private var alertDialog: Dialog? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-    inflater.inflate(app.envelop.R.layout.view_doc_menu, container, false)
+    inflater.inflate(R.layout.view_doc_menu, container, false)
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -100,7 +101,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .isDeleting()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { loadingManager.apply(it, app.envelop.R.string.doc_deleting) }
+      .subscribe { loadingManager.apply(it, R.string.doc_deleting) }
 
     viewModel
       .errors()
@@ -109,7 +110,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            DocMenuViewModel.Error.DeleteError -> app.envelop.R.string.doc_delete_error
+            DocMenuViewModel.Error.DeleteError -> R.string.doc_delete_error
           }
         )
       }
@@ -140,10 +141,10 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   private fun openDeleteConfirm() {
     activity?.let {
       alertDialog = AlertDialog.Builder(it)
-        .setTitle(app.envelop.R.string.doc_delete_title)
-        .setMessage(app.envelop.R.string.doc_delete_message)
-        .setNegativeButton(app.envelop.R.string.cancel, null)
-        .setPositiveButton(app.envelop.R.string.doc_delete) { _, _ -> viewModel.deleteConfirmClicked() }
+        .setTitle(R.string.doc_delete_title)
+        .setMessage(R.string.doc_delete_message)
+        .setNegativeButton(R.string.cancel, null)
+        .setPositiveButton(R.string.doc_delete) { _, _ -> viewModel.deleteConfirmClicked() }
         .show()
     }
   }
@@ -151,10 +152,10 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   private fun openCannotDeleteAlert() {
     activity?.let {
       alertDialog = AlertDialog.Builder(it)
-        .setTitle(app.envelop.R.string.doc_cannot_delete_title)
-        .setMessage(app.envelop.R.string.doc_cannot_delete_message)
-        .setNegativeButton(app.envelop.R.string.cancel, null)
-        .setPositiveButton(app.envelop.R.string.update) { _, _ -> openAppInStore() }
+        .setTitle(R.string.doc_cannot_delete_title)
+        .setMessage(R.string.doc_cannot_delete_message)
+        .setNegativeButton(R.string.cancel, null)
+        .setPositiveButton(R.string.update) { _, _ -> openAppInStore() }
         .show()
     }
   }

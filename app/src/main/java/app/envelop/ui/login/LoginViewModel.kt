@@ -28,7 +28,7 @@ class LoginViewModel
       .flatMapSingle { loginService.login() }
       .subscribe {
         if (it.isError) {
-          Timber.e(it.throwable())
+          Timber.w(it.throwable())
           errors.onNext(Error.LoginError)
         }
         isLoggingIn.idle()
@@ -43,7 +43,7 @@ class LoginViewModel
         if (it.isSuccessful) {
           finishToMain.finish(Finish.Result.Ok)
         } else {
-          Timber.e(it.throwable())
+          Timber.w(it.throwable())
           errors.onNext(Error.LoginError)
         }
       }

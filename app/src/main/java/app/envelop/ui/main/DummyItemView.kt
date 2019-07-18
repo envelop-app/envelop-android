@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.content.res.ResourcesCompat
+import app.envelop.R
 import com.airbnb.epoxy.ModelView
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)
@@ -15,6 +17,7 @@ constructor(
   defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+  // 1 invisible px height
   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
     super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(1, MeasureSpec.EXACTLY))
   }

@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_share.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
-
 class ShareActivity : BaseActivity() {
 
   @Inject
@@ -34,8 +33,8 @@ class ShareActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
-    setContentView(app.envelop.R.layout.activity_share)
-    toolbar.enableNavigation(app.envelop.R.drawable.ic_close, app.envelop.R.string.close)
+    setContentView(R.layout.activity_share)
+    toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
 
     viewModel
       .doc()

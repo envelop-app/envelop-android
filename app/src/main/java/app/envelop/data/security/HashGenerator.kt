@@ -1,4 +1,4 @@
-package app.envelop.domain
+package app.envelop.data.security
 
 import java.security.SecureRandom
 import javax.inject.Inject

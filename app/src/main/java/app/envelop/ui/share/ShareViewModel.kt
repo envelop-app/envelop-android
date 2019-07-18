@@ -52,7 +52,7 @@ class ShareViewModel
       .addTo(disposables)
 
     doc
-      .flatMapSingle { docLinkBuilder.build(it) }
+      .map { docLinkBuilder.build(it) }
       .subscribe(link::onNext)
       .addTo(disposables)
   }

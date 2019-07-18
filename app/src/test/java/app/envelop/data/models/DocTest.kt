@@ -1,7 +1,9 @@
 package app.envelop.data.models
 
+import com.google.gson.Gson
 import com.google.gson.JsonParser
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 import java.util.*
 
@@ -13,7 +15,9 @@ class DocTest {
     url = "UUID-UUID",
     size = 1_000,
     contentType = null,
-    numParts = 1
+    numParts = 1,
+    username = "",
+    encryptionSpec = null
   )
 
   @Test
@@ -36,7 +40,10 @@ class DocTest {
          "size": 1000,
          "created_at": "2019-10-10T12:34:56",
          "content_type": "pdf",
-         "num_parts": 2
+         "version": 2,
+         "num_parts": 2,
+         "part_ivs": ["abc","abc"],
+         "username": "username"
         }
       """
       ).asJsonObject
@@ -47,7 +54,9 @@ class DocTest {
       assertEquals(1_000, size)
       assertEquals(10, Calendar.getInstance().also { it.time = createdAt }.get(Calendar.DAY_OF_MONTH))
       assertEquals("pdf", contentType)
+      assertEquals(2, version)
       assertEquals(2, numParts)
+      assertEquals(2, partIVs?.size)
     }
   }
 
@@ -63,6 +72,7 @@ class DocTest {
          "size": 1000,
          "created_at": "2019-10-10T12:34:56",
          "num_parts": 2,
+         "username": "username",
          "new_field": "new_value"
         }
       """
@@ -70,7 +80,8 @@ class DocTest {
     )
     assertEquals(
       "new_value",
-      doc.toJsonObject().getAsJsonPrimitive("new_field").asString
+      doc.toJsonObject().json.getAsJsonPrimitive("new_field").asString
     )
   }
+
 }
