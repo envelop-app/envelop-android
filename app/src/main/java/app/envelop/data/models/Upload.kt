@@ -28,7 +28,7 @@ data class UploadWithDoc(
 ) {
 
   val name get() = doc.name
-  val progress get() = partsUploadedCount.toFloat() / totalParts.toFloat()
+  val progress get() = Progress(partsUploadedCount, totalParts)
   val partsUploadedCount get() = upload.partsUploaded.size
   val totalParts get() = doc.calculateParts(upload.partSize)
 

@@ -90,7 +90,7 @@ class UploadBackgroundService : Service() {
       .setContentText(state.nextUpload.name)
       .setSmallIcon(R.drawable.notification_icon)
       .setContentIntent(pendingIntent)
-      .setProgress(100, (state.nextUpload.progress * 100).roundToInt(), false)
+      .setProgress(100, state.nextUpload.progress.percentage, false)
       .setColor(ResourcesCompat.getColor(resources, R.color.primary, theme))
       .build()
 

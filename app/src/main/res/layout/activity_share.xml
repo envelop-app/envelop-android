@@ -17,58 +17,30 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <LinearLayout
-      android:id="@+id/uploading"
+    <TextView
+      android:id="@+id/stateText"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:drawableStart="@drawable/uploaded_icon"
+      android:drawablePadding="16dp"
       android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:padding="16dp"
-      tools:ignore="UseCompoundDrawables"
-      >
+      android:text="@string/uploading"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+      />
 
-      <ProgressBar
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:indeterminate="true"
-        />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/uploading"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        />
-    </LinearLayout>
-
-    <LinearLayout
-      android:id="@+id/uploaded"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:gravity="center_vertical"
-      android:orientation="horizontal"
-      android:padding="16dp"
-      android:visibility="gone"
-      tools:ignore="UseCompoundDrawables"
-      tools:visibility="visible"
-      >
-
-      <ImageView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="12dp"
-        android:contentDescription="@null"
-        android:src="@drawable/uploaded_icon"
-        />
-
-      <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/uploaded"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        />
-    </LinearLayout>
+    <ProgressBar
+      android:id="@+id/uploadProgress"
+      style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="8dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="32dp"
+      android:indeterminate="false"
+      android:progressTint="@color/primary"
+      />
 
     <LinearLayout
       android:layout_width="match_parent"
@@ -151,11 +123,18 @@
         android:id="@+id/share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
         android:padding="18dp"
         android:text="@string/doc_share_link"
         android:textAllCaps="false"
         android:textSize="18sp"
+        />
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/share_recommendations"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         />
 
     </LinearLayout>

@@ -35,6 +35,10 @@
     <item quantity="one">Uploading %d file</item>
     <item quantity="other">Uploading %d files</item>
   </plurals>
+  <string name="share_recommendations">
+    This file is now accessible to anyone with this link.
+    Be careful sharing it, and delete the file once it’s no longer needed.
+  </string>
 
   <string name="upload_notification_channel">@string/upload</string>
   <string name="upload_notification_channel_description">File uploading</string>

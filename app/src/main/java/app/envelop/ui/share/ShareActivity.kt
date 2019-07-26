@@ -3,7 +3,9 @@ package app.envelop.ui.share
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.view.isVisible
+import android.view.animation.Animation
+import android.view.animation.Transformation
+import android.widget.ProgressBar
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
@@ -14,6 +16,7 @@ import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_share.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
+
 
 class ShareActivity : BaseActivity() {
 
@@ -31,18 +34,15 @@ class ShareActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     component.inject(this)
-    setContentView(R.layout.activity_share)
-    toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
+    setContentView(app.envelop.R.layout.activity_share)
+    toolbar.enableNavigation(app.envelop.R.drawable.ic_close, app.envelop.R.string.close)
 
     viewModel
       .doc()
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
-
-        uploading.isVisible = !it.uploadedNonNull
-        uploaded.isVisible = it.uploadedNonNull
-
+        stateText.setText(if (it.uploadedNonNull) R.string.uploaded else R.string.uploading)
         icon.contentDescription = it.contentType
         icon.setImageResource(it.fileType.iconRes)
         name.text = it.name
@@ -61,6 +61,19 @@ class ShareActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe(docActions::share)
+
+    uploadProgress.max = 100
+    viewModel
+      .progress()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe {
+        ProgressBarAnimation(uploadProgress, it.element()?.percentage ?: 100)
+          .also { anim ->
+            anim.duration = 300
+            uploadProgress.startAnimation(anim)
+          }
+      }
 
     viewModel
       .link()
@@ -91,4 +104,18 @@ class ShareActivity : BaseActivity() {
   data class Extras(
     val doc: Doc
   )
+
+  class ProgressBarAnimation(
+    private val progressBar: ProgressBar,
+    private val newValue: Int
+  ) : Animation() {
+
+    val oldValue = progressBar.progress
+
+    override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
+      super.applyTransformation(interpolatedTime, t)
+      val value = oldValue + (newValue - oldValue) * interpolatedTime
+      progressBar.progress = value.toInt()
+    }
+  }
 }
