@@ -1,12 +1,14 @@
 package app.envelop.ui.main
 
 import android.app.Dialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import app.envelop.R
+import app.envelop.BuildConfig
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
@@ -19,6 +21,7 @@ import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_doc_menu.*
 import javax.inject.Inject
 
+
 class DocMenuFragment : BottomSheetDialogFragment() {
 
   @Inject
@@ -30,10 +33,10 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   @Inject
   lateinit var docActions: DocActions
 
-  private var deleteDialog: Dialog? = null
+  private var alertDialog: Dialog? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-    inflater.inflate(R.layout.view_doc_menu, container, false)
+    inflater.inflate(app.envelop.R.layout.view_doc_menu, container, false)
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
@@ -73,13 +76,31 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .clicksThrottled()
       .bindToLifecycle(this)
       .observeOnUI()
+      .subscribe { viewModel.deleteClicked() }
+
+    viewModel
+      .doc()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe { setDocInfo(it) }
+
+    viewModel
+      .openDeleteConfirm()
+      .bindToLifecycle(this)
+      .observeOnUI()
       .subscribe { openDeleteConfirm() }
+
+    viewModel
+      .openCannotDeleteConfirm()
+      .bindToLifecycle(this)
+      .observeOnUI()
+      .subscribe { openCannotDeleteAlert() }
 
     viewModel
       .isDeleting()
       .bindToLifecycle(this)
       .observeOnUI()
-      .subscribe { loadingManager.apply(it, R.string.doc_deleting) }
+      .subscribe { loadingManager.apply(it, app.envelop.R.string.doc_deleting) }
 
     viewModel
       .errors()
@@ -88,7 +109,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            DocMenuViewModel.Error.DeleteError -> R.string.doc_delete_error
+            DocMenuViewModel.Error.DeleteError -> app.envelop.R.string.doc_delete_error
           }
         )
       }
@@ -99,9 +120,8 @@ class DocMenuFragment : BottomSheetDialogFragment() {
       .observeOnUI()
       .subscribe { dismiss() }
 
-    arguments?.getParcelable<Doc>(EXTRA_DOC)?.let {
-      viewModel.docReceived(it)
-      setDocInfo(it)
+    arguments?.getString(EXTRA_DOC_ID)?.let {
+      viewModel.docIdReceived(it)
     } ?: dismiss()
   }
 
@@ -119,21 +139,40 @@ class DocMenuFragment : BottomSheetDialogFragment() {
 
   private fun openDeleteConfirm() {
     activity?.let {
-      deleteDialog = AlertDialog.Builder(it)
-        .setTitle(R.string.doc_delete_title)
-        .setMessage(R.string.doc_delete_message)
-        .setNegativeButton(R.string.cancel, null)
-        .setPositiveButton(R.string.doc_delete) { _, _ -> viewModel.deleteClicked() }
+      alertDialog = AlertDialog.Builder(it)
+        .setTitle(app.envelop.R.string.doc_delete_title)
+        .setMessage(app.envelop.R.string.doc_delete_message)
+        .setNegativeButton(app.envelop.R.string.cancel, null)
+        .setPositiveButton(app.envelop.R.string.doc_delete) { _, _ -> viewModel.deleteConfirmClicked() }
         .show()
     }
   }
 
+  private fun openCannotDeleteAlert() {
+    activity?.let {
+      alertDialog = AlertDialog.Builder(it)
+        .setTitle(app.envelop.R.string.doc_cannot_delete_title)
+        .setMessage(app.envelop.R.string.doc_cannot_delete_message)
+        .setNegativeButton(app.envelop.R.string.cancel, null)
+        .setPositiveButton(app.envelop.R.string.update) { _, _ -> openAppInStore() }
+        .show()
+    }
+  }
+
+  private fun openAppInStore() =
+    activity?.startActivity(
+      Intent(Intent.ACTION_VIEW).also {
+        it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        it.data = Uri.parse("market://details?id=${BuildConfig.APPLICATION_ID.replace(".debug", "")}")
+      }
+    )
+
   companion object {
-    private const val EXTRA_DOC = "doc"
+    private const val EXTRA_DOC_ID = "doc_id"
     fun newInstance(doc: Doc) =
       DocMenuFragment().also {
         it.arguments = Bundle().also { args ->
-          args.putParcelable(EXTRA_DOC, doc)
+          args.putString(EXTRA_DOC_ID, doc.id)
         }
       }
   }

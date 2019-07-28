@@ -1,8 +1,24 @@
 package app.envelop.data.models
 
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class Index(
   @SerializedName("files")
-  val docs: List<Doc>
-)
+  val jsonArray: JsonArray = JsonArray()
+) {
+
+  constructor(docs: List<Doc>) : this(
+    docs
+      .map { it.toJsonObject() }
+      .let { jsonList ->
+        val array = JsonArray(jsonList.size)
+        jsonList.forEach { array.add(it) }
+        array
+      }
+  )
+
+  val docs get() = jsonArray.mapNotNull { Doc.build(it.asJsonObject) }
+
+}

@@ -1,0 +1,67 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "14d4d61c0d3a842ff6eec9f665e2dbfb",
+    "entities": [
+      {
+        "tableName": "Upload",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `docId` TEXT NOT NULL, `fileUriPath` TEXT NOT NULL, `partsUploaded` TEXT NOT NULL, `partSize` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "docId",
+            "columnName": "docId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fileUriPath",
+            "columnName": "fileUriPath",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "partsUploaded",
+            "columnName": "partsUploaded",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "partSize",
+            "columnName": "partSize",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Upload_docId",
+            "unique": true,
+            "columnNames": [
+              "docId"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Upload_docId` ON `${TABLE_NAME}` (`docId`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '14d4d61c0d3a842ff6eec9f665e2dbfb')"
+    ]
+  }
+}

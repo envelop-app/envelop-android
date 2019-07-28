@@ -44,7 +44,7 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-          android:host="envelop.app"
+          android:host="@string/blockstack_app_domain"
           android:pathPrefix="/redirect_mobile"
           android:scheme="https"
           />

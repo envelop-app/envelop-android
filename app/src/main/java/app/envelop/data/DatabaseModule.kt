@@ -15,10 +15,6 @@ class DatabaseModule {
     Database.create(context, appMode)
 
   @Provides
-  fun docRepository(database: Database) =
-    database.docRepository()
-
-  @Provides
   fun uploadRepository(database: Database) =
     database.uploadRepository()
 

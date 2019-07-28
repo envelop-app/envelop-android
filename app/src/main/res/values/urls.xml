@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="blockstack_app_domain">envelop.app</string>
   <string name="blockstack_app_url">https://envelop.app</string>
   <string name="doc_url">https://envl.app/%1$s/%2$s</string>
   <string name="feedback_email">feedback@envelop.app</string>

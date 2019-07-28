@@ -16,8 +16,7 @@ interface UploadRepository {
   fun getByDocId(docId: String): Flowable<List<Upload>>
 
   @Query("SELECT * FROM Upload ORDER BY Upload.id ASC")
-  @Transaction
-  fun getAll(): Flowable<List<UploadWithDocQuery>>
+  fun getAll(): Flowable<List<Upload>>
 
   @Query("SELECT COUNT(Upload.id) FROM Upload")
   fun count(): Flowable<Int>
@@ -28,19 +27,10 @@ interface UploadRepository {
   @Delete
   fun delete(upload: Upload)
 
+  @Query("DELETE FROM Upload WHERE docId = :id")
+  fun deleteByDocId(id: String)
+
   @Query("DELETE FROM Upload")
   fun deleteAll()
-
-  // Query objects
-
-  data class UploadWithDocQuery(
-    @Embedded val upload: Upload
-  ) {
-    @Relation(parentColumn = "docId", entityColumn = "id")
-    var docList: List<Doc>? = null
-    val doc get() = docList?.firstOrNull()
-
-    fun build() = doc?.let { UploadWithDoc(upload, it) }
-  }
 
 }

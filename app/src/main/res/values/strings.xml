@@ -5,6 +5,7 @@
   <string name="close">Close</string>
   <string name="cancel">Cancel</string>
   <string name="menu">Menu</string>
+  <string name="update">Update</string>
 
   <!-- Login -->
   <string name="login">Sign in</string>
@@ -56,4 +57,9 @@
   <string name="doc_delete_message">Links shared to this file will no longer work.</string>
   <string name="doc_deleting">Deleting file</string>
   <string name="doc_delete_error">Error deleting file. Please try again.</string>
+  <string name="doc_cannot_delete_title">Can\'t delete file</string>
+  <string name="doc_cannot_delete_message">
+    This file was uploaded on a more recent version of Envelop.
+    Please update your app to be able to delete your file.
+  </string>
 </resources>

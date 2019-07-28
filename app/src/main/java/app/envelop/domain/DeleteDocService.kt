@@ -30,14 +30,17 @@ class DeleteDocService
       .fromCallable { doc.copy(deleted = true) }
       .subscribeOn(Schedulers.io())
       .observeOnIO()
-      .doOnSuccess { docRepository.save(it) }
+      .flatMap { docRepository.save(it).toSingleDefault(it) }
       .flatMap { updateDocRemotely.update(it) }
-      .doIfError { docRepository.save(doc.copy(deleted = false)) }
+      .flatMap { op ->
+        if (op.isError) {
+          doc.copy(deleted = false).let { docRepository.save(it).toSingleDefault(op) }
+        } else Single.just(op)
+      }
 
   fun deletePending() =
     docRepository
       .countDeleted()
-      .toObservable()
       .filter { it > 0 }
       .flatMap { getFilesToDelete() }
       .distinctUntilChanged()
@@ -59,7 +62,7 @@ class DeleteDocService
       .doOnNext { if (!it.isSuccessful && !it.is404) throw DeleteError(it.throwable()) }
       .ignoreElements()
       .andThen(deleteLocalUploadFileIfNeeded(doc))
-      .doOnComplete { docRepository.delete(doc) }
+      .andThen(docRepository.delete(doc))
       .andThen(updateDocRemotely.delete(doc))
       .onErrorReturn { Operation.error(it) }
 
@@ -72,7 +75,7 @@ class DeleteDocService
       .ignoreElements()
 
   private fun getFilesToDelete() =
-    docRepository.listDeleted().toObservable().take(1)
+    docRepository.listDeleted().take(1)
 
   private fun <T> Observable<T>.wait(delay: Long, unit: TimeUnit): Observable<T> =
     zipWith(Observable.interval(delay, unit), BiFunction<T, Long, T> { item, _ -> item })

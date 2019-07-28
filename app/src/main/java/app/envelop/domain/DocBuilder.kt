@@ -45,6 +45,7 @@ class DocBuilder
             Operation.success(
               Doc(
                 id = generateShortId(),
+                name = name,
                 url = "${generateSecretId()}/$name",
                 size = size,
                 contentType = extension,

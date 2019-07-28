@@ -1,6 +1,6 @@
 package app.envelop.domain
 
-import app.envelop.common.doIfSuccessful
+import app.envelop.common.flatMapCompletableIfSuccessful
 import app.envelop.common.flatMapIfSuccessful
 import app.envelop.data.models.Doc
 import app.envelop.data.models.Index
@@ -15,14 +15,14 @@ class IndexService
   private val remoteRepository: RemoteRepository
 ) {
 
-  fun download(docsToKeep: List<Doc> = emptyList(), docsToIgnore: List<Doc> = emptyList()) =
+  fun download(docsToKeep: List<Doc> = emptyList(), docToIgnore: List<Doc> = emptyList()) =
     remoteRepository
       .getJson(INDEX_FILE_NAME, Index::class, true)
-      .doIfSuccessful {
-        val docsToIgnoreIds = docsToIgnore.map { it.id }
+      .flatMapCompletableIfSuccessful { opt ->
+        val docsToIgnoreIds = (docToIgnore + docsToKeep).map { it.id }
+        val docsReceived = (opt.element()?.docs ?: emptyList())
         docRepository.replace(
-          (it.element()?.docs ?: emptyList())
-            .filterNot { docReceived -> docsToIgnoreIds.contains(docReceived.id) }
+          docsReceived.filterNot { docsToIgnoreIds.contains(it.id) }
               + docsToKeep
         )
       }
@@ -32,11 +32,11 @@ class IndexService
       .flatMapIfSuccessful { upload() }
 
   fun uploadIgnoringDoc(docToIgnore: Doc) =
-    download(docsToIgnore = listOf(docToIgnore))
+    download(docToIgnore = listOf(docToIgnore))
       .flatMapIfSuccessful { upload() }
 
   fun get() =
-    docRepository.listVisible().toObservable()
+    docRepository.listVisible()
 
   private fun upload() =
     docRepository

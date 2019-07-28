@@ -42,7 +42,7 @@ class ShareActivity : BaseActivity() {
       .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
-        stateText.setText(if (it.uploadedNonNull) R.string.uploaded else R.string.uploading)
+        stateText.setText(if (it.uploaded) R.string.uploaded else R.string.uploading)
         icon.contentDescription = it.contentType
         icon.setImageResource(it.fileType.iconRes)
         name.text = it.name

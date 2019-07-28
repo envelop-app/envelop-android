@@ -1,55 +1,73 @@
 package app.envelop.data.repositories
 
-import androidx.room.*
+import app.envelop.common.Optional
+import app.envelop.data.IndexDatabase
 import app.envelop.data.models.Doc
-import io.reactivex.Flowable
+import app.envelop.data.models.Index
+import io.reactivex.Single
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Dao
-interface DocRepository {
+@Singleton
+class DocRepository
+@Inject constructor(
+  private val indexDb: IndexDatabase,
+  private val uploadRepository: UploadRepository
+) {
 
-  @Query("SELECT * FROM Doc ORDER BY createdAt DESC")
-  fun list(): Flowable<List<Doc>>
+  fun list() =
+    loadDocs()
 
-  @Query("SELECT * FROM Doc WHERE deleted = 0 OR deleted IS NULL ORDER BY createdAt DESC")
-  fun listVisible(): Flowable<List<Doc>>
+  fun listVisible() =
+    loadDocs().map { list -> list.filter { !it.deleted } }
 
-  @Query("SELECT * FROM Doc WHERE deleted = 1 ORDER BY createdAt DESC")
-  fun listDeleted(): Flowable<List<Doc>>
+  fun listDeleted() =
+    loadDocs().map { list -> list.filter { it.deleted } }
 
-  @Query("SELECT COUNT(Doc.id) FROM Doc WHERE deleted = 1")
-  fun countDeleted(): Flowable<Int>
+  fun countDeleted() =
+    loadDocs().map { list -> list.count { it.deleted } }
 
-  @Query("SELECT * FROM Doc WHERE id = :id LIMIT 1")
-  fun get(id: String): Flowable<List<Doc>>
+  fun get(id: String) =
+    loadDocs().map { list -> Optional.create(list.firstOrNull() { it.id == id }) }
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun save(doc: Doc)
+  fun save(doc: Doc) =
+    loadDocs()
+      .take(1)
+      .singleOrError()
+      .map { list -> list.filter { it.id != doc.id } + doc }
+      .saveDocs()
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  fun save(docs: List<Doc>)
-
-  @Transaction
-  fun delete(doc: Doc) {
+  fun delete(doc: Doc) =
     deleteDoc(doc)
-    deleteUpload(doc.id)
-  }
+      .doOnComplete { uploadRepository.deleteByDocId(doc.id) }
 
-  @Delete
-  fun deleteDoc(doc: Doc)
+  fun deleteDoc(doc: Doc) =
+    loadDocs()
+      .take(1)
+      .singleOrError()
+      .map { list -> list.filter { it.id != doc.id } }
+      .saveDocs()
 
-  @Query("DELETE FROM Upload WHERE docId = :id")
-  fun deleteUpload(id: String)
+  fun deleteAll() =
+    indexDb.delete()
 
-  @Query("DELETE FROM Doc")
-  fun deleteAll()
+  fun replace(docs: List<Doc>) =
+    Single
+      .fromCallable { docs }
+      .saveDocs()
 
-  @Query("DELETE FROM Doc WHERE id NOT IN (:exceptIds)")
-  fun deleteAllExcept(exceptIds: List<String>)
+  private fun loadDocs() =
+    indexDb
+      .get()
+      .map { it.docs }
 
-  @Transaction
-  fun replace(docs: List<Doc>) {
-    deleteAllExcept(docs.map { it.id })
-    save(docs)
-  }
+  private fun Single<List<Doc>>.saveDocs() =
+    flatMapCompletable { list ->
+      indexDb.save(
+        Index(
+          list.sortedBy { it.createdAt }.reversed()
+        )
+      )
+    }
 
 }

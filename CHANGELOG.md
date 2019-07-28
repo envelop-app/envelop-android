@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2019-07-16
+
+### Changed
+- Prepare the app for the next features coming up to the Web and Android apps:
+  - Store unknown file data as well, instead of dropping it.
+  - Block file editions if the file was uploaded with a more recent version of the spec.
+
 ## [1.1.1] - 2019-07-15
 
 ### Added

@@ -4,6 +4,7 @@ import app.envelop.App
 import app.envelop.background.UploadBackgroundService
 import app.envelop.data.BlockstackModule
 import app.envelop.data.DatabaseModule
+import app.envelop.data.IndexDatabase
 import app.envelop.data.PreferencesModule
 import dagger.Component
 import javax.inject.Singleton
@@ -23,5 +24,9 @@ interface AppComponent {
   // Services
 
   fun inject(service: UploadBackgroundService)
+
+  // For tests
+
+  fun indexDatabase(): IndexDatabase
 
 }

@@ -1,6 +1,5 @@
 package app.envelop.domain
 
-import app.envelop.common.rx.observeOnUI
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.UploadRepository
 import app.envelop.data.repositories.UserRepository
@@ -26,12 +25,13 @@ class LogoutService
   }
 
   fun logout() =
+
     Completable
       .fromAction {
-        docRepository.deleteAll()
         uploadRepository.deleteAll()
         userRepository.setUser(null)
       }
+      .andThen(docRepository.deleteAll())
       .subscribeOn(Schedulers.io())
       .observeOn(blockstackScheduler)
       .doOnComplete { blockstack.signUserOut() }

@@ -14,8 +14,6 @@ class GetDocService
   fun get(id: String) =
     docRepository
       .get(id)
-      .map { Optional.create(it.firstOrNull()) }
-      .toObservable()
 
   fun getUpload(docId: String) =
     uploadRepository

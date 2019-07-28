@@ -60,17 +60,24 @@ class UploadService
   private fun getUploadState() =
     uploadRepository
       .getAll()
-      .map { list -> list.mapNotNull { it.build() } }
       .toObservable()
       .take(1)
-      .map { filesToUpload ->
+      .flatMap { filesToUpload ->
         if (filesToUpload.isEmpty()) {
-          UploadState.Idle
+          Observable.just(UploadState.Idle)
         } else {
-          UploadState.Uploading(
-            filesToUpload.size,
-            filesToUpload.first()
-          )
+          val firstUpload = filesToUpload.first()
+          docRepository
+            .get(firstUpload.docId)
+            .take(1)
+            .map {
+              it.element()?.let { doc ->
+                UploadState.Uploading(
+                  filesToUpload.size,
+                  UploadWithDoc(firstUpload, doc)
+                )
+              } ?: UploadState.Idle
+            }
         }
       }
 
@@ -119,7 +126,7 @@ class UploadService
   private fun markFileAsUploaded(item: UploadWithDoc) =
     Single
       .just(item.doc.copy(uploaded = true))
-      .doOnSuccess(docRepository::save)
+      .flatMap { docRepository.save(it).toSingleDefault(it) }
       .flatMap(updateDocRemotely::update)
       .doIfSuccessful {
         fileHandler.deleteLocalFile(item.upload.fileUri)

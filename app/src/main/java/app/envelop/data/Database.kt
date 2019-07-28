@@ -14,15 +14,13 @@ import app.envelop.data.repositories.UploadRepository
 
 @androidx.room.Database(
   entities = [
-    Doc::class,
     Upload::class
   ],
-  version = 2
+  version = 3
 )
 @TypeConverters(Converters::class)
 abstract class Database : RoomDatabase() {
 
-  abstract fun docRepository(): DocRepository
   abstract fun uploadRepository(): UploadRepository
 
   companion object {
@@ -31,7 +29,7 @@ abstract class Database : RoomDatabase() {
     fun create(context: Context, appMode: App.Mode) =
       Room
         .databaseBuilder(context, Database::class.java, getName(appMode))
-        .fallbackToDestructiveMigration()
+        .fallbackToDestructiveMigrationFrom(1, 2)
         .build()
 
     private fun getName(appMode: App.Mode) = when (appMode) {

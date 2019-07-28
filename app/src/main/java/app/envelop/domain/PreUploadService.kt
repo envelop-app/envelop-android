@@ -24,7 +24,7 @@ class PreUploadService
   fun prepareUpload(fileUri: Uri): Single<Operation<Doc>> =
     docBuilder
       .build(fileUri)
-      .doIfSuccessful { docRepository.save(it) }
+      .flatMapIfSuccessful { docRepository.save(it).toSingleDefault(Operation.success(it)) }
       .flatMapIfSuccessful { updateDocRemotely.update(it) }
       .flatMapIfSuccessful { doc ->
         fileHandler
