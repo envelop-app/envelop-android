@@ -11,10 +11,18 @@ class Converters {
   fun dateToTimestamp(date: Date?) = date?.time
 
   @TypeConverter
-  fun stringToListInt(value: String?) =
+  fun stringToIntList(value: String?) =
     value?.split(",")?.mapNotNull { it.toIntOrNull() } ?: emptyList()
 
   @TypeConverter
-  fun listIntToString(list: List<Int>?) =
+  fun intListToString(list: List<Int>?) =
     list?.joinToString(",") ?: ""
+
+  @TypeConverter
+  fun stringToStringList(value: String?) =
+    value?.split(",")
+
+  @TypeConverter
+  fun stringListToString(list: List<String>?) =
+    list?.joinToString(",")
 }

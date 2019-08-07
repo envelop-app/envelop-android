@@ -18,7 +18,6 @@ import app.envelop.ui.main.MainActivity
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import javax.inject.Inject
-import kotlin.math.roundToInt
 
 class UploadBackgroundService : Service() {
 

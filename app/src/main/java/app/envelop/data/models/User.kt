@@ -11,9 +11,12 @@ data class User(
     get() =
       profile?.name?.ifBlank { null }
         ?: usernameShort
-        ?: profile?.email?.ifBlank { null }
-        ?: decentralizedId
 
-  val usernameShort = username.replace(".id.blockstack", "")
+  val usernameShort = usernameShort(username)
+
+  companion object {
+    fun usernameShort(username: String) =
+      username.replace(".id.blockstack", "")
+  }
 
 }

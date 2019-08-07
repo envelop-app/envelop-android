@@ -22,6 +22,7 @@ class LoadingManager
           it.setMessage(messageRes)
         }
       )
+      .setCancelable(false)
       .show().also { dialog ->
         // Set the correct width for the dialog
         dialog.window?.let { window ->

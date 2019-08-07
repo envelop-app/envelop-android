@@ -13,8 +13,8 @@ android {
     applicationId 'app.envelop'
     minSdkVersion 21
     targetSdkVersion 28
-    versionCode 13
-    versionName "1.1.2"
+    versionCode 15
+    versionName "1.2.0"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -89,6 +89,10 @@ dependencies {
   // Lists
   implementation 'com.airbnb.android:epoxy:3.5.1'
   kapt 'com.airbnb.android:epoxy-processor:3.5.1'
+
+  // Encryption
+  implementation 'com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0'
+  implementation 'com.madgag.spongycastle:bcpg-jdk15on:1.58.0.0'
 
   // Testing
   testImplementation 'junit:junit:4.12'

@@ -8,6 +8,9 @@ import app.envelop.data.models.UploadWithDoc
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.RemoteRepository
 import app.envelop.data.repositories.UploadRepository
+import app.envelop.data.security.EncrypterProvider
+import app.envelop.data.security.EncryptionKey
+import app.envelop.data.security.KeyGenerator
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -25,7 +28,9 @@ class UploadService
   private val docRepository: DocRepository,
   private val uploadRepository: UploadRepository,
   private val fileHandler: FileHandler,
-  private val updateDocRemotely: UpdateDocRemotely
+  private val updateDocRemotely: UpdateDocRemotely,
+  private val encrypterProvider: EncrypterProvider,
+  private val keyGenerator: KeyGenerator
 ) {
 
   private val disposables = CompositeDisposable()
@@ -46,7 +51,7 @@ class UploadService
       }
       .repeatUntil { state.value is UploadState.Idle }
       .subscribe({}, {
-        Timber.e(it, "Upload error")
+        Timber.w(it, "Upload error")
         state.onNext(UploadState.Idle)
       })
       .addTo(disposables)
@@ -86,28 +91,39 @@ class UploadService
       .doOnNext(state::onNext)
 
   private fun uploadNextFile(item: UploadWithDoc) =
-    Observable
-      .fromIterable(item.missingParts)
-      .concatMapSingle { uploadPart ->
-        uploadPart(uploadPart)
-          .flatMap {
-            if (it.isError) throw UploadPartError(it.throwable())
-            markPartAsUploaded(item, uploadPart.docPart.part)
-              .toSingleDefault(uploadPart)
+    Single
+      .fromCallable { keyGenerator.generate(item.baseEncryptionSpec, item.passcode) }
+      .flatMapObservable { key ->
+        Observable
+          .fromIterable(item.missingParts)
+          .concatMapSingle { uploadPart ->
+            uploadPart(uploadPart, key)
+              .flatMap {
+                if (it.isError) throw UploadPartError(it.throwable())
+                markPartAsUploaded(item, uploadPart.part)
+                  .toSingleDefault(uploadPart)
+              }
           }
+          .flatMap { updateUploadState() }
       }
-      .flatMap { updateUploadState() }
       .ignoreElements()
       .andThen(markFileAsUploaded(item))
 
-  private fun uploadPart(part: UploadPart) =
+  private fun uploadPart(part: UploadPart, key: EncryptionKey) =
     Single
       .fromCallable {
         fileHandler.localFileToByteArray(part.fileUri, part.partStart, part.partSize)
       }
-      .flatMap {
-        remoteRepository.uploadByteArray(part.destinationUrl, it)
+      .flatMap { partData ->
+        encryptAndUploadPart(part, key, partData)
       }
+
+  private fun encryptAndUploadPart(part: UploadPart, key: EncryptionKey, partData: ByteArray) =
+    remoteRepository.uploadByteArray(
+      part.destinationUrl,
+      encrypterProvider.getOrError(part.encryptionSpec).encrypt(partData, part.encryptionSpec, key).data,
+      false
+    )
 
   private fun markPartAsUploaded(item: UploadWithDoc, part: Int) =
     uploadRepository

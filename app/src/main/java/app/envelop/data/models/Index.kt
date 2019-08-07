@@ -11,7 +11,7 @@ data class Index(
 
   constructor(docs: List<Doc>) : this(
     docs
-      .map { it.toJsonObject() }
+      .map { it.toJsonObject().json }
       .let { jsonList ->
         val array = JsonArray(jsonList.size)
         jsonList.forEach { array.add(it) }
@@ -22,3 +22,8 @@ data class Index(
   val docs get() = jsonArray.mapNotNull { Doc.build(it.asJsonObject) }
 
 }
+
+data class UnsanitizedIndex(
+  @SerializedName("files")
+  val jsonArray: JsonArray = JsonArray()
+)

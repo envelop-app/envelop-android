@@ -47,7 +47,7 @@ class DeleteDocService
       .filter { it.isNotEmpty() }
       .map { it.first() }
       .concatMapSingle { delete(it) }
-      .doIfError { Timber.e(it, "Delete error") }
+      .doIfError { Timber.w(it, "Delete error") }
       .ignoreElements()
 
   private fun delete(doc: Doc) =

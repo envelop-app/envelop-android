@@ -1,26 +1,37 @@
 package app.envelop.domain
 
+import app.envelop.common.Operation
+import app.envelop.common.Optional
 import app.envelop.common.flatMapCompletableIfSuccessful
 import app.envelop.common.flatMapIfSuccessful
+import app.envelop.data.mappers.IndexSanitizer
 import app.envelop.data.models.Doc
 import app.envelop.data.models.Index
+import app.envelop.data.models.UnsanitizedIndex
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.RemoteRepository
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class IndexService
 @Inject constructor(
   private val docRepository: DocRepository,
-  private val remoteRepository: RemoteRepository
+  private val remoteRepository: RemoteRepository,
+  private val indexSanitizer: IndexSanitizer
 ) {
 
   fun download(docsToKeep: List<Doc> = emptyList(), docToIgnore: List<Doc> = emptyList()) =
     remoteRepository
-      .getJson(INDEX_FILE_NAME, Index::class, true)
-      .flatMapCompletableIfSuccessful { opt ->
+      .getJson(INDEX_FILE_NAME, UnsanitizedIndex::class, true)
+      .flatMapIfSuccessful { opt ->
+        when (opt) {
+          is Optional.Some -> indexSanitizer.sanitize(opt.element).map { Operation.success(it.docs) }
+          is Optional.None -> Single.just(Operation.success(emptyList()))
+        }
+      }
+      .flatMapCompletableIfSuccessful { docsReceived ->
         val docsToIgnoreIds = (docToIgnore + docsToKeep).map { it.id }
-        val docsReceived = (opt.element()?.docs ?: emptyList())
         docRepository.replace(
           docsReceived.filterNot { docsToIgnoreIds.contains(it.id) }
               + docsToKeep
@@ -42,11 +53,7 @@ class IndexService
     docRepository
       .list()
       .firstOrError()
-      .map { Index(it) }
-      .flatMap {
-        remoteRepository
-          .uploadJson(INDEX_FILE_NAME, it, true)
-      }
+      .flatMap { remoteRepository.uploadJson(INDEX_FILE_NAME, Index(it), true) }
       .subscribeOn(Schedulers.io())
 
   companion object {

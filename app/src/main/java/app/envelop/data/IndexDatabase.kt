@@ -2,10 +2,13 @@ package app.envelop.data
 
 import android.content.Context
 import app.envelop.App
+import app.envelop.data.mappers.IndexSanitizer
 import app.envelop.data.models.Index
+import app.envelop.data.models.UnsanitizedIndex
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import timber.log.Timber
@@ -20,15 +23,20 @@ class IndexDatabase
 @Inject constructor(
   private val appMode: App.Mode,
   private val context: Context,
-  private val gson: Gson
+  private val gson: Gson,
+  private val indexSanitizer: IndexSanitizer
 ) {
 
   private val indexSubject = BehaviorSubject.create<Index>()
 
   fun get() =
     Completable
-      .fromAction {
-        if (!indexSubject.hasValue()) indexSubject.onNext(loadIndex())
+      .defer {
+        if (!indexSubject.hasValue()) {
+          loadIndex().doOnSuccess { indexSubject.onNext(it) }.ignoreElement()
+        } else {
+          Completable.complete()
+        }
       }
       .andThen(indexSubject.hide())
       .subscribeOn(Schedulers.io())
@@ -50,16 +58,20 @@ class IndexDatabase
       .subscribeOn(Schedulers.io())
 
   private fun loadIndex() =
-    try {
-      context.openFileInput(indexFileName).use {
-        gson.fromJson(FileReader(it.fd), Index::class.java)
+    Single
+      .fromCallable {
+        try {
+          context.openFileInput(indexFileName).use {
+            gson.fromJson(FileReader(it.fd), UnsanitizedIndex::class.java) ?: UnsanitizedIndex()
+          }
+        } catch (exception: FileNotFoundException) {
+          UnsanitizedIndex()
+        } catch (exception: JsonParseException) {
+          Timber.w(exception)
+          UnsanitizedIndex()
+        }
       }
-    } catch (exception: FileNotFoundException) {
-      Index()
-    } catch (exception: JsonParseException) {
-      Timber.w(exception)
-      Index()
-    }
+      .flatMap { indexSanitizer.sanitize(it) }
 
   private fun storeIndex(index: Index) =
     context.openFileOutput(indexFileName, Context.MODE_PRIVATE).use {

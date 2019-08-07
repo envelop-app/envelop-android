@@ -40,7 +40,7 @@ class RemoteRepository
             )
           )
         } else {
-          Timber.e(it.error)
+          Timber.w(it.error)
           emitter.onSuccess(
             Operation.error(GetError("Error getting $fileName: ${it.error}"))
           )
@@ -48,12 +48,12 @@ class RemoteRepository
       }
     }
 
-  fun uploadByteArray(url: String, data: ByteArray) =
+  fun uploadByteArray(url: String, data: ByteArray, encrypted: Boolean) =
     createSingleForCall<Unit>() { emitter ->
       blockstack.putFile(
         url,
         data,
-        PutFileOptions(encrypt = false, contentType = "application/octet-stream")
+        PutFileOptions(encrypt = encrypted, contentType = "application/octet-stream")
       ) { result ->
         if (result.hasValue) {
           emitter.onSuccess(Operation.success(Unit))
@@ -85,7 +85,7 @@ class RemoteRepository
           if (it.error?.startsWith("FileNotFound") == true) {
             emitter.onSuccess(Operation.success())
           } else {
-            Timber.e(it.error)
+            Timber.w(it.error)
             emitter.onSuccess(Operation.error(DeleteError(it.error)))
           }
         } else {

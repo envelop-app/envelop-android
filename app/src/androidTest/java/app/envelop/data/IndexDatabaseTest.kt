@@ -18,7 +18,9 @@ class IndexDatabaseTest {
     url = "UUID-UUID",
     size = 1_000,
     contentType = null,
-    numParts = 1
+    numParts = 1,
+    encryptionSpec = null,
+    username = "username"
   )
 
   private lateinit var db: IndexDatabase
