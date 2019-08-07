@@ -1,5 +1,6 @@
 package app.envelop.data.models
 
+import app.envelop.test.DocFactory
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import org.junit.Assert.assertEquals
@@ -9,16 +10,7 @@ import java.util.*
 
 class DocTest {
 
-  private val baseDoc = Doc(
-    id = "ABCDEF",
-    name = "file.pdf",
-    url = "UUID-UUID",
-    size = 1_000,
-    contentType = null,
-    numParts = 1,
-    username = "",
-    encryptionSpec = null
-  )
+  private val baseDoc = DocFactory.build()
 
   @Test
   fun humanSize() {

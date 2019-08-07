@@ -6,7 +6,6 @@ import android.provider.OpenableColumns
 import android.webkit.MimeTypeMap
 import app.envelop.common.EnvelopSpec
 import app.envelop.common.Operation
-import app.envelop.common.Optional
 import app.envelop.data.models.Doc
 import app.envelop.data.security.HashGenerator
 import app.envelop.data.security.IVGenerator
@@ -19,6 +18,7 @@ class DocBuilder
 @Inject constructor(
   private val userService: UserService,
   private val hashGenerator: HashGenerator,
+  private val docIdGenerator: DocIdGenerator,
   private val ivGenerator: IVGenerator,
   private val contentResolver: ContentResolver
 ) {
@@ -29,12 +29,12 @@ class DocBuilder
       .map { user ->
         val fileInfo = getFileInfo(fileUri)
         val numParts = Doc.calculateNumParts(fileInfo.size, EnvelopSpec.FILE_PART_SIZE)
-        val id = generateShortId()
+        val id = generateDocId()
         Operation.success(
           Doc(
             id = id,
             name = fileInfo.name,
-            url = generateSecretId(),
+            url = generateFileUrl(),
             size = fileInfo.size,
             contentType = fileInfo.extension,
             createdAt = Date(),
@@ -82,8 +82,8 @@ class DocBuilder
       }
 
   private fun generateGenericFileName() = "file-${Random().nextInt(1000)}"
-  private fun generateSecretId() = UUID.randomUUID().toString()
-  private fun generateShortId() = hashGenerator.generate(EnvelopSpec.POINTER_LENGTH)
+  private fun generateFileUrl() = UUID.randomUUID().toString()
+  private fun generateDocId() = docIdGenerator.generate()
   private fun generatePasscode() = hashGenerator.generate(EnvelopSpec.PASSCODE_LENGTH)
 
   private fun String.getExtension() =
