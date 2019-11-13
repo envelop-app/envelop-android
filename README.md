@@ -2,7 +2,7 @@
 
 # Android app 🤖
 
-![Build Status](https://github.com/envelop-app/envelop-android/workflows/main/badge.svg)
+![Build Status](https://github.com/envelop-app/envelop-android/workflows/Android%20CI/badge.svg)
 
 ![Envelop - Share and upload private files easily](https://envelop.app/images/og-image.png)
 
