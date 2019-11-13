@@ -28,6 +28,9 @@ android {
     }
   }
   lintOptions {
+    checkAllWarnings true
+    warningsAsErrors true
+    abortOnError true
     disable 'CheckResult'
   }
   androidExtensions {
