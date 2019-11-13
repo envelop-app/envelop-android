@@ -14,6 +14,7 @@
   <string name="login_button">Sign in with Blockstack</string>
   <string name="login_progress">Signing in</string>
   <string name="login_error">Error signing in with Blockstack</string>
+  <string name="login_informer">If you don\'t have a Blockstack account, it will create you one for free. There would be no spam and your data will not be tracked.</string>
 
   <!-- Main -->
   <string name="main_title">Your Files</string>

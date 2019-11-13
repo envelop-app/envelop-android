@@ -7,8 +7,6 @@
   tools:context=".ui.login.LoginActivity"
   >
 
-  <include layout="@layout/shared_appbar" />
-
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,13 +15,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <ImageView
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
+      android:orientation="vertical"
+      android:gravity="center">
+
+    <ImageView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
       android:contentDescription="@string/app_name"
       android:scaleType="centerInside"
       android:src="@drawable/login_logo"
+      android:layout_margin="48dp"
       />
 
     <TextView
@@ -36,14 +41,13 @@
       android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
       />
 
+    </LinearLayout>
+
     <com.google.android.material.button.MaterialButton
       android:id="@+id/login"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="48dp"
-      android:layout_marginEnd="16dp"
-      android:layout_marginBottom="48dp"
+      android:layout_margin="16dp"
       android:backgroundTint="@color/blockstack"
       android:padding="16dp"
       android:text="@string/login_button"
@@ -53,6 +57,17 @@
       app:iconGravity="start"
       app:iconPadding="8dp"
       app:iconTint="@color/colorOnSecondary"
+      />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginBottom="48dp"
+      android:gravity="center_horizontal"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+      android:text="@string/login_informer"
       />
   </LinearLayout>
 
