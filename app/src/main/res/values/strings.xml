@@ -21,9 +21,20 @@
   <string name="main_refresh_error">Error refreshing files</string>
   <string name="main_username">username</string>
   <string name="main_feedback">Send us feedback</string>
+  <string name="main_faq">FAQ</string>
   <string name="main_feedback_email_subject">Envelop feedback</string>
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
+
+  <!-- FAQ -->
+  <string name="faq_title">Frequently asked</string>
+  <string name="faq_page_name">FAQS</string>
+  <string name="host_not_found"> The web page could not be loaded. Check your internet connection </string>
+  <string name="http">http://</string>
+  <string name="https">https://</string>
+  <string name="text">text/plain</string>
+  <string name="send_email">Send email</string>
+  <string name="mail_to">mailto</string>
 
   <!-- Upload -->
   <string name="upload_title">Envelop Upload</string>
@@ -62,4 +73,5 @@
     This file was uploaded on a more recent version of Envelop.
     Please update your app to be able to delete your file.
   </string>
+
 </resources>

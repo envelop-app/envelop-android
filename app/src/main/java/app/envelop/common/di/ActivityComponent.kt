@@ -1,6 +1,7 @@
 package app.envelop.common.di
 
 import app.envelop.ui.common.Toolbar
+import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.share.ShareActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.main.DocMenuFragment
@@ -20,13 +21,14 @@ interface ActivityComponent {
 
   // Views
 
-  fun inject(toolbar: Toolbar)
   fun inject(docMenuFragment: DocMenuFragment)
+  fun inject(toolbar: Toolbar)
 
   // Activities
 
-  fun inject(mainActivity: MainActivity)
+  fun inject(faqActivity: FaqActivity)
   fun inject(loginActivity: LoginActivity)
-  fun inject(uploadActivity: UploadActivity)
+  fun inject(mainActivity: MainActivity)
   fun inject(shareActivity: ShareActivity)
+  fun inject(uploadActivity: UploadActivity)
 }

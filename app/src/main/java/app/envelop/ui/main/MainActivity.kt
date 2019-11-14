@@ -15,6 +15,7 @@ import app.envelop.ui.common.LoadingState
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.setVisible
+import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
@@ -46,6 +47,11 @@ class MainActivity : BaseActivity() {
       .itemClicks(R.id.feedback)
       .bindToLifecycle(this)
       .subscribe { openFeedback() }
+
+    toolbar
+      .itemClicks(R.id.faq)
+      .bindToLifecycle(this)
+      .subscribe { openFaq() }
 
     toolbar
       .itemClicks(R.id.logout)
@@ -163,6 +169,10 @@ class MainActivity : BaseActivity() {
         getString(R.string.main_feedback)
       )
     )
+  }
+
+  private fun openFaq() {
+    startActivity(FaqActivity.getIntent(this))
   }
 
   private fun openLogoutConfirm() {
