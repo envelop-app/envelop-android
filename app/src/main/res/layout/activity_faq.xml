@@ -4,9 +4,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context="app.envelop.ui.faq.FaqActivity"
   android:background="@color/primary"
+  tools:context="app.envelop.ui.faq.FaqActivity"
   >
+
   <include layout="@layout/shared_appbar" />
 
   <ProgressBar
@@ -14,21 +15,21 @@
     style="@android:style/Widget.ProgressBar.Horizontal"
     android:layout_width="match_parent"
     android:layout_height="4dp"
-    android:visibility="visible"
     android:layout_gravity="center_vertical"
     android:layout_margin="48dp"
-    tools:progress="50"
     android:progressDrawable="@drawable/progress_webview"
     android:progressTint="@color/primaryDark"
+    android:visibility="visible"
+    tools:progress="50"
     />
 
   <WebView
     android:id="@+id/faq"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/primary"
     android:visibility="invisible"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
