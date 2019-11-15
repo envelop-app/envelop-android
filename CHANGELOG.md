@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Additional instructions on the initial sign in screen.
 
+### Fixed
+- Crash when dismissing menu.
+
 ## [1.2.1] - 2019-08-09
 
 ### Changed
