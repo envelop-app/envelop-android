@@ -26,6 +26,17 @@
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
 
+  <!-- Donate -->
+  <string name="donate_title">Donate</string>
+  <string name="donate_tagline">Envelop is a free and open source app that enables private file sharing for everyone.
+    We will never track or spam you.\nTo help support the maintenance and future developments of Envelop, please consider donating.
+  </string>
+  <string name="donate">Donate</string>
+  <string name="donate_bitcoin">Donate crypto\n(Bitcoin, Ethereum, ...)</string>
+  <string name="donate_stacks">Donate stacks</string>
+  <string name="donate_crypto_link">https://commerce.coinbase.com/checkout/6b9b0397-0481-483b-a08b-d46a915d99e6</string>
+  <string name="donate_stack_link">https://explorer.blockstack.org/address/stacks/SP7HTEK3HGNMDDYTH7JRP890J2VB8KC181N65XCK</string>
+
   <!-- Upload -->
   <string name="upload_title">Envelop Upload</string>
   <string name="upload">Upload</string>

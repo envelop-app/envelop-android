@@ -14,6 +14,7 @@ class DocTest {
 
   @Test
   fun humanSize() {
+    Locale.setDefault(Locale.US)
     assertEquals("0 B", baseDoc.copy(size = 0).humanSize)
     assertEquals("1.0 kB", baseDoc.copy(size = 1_000).humanSize)
     assertEquals("1.2 kB", baseDoc.copy(size = 1_234).humanSize)
