@@ -41,7 +41,7 @@ class IndexDatabaseTest {
     repeat(3) {
       db.save(Index()).blockingAwait()
     }
-    test.assertValueCount(4)
+    test.awaitCount(4)
   }
 
   @Test
