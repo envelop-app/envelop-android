@@ -7,8 +7,6 @@
   tools:context=".ui.login.LoginActivity"
   >
 
-  <include layout="@layout/shared_appbar" />
-
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,33 +15,40 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <ImageView
+    <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="1"
-      android:contentDescription="@string/app_name"
-      android:scaleType="centerInside"
-      android:src="@drawable/login_logo"
-      />
+      android:gravity="center"
+      android:orientation="vertical"
+      >
 
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="48dp"
-      android:layout_marginEnd="48dp"
-      android:gravity="center_horizontal"
-      android:text="@string/login_tagline"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-      />
+      <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="48dp"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        android:src="@drawable/login_logo"
+        />
+
+      <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginEnd="48dp"
+        android:gravity="center_horizontal"
+        android:text="@string/login_tagline"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        />
+
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
       android:id="@+id/login"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="48dp"
-      android:layout_marginEnd="16dp"
-      android:layout_marginBottom="48dp"
+      android:layout_margin="16dp"
       android:backgroundTint="@color/blockstack"
       android:padding="16dp"
       android:text="@string/login_button"
@@ -53,6 +58,17 @@
       app:iconGravity="start"
       app:iconPadding="8dp"
       app:iconTint="@color/colorOnSecondary"
+      />
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="16dp"
+      android:layout_marginRight="16dp"
+      android:layout_marginBottom="48dp"
+      android:gravity="center_horizontal"
+      android:text="@string/login_informer"
+      android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
       />
   </LinearLayout>
 
