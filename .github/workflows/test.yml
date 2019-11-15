@@ -67,3 +67,9 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: app/build/reports/coverage.xml
+
+      - name: Upload code coverage reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: app/build/reports/
