@@ -12,7 +12,7 @@ data class InnerJsonObject(
 ) {
 
   private val dateTimeFormat by lazy {
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX", Locale.getDefault()).also {
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ", Locale.getDefault()).also {
       it.timeZone = TimeZone.getTimeZone("UTC")
     }
   }
