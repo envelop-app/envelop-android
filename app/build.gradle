@@ -7,6 +7,8 @@ repositories {
   maven { url 'https://jitpack.io' }
 }
 
+apply from: 'jacoco.gradle'
+
 android {
   compileSdkVersion 28
   defaultConfig {
@@ -25,7 +27,11 @@ android {
     }
     debug {
       applicationIdSuffix '.debug'
+      testCoverageEnabled true
     }
+  }
+  testOptions {
+    animationsDisabled = true
   }
   lintOptions {
     checkAllWarnings true

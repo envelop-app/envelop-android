@@ -3,7 +3,7 @@ name: test
 on: [push]
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +23,47 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Unit tests
-        run: ./gradlew test
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Run unit tests
+        run: ./gradlew testDebug
+
+      - name: Build androidTest APK
+        run: ./gradlew :app:assembleDebugAndroidTest
+
+      - name: Install Google Cloud
+        run: |
+          sudo echo ${{ secrets.GCLOUD_AUTH }} | base64 --decode > gcloud-service-key.json
+          sudo gcloud auth activate-service-account --key-file=gcloud-service-key.json
+          sudo gcloud --quiet config set project ${{ secrets.GOOGLE_PROJECT_ID }}
+
+      - name: Run instrumentation tests with Firebase Test Lab
+        run: |
+          sudo gcloud firebase test android run \
+            --app app/build/outputs/apk/debug/app-debug.apk \
+            --test app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+            --device model=Pixel2,version=28,locale=en,orientation=portrait \
+            --directories-to-pull /sdcard \
+            --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec" \
+            --results-bucket cloud-test-${{ secrets.GOOGLE_PROJECT_ID }}
+
+      - name: Setup python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+
+      - name: Upload test results data
+        run: |
+          pip install -U crcmod
+          mkdir app/test_results
+          sudo gsutil -m cp -r -U `sudo gsutil ls gs://cloud-test-${{ secrets.GOOGLE_PROJECT_ID }} | tail -1` app/test_results/ | true
+
+      - name: Generate code coverage report
+        run: ./gradlew jacocoAndroidTestReport -PcodeCoverageDataLocation=test_results
+
+      - uses: codecov/codecov-action@v1.0.3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: app/build/reports/coverage.xml
