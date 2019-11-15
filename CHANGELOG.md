@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Changed
-- Date format changed to avoid compatibility issues with older Android API versions.
 - Additional instructions on the initial sign in screen.
+
+### Fixed
+- Date format changed to avoid compatibility issues with older Android API versions.
 
 ## [1.2.1] - 2019-08-09
 
