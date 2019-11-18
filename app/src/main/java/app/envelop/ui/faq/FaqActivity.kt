@@ -18,7 +18,7 @@ class FaqActivity : BaseActivity() {
 
   @Inject
   lateinit var messageManager: MessageManager
-  private var hadError = false
+  private var hadErrorLoadingWebView = false
 
   @SuppressLint("SetJavaScriptEnabled")
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,8 @@ class FaqActivity : BaseActivity() {
     faq.webViewClient = CustomWebViewClient()
   }
 
-  private fun openBrowser(url: Uri?) {
-    url?.let {
+  private fun openBrowser(url: Uri) {
+    url.let {
       val intent = Intent(Intent.ACTION_VIEW, url)
       startActivity(intent)
     }
@@ -52,11 +52,11 @@ class FaqActivity : BaseActivity() {
       request: WebResourceRequest,
       error: WebResourceError
     ) {
-      hadError = true
+      hadErrorLoadingWebView = true
       messageManager.showError(R.string.faq_host_not_found)
-      super.onReceivedError(view, request, error)
       faq.isVisible = false
       progressBar.isVisible = false
+      super.onReceivedError(view, request, error)
     }
 
     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -66,7 +66,7 @@ class FaqActivity : BaseActivity() {
 
     override fun onPageFinished(view: WebView?, url: String?) {
       super.onPageFinished(view, url)
-      if (!hadError) {
+      if (!hadErrorLoadingWebView) {
         faq.isVisible = true
         progressBar.isVisible = true
       }
@@ -74,7 +74,6 @@ class FaqActivity : BaseActivity() {
   }
 
   companion object {
-
     fun getIntent(context: Context) = Intent(context, FaqActivity::class.java)
   }
 }

@@ -26,9 +26,9 @@
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
 
-  <!-- FAQ -->
-  <string name="faq_title">FAQS</string>
-  <string name="faq_host_not_found"> The web page could not be loaded. Check your internet connection </string>
+  <!-- FAQs -->
+  <string name="faq_title">FAQs</string>
+  <string name="faq_host_not_found">The FAQs web page could not be loaded. Please check your connection and try again.</string>
 
   <!-- Upload -->
   <string name="upload_title">Envelop Upload</string>

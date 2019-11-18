@@ -19,7 +19,6 @@
     android:layout_margin="48dp"
     android:progressDrawable="@drawable/progress_webview"
     android:progressTint="@color/primaryDark"
-    android:visibility="visible"
     tools:progress="50"
     />
 
