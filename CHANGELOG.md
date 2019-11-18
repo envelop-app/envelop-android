@@ -11,7 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Donations screen.
 
 ### Changed
-- Additional instructions on the initial sign in screen.
+- Additional instructions on the initial sign in screen
+
+### Fixed
+- Crash when dismissing file bottom menu
 
 ### Fixed
 - Date format changed to avoid compatibility issues with older Android API versions.
