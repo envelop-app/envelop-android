@@ -10,8 +10,8 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import app.envelop.R
+import app.envelop.test.AppHelper
 import org.hamcrest.CoreMatchers.allOf
 import org.junit.Rule
 import org.junit.Test
@@ -22,7 +22,7 @@ class DonateActivityTest {
 
   @get:Rule
   val intentTestRule = IntentsTestRule<DonateActivity>(DonateActivity::class.java)
-  private val context = InstrumentationRegistry.getInstrumentation().targetContext
+  private val context = AppHelper.context
 
   @Test
   fun donateCryptoTest() {
