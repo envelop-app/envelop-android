@@ -1,7 +1,9 @@
 package app.envelop.domain
 
 import app.envelop.common.Optional
+import app.envelop.data.models.User
 import app.envelop.data.repositories.UserRepository
+import io.reactivex.Single
 import javax.inject.Inject
 
 class UserService
@@ -12,7 +14,7 @@ class UserService
   fun user() =
     userRepository.user()
 
-  fun userSingle() =
+  fun userSingle(): Single<User> =
     userRepository
       .user()
       .filter { it is Optional.Some }

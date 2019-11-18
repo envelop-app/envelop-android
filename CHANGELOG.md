@@ -15,9 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Crash when dismissing file bottom menu
-
-### Fixed
 - Date format changed to avoid compatibility issues with older Android API versions.
+- Lint errors and warnings
 
 ## [1.2.1] - 2019-08-09
 

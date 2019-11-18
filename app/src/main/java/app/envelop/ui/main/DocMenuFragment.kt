@@ -43,7 +43,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
     inflater: LayoutInflater,
     container: ViewGroup?,
     savedInstanceState: Bundle?
-  ) =
+  ): View =
     inflater.inflate(R.layout.view_doc_menu, container, false)
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -157,7 +157,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   private fun openDeleteConfirm() {
     activity?.let {
       alertDialog = AlertDialog.Builder(it)
-        .setTitle(R.string.doc_delete_title)
+        .setTitle(R.string.confirm)
         .setMessage(R.string.doc_delete_message)
         .setNegativeButton(R.string.cancel, null)
         .setPositiveButton(R.string.doc_delete) { _, _ -> viewModel.deleteConfirmClicked() }

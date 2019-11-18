@@ -1,6 +1,7 @@
 package app.envelop
 
 import android.app.Application
+import app.envelop.common.di.AppComponent
 import app.envelop.common.di.AppModule
 import app.envelop.common.di.DaggerAppComponent
 import app.envelop.domain.DeleteDocService
@@ -25,7 +26,7 @@ class App : Application() {
     }
   }
 
-  val component by lazy {
+  val component: AppComponent by lazy {
     DaggerAppComponent.builder().appModule(AppModule(this)).build()
   }
 

@@ -95,7 +95,7 @@ class DocBuilder
   private class FileInfo(
     val name: String,
     val size: Long,
-    val extension: String
+    val extension: String?
   )
 
   class Error(message: String, cause: Throwable? = null) : Exception(message, cause)

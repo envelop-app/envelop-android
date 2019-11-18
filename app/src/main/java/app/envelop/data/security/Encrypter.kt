@@ -33,7 +33,7 @@ abstract class Encrypter(
 
   abstract fun encrypt(input: ByteArray, spec: EncryptionSpec, key: EncryptionKey): Result
 
-  fun encrypt(input: ByteArray, spec: EncryptionSpec, passcode: String) =
+  private fun encrypt(input: ByteArray, spec: EncryptionSpec, passcode: String) =
     encrypt(input, spec, keyGenerator.generate(spec, passcode))
 
   fun encryptToBase64(input: ByteArray, spec: EncryptionSpec, passcode: String) =
@@ -92,7 +92,7 @@ class Pbkdf2AesEncrypter
   // Decrypt
 
   @Synchronized
-  override fun decrypt(input: ByteArray, spec: EncryptionSpec, key: EncryptionKey) =
+  override fun decrypt(input: ByteArray, spec: EncryptionSpec, key: EncryptionKey): ByteArray =
     with(cipher) {
       init(
         Cipher.DECRYPT_MODE,

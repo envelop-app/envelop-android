@@ -34,6 +34,7 @@ fun BehaviorSubject<Finish>.finish(result: Finish.Result = Finish.Result.Cancele
 object Open
 
 fun PublishSubject<Open>.open() = onNext(Open)
+@Suppress("unused")
 fun BehaviorSubject<Open>.open() = onNext(Open)
 
 sealed class LoadingState {
@@ -49,8 +50,6 @@ sealed class VisibleState {
   object Hidden : VisibleState()
 }
 
-fun BehaviorSubject<VisibleState>.visible() = onNext(VisibleState.Visible)
-fun BehaviorSubject<VisibleState>.hidden() = onNext(VisibleState.Hidden)
 fun BehaviorSubject<VisibleState>.next(isVisible: Boolean) =
   onNext(if (isVisible) VisibleState.Visible else VisibleState.Hidden)
 

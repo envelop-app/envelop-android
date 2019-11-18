@@ -3,9 +3,7 @@ package app.envelop.ui.donate
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import app.envelop.R
 import app.envelop.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_donate.*

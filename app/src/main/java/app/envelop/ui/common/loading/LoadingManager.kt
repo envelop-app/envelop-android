@@ -14,7 +14,7 @@ class LoadingManager
 
   private var dialog: AlertDialog? = null
 
-  fun show(messageRes: Int) {
+  private fun show(messageRes: Int) {
     dialog?.let { hide() }
     dialog = AlertDialog.Builder(activity)
       .setView(

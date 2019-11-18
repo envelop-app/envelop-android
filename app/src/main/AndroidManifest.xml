@@ -51,8 +51,10 @@
       </intent-filter>
       <intent-filter>
         <action android:name="android.intent.action.VIEW" />
+
         <category android:name="android.intent.category.DEFAULT" />
         <category android:name="android.intent.category.BROWSABLE" />
+
         <data
           android:host="redirect_mobile"
           android:scheme="envelop"
@@ -79,7 +81,7 @@
 
     <activity
       android:name=".ui.donate.DonateActivity"
-      android:label="@string/donate_title"
+      android:label="@string/donate"
       android:theme="@style/AppTheme.Color"
       />
 

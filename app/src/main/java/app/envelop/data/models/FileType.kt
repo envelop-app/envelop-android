@@ -15,7 +15,7 @@ constructor(
   PDF(R.drawable.ic_type_pdf);
 
   companion object {
-    private val MAPPING = mapOf(
+    val MAPPING = mapOf(
       Image to arrayOf("png", "gif", "jpg", "jpeg", "svg", "tif", "tiff", "ico"),
       Audio to arrayOf("wav", "aac", "mp3", "oga", "weba", "midi"),
       Video to arrayOf("avi", "mpeg", "mpg", "mp4", "ogv", "webm", "3gp", "mov"),

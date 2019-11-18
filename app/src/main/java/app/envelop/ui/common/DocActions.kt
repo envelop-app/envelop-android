@@ -17,7 +17,7 @@ class DocActions
 
   fun copyLink(link: String) {
     (activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-      .primaryClip = ClipData.newPlainText(link, link)
+      .setPrimaryClip(ClipData.newPlainText(link, link))
     messageManager.showNotice(R.string.doc_copy_link_done)
   }
 

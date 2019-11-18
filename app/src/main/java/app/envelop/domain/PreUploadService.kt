@@ -8,6 +8,7 @@ import app.envelop.data.models.Doc
 import app.envelop.data.models.Upload
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.UploadRepository
+import io.reactivex.Completable
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -34,7 +35,7 @@ class PreUploadService
       }
       .doIfSuccessful { startBackgroundService() }
 
-  fun startBackgroundIfNeeded() =
+  fun startBackgroundIfNeeded(): Completable =
     uploadRepository
       .count()
       .take(1)

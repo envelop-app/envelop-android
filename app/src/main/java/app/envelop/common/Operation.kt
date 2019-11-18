@@ -17,6 +17,7 @@ class Operation<out T>(
 
   fun throwable() = throwable!!
 
+  @Suppress("unused")
   fun <V> mapResult(map: ((T) -> V)) =
     Operation(
       result?.let { map.invoke(it) },
@@ -52,15 +53,17 @@ fun <T, R> Single<Operation<T>>.mapIfSuccessful(mapper: ((T) -> R)): Single<Oper
     }
   }
 
-fun <T> Observable<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
+@Suppress("unused")
+fun <T> Observable<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)): Observable<Operation<T>> =
   doOnNext { if (it.isSuccessful) mapper.invoke(it.result()) }
 
-fun <T> Observable<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
+fun <T> Observable<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)): Observable<Operation<T>> =
   doOnNext { if (it.isError) mapper.invoke(it.throwable()) }
 
 fun <T> Single<Operation<T>>.doIfSuccessful(mapper: ((T) -> Unit)) =
   doOnSuccess { if (it.isSuccessful) mapper.invoke(it.result()) }
 
+@Suppress("unused")
 fun <T> Single<Operation<T>>.doIfError(mapper: ((Throwable) -> Unit)) =
   doOnSuccess { if (it.isError) mapper.invoke(it.throwable()) }
 

@@ -43,6 +43,7 @@
         android:ellipsize="middle"
         android:maxLines="3"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textIsSelectable="true"
         tools:text="AWEsome.jpg"
         />
 
@@ -51,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        android:textIsSelectable="true"
         tools:text="15.65 KB"
         />
     </LinearLayout>

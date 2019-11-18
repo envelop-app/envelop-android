@@ -109,7 +109,7 @@ class ShareActivity : BaseActivity() {
     private val newValue: Int
   ) : Animation() {
 
-    val oldValue = progressBar.progress
+    private val oldValue = progressBar.progress
 
     override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
       super.applyTransformation(interpolatedTime, t)

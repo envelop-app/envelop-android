@@ -1,7 +1,6 @@
 package app.envelop.data.models
 
 import com.google.gson.JsonArray
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class Index(
