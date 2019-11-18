@@ -33,10 +33,8 @@ class FaqActivity : BaseActivity() {
   }
 
   private fun openBrowser(url: Uri) {
-    url.let {
-      val intent = Intent(Intent.ACTION_VIEW, url)
-      startActivity(intent)
-    }
+    val intent = Intent(Intent.ACTION_VIEW, url)
+    startActivity(intent)
   }
 
   inner class CustomChromeClient : WebChromeClient() {
