@@ -22,9 +22,14 @@
   <string name="main_refresh_error">Error refreshing files</string>
   <string name="main_username">username</string>
   <string name="main_feedback">Send us feedback</string>
+  <string name="main_faq">FAQ</string>
   <string name="main_feedback_email_subject">Envelop feedback</string>
   <string name="logout">Logout</string>
   <string name="logout_confirm">Are you sure?</string>
+
+  <!-- FAQs -->
+  <string name="faq_title">FAQs</string>
+  <string name="faq_host_not_found">The FAQs web page could not be loaded. Please check your connection and try again.</string>
 
   <!-- Donate -->
   <string name="donate_title">Donate</string>
@@ -72,4 +77,5 @@
     This file was uploaded on a more recent version of Envelop.
     Please update your app to be able to delete your file.
   </string>
+
 </resources>

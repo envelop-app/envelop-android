@@ -4,6 +4,7 @@
   <string name="blockstack_app_url">https://envelop.app</string>
   <string name="doc_url_old">https://envl.app/%1$s/%2$s</string>
   <string name="doc_url">https://envl.app/%1$s/%2$s!%3$s</string>
+  <string name="faq_url">https://envelop.app/faq.html</string>
   <string name="feedback_email">feedback@envelop.app</string>
 
   <!-- Donate -->

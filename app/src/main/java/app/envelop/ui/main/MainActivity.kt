@@ -15,6 +15,7 @@ import app.envelop.ui.common.LoadingState
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.setVisible
+import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.donate.DonateActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
@@ -47,6 +48,11 @@ class MainActivity : BaseActivity() {
       .itemClicks(R.id.feedback)
       .bindToLifecycle(this)
       .subscribe { openFeedback() }
+
+    toolbar
+      .itemClicks(R.id.faq)
+      .bindToLifecycle(this)
+      .subscribe { openFaq() }
 
     toolbar
       .itemClicks(R.id.donate)
@@ -171,9 +177,12 @@ class MainActivity : BaseActivity() {
     )
   }
 
+  private fun openFaq() {
+    startActivity(FaqActivity.getIntent(this))
+  }
+  
   private fun openDonate() {
-    val intent = Intent(DonateActivity.getIntent(this))
-    startActivity(intent)
+    startActivity(DonateActivity.getIntent(this))
   }
 
   private fun openLogoutConfirm() {
