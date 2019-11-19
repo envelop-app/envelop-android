@@ -35,10 +35,6 @@ class LoginActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_login)
-    toolbar.setTitle(R.string.login)
-
-    @Suppress("DEPRECATION")
-    appBar.targetElevation = 0f
 
     login
       .clicksThrottled()
