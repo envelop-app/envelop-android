@@ -10,49 +10,47 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.blockstack.android.sdk.*
+import org.blockstack.android.sdk.BaseScope
+import org.blockstack.android.sdk.BlockstackSession
+import org.blockstack.android.sdk.ISessionStore
+import org.blockstack.android.sdk.SessionStore
 import org.blockstack.android.sdk.model.BlockstackConfig
-import org.blockstack.android.sdk.model.toBlockstackConfig
-import timber.log.Timber
+import java.net.URI
 import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 class BlockstackModule {
 
-  @Provides
-  fun blockstackConfig(resources: Resources) =
-    resources.getString(R.string.blockstack_app_url)
-      .toBlockstackConfig(arrayOf(Scope.StoreWrite, Scope.PublishData))
+    @Provides
+    fun blockstackConfig(resources: Resources) =
+        BlockstackConfig(
+            URI(resources.getString(R.string.blockstack_app_url)),
+            "/redirect",
+            "/manifest.json",
+            arrayOf(BaseScope.StoreWrite.scope, BaseScope.PublishData.scope)
+        )
 
-  @Provides
-  @Singleton
-  fun blockstackSessionStore(context: Context): ISessionStore =
-    SessionStore(PreferenceManager.getDefaultSharedPreferences(context))
+    @Provides
+    @Singleton
+    fun blockstackSessionStore(context: Context): ISessionStore =
+        SessionStore(PreferenceManager.getDefaultSharedPreferences(context))
 
-  @Provides
-  @Singleton
-  @Named("blockstack")
-  fun blockstackScheduler(): Scheduler {
-    val handlerThread = HandlerThread("BlockstackService").apply { start() }
-    val handler = Handler(handlerThread.looper)
-    return Schedulers.from {
-      handler.post(it)
+    @Provides
+    @Singleton
+    @Named("blockstack")
+    fun blockstackScheduler(): Scheduler {
+        val handlerThread = HandlerThread("BlockstackService").apply { start() }
+        val handler = Handler(handlerThread.looper)
+        return Schedulers.from {
+            handler.post(it)
+        }
     }
-  }
-
-  @Provides
-  @Singleton
-  fun blockstackExecutor(context: Context, @Named("blockstack") scheduler: Scheduler): Executor =
-    BlockstackExecutor(context, scheduler)
 
 
-  @Provides
-  @Singleton
-  fun blockstackSession(context: Context, config: BlockstackConfig, sessionStore: ISessionStore, executor: Executor) =
-    BlockstackSession(context, config, sessionStore = sessionStore, executor = executor)
+    @Provides
+    @Singleton
+    fun blockstackSession(context: Context, config: BlockstackConfig, sessionStore: ISessionStore) =
+        BlockstackSession(appConfig = config, sessionStore = sessionStore)
 
 }

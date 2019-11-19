@@ -71,7 +71,7 @@ dependencies {
   // Blockstack
   // implementation 'com.github.blockstack:blockstack-android:0.4.6'
   // Fork with temporary fix for proper network errors
-  implementation 'com.github.sdsantos:blockstack-android:3fbd12cfb31c1ee2696f67535ea27652341f243e'
+  implementation 'com.github.blockstack:blockstack-android:96fb40f'
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.23'
