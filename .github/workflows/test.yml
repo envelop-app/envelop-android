@@ -3,7 +3,7 @@ name: test
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -54,7 +54,7 @@ jobs:
           python-version: '3.x'
           architecture: 'x64'
 
-      - name: Upload test results data
+      - name: Download test results data
         run: |
           pip install -U crcmod
           mkdir app/test_results

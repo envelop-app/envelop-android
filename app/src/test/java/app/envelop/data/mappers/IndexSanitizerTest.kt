@@ -24,7 +24,7 @@ class IndexSanitizerTest {
   fun sanitize() {
     val result = subject.sanitize(
       UnsanitizedIndex(
-        JsonParser().parse(
+        JsonParser.parseString(
           """
         [{
          "id": "ABCDEF",
