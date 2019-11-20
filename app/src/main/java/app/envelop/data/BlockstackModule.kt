@@ -4,19 +4,15 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Handler
 import android.os.HandlerThread
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
 import app.envelop.R
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.blockstack.android.sdk.*
 import org.blockstack.android.sdk.model.BlockstackConfig
 import org.blockstack.android.sdk.model.toBlockstackConfig
-import timber.log.Timber
 import javax.inject.Named
 import javax.inject.Singleton
 

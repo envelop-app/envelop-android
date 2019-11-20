@@ -16,7 +16,7 @@ class MessageManager
   fun showNotice(@StringRes messageRes: Int) =
     showNotice(resources.getString(messageRes))
 
-  fun showNotice(message: String) =
+  private fun showNotice(message: String) =
     Snackbar
       .make(getRootView(), message, Snackbar.LENGTH_LONG)
       .show()
@@ -24,7 +24,7 @@ class MessageManager
   fun showError(@StringRes errorRes: Int) =
     showError(resources.getString(errorRes))
 
-  fun showError(error: String) =
+  private fun showError(error: String) =
     Snackbar
       .make(getRootView(), error, Snackbar.LENGTH_LONG)
       .show()

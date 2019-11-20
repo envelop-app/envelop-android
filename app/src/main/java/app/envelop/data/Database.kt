@@ -4,12 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import app.envelop.App
-import app.envelop.data.models.Doc
 import app.envelop.data.models.Upload
-import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.UploadRepository
 
 @androidx.room.Database(

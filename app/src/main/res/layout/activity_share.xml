@@ -84,6 +84,7 @@
             android:ellipsize="middle"
             android:maxLines="3"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+            android:textIsSelectable="true"
             />
         </LinearLayout>
       </com.google.android.material.card.MaterialCardView>

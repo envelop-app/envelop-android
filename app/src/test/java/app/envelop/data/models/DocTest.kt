@@ -2,9 +2,8 @@ package app.envelop.data.models
 
 import app.envelop.test.DocFactory
 import com.google.gson.Gson
-import com.google.gson.JsonParser
+import com.google.gson.JsonObject
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Test
 import java.util.*
 
@@ -24,7 +23,7 @@ class DocTest {
   @Test
   fun fromJson() {
     Doc.build(
-      JsonParser().parse(
+      Gson().fromJson(
         """
         {
          "id": "ABCDEF",
@@ -38,14 +37,17 @@ class DocTest {
          "part_ivs": ["abc","abc"],
          "username": "username"
         }
-      """
+      """, JsonObject::class.java
       ).asJsonObject
     ).run {
       assertEquals("ABCDEF", id)
       assertEquals("file.pdf", name)
       assertEquals("UUID-UUID", url)
       assertEquals(1_000, size)
-      assertEquals(10, Calendar.getInstance().also { it.time = createdAt }.get(Calendar.DAY_OF_MONTH))
+      assertEquals(
+        10,
+        Calendar.getInstance().also { it.time = createdAt }.get(Calendar.DAY_OF_MONTH)
+      )
       assertEquals("pdf", contentType)
       assertEquals(2, version)
       assertEquals(2, numParts)
@@ -56,7 +58,7 @@ class DocTest {
   @Test
   fun keepUnknownFields() {
     val doc = Doc.build(
-      JsonParser().parse(
+      Gson().fromJson(
         """
         {
          "id": "ABCDEF",
@@ -68,7 +70,7 @@ class DocTest {
          "username": "username",
          "new_field": "new_value"
         }
-      """
+      """, JsonObject::class.java
       ).asJsonObject
     )
     assertEquals(

@@ -6,9 +6,9 @@
   <string name="cancel">Cancel</string>
   <string name="menu">Menu</string>
   <string name="update">Update</string>
+  <string name="confirm">Are you sure?</string>
 
   <!-- Login -->
-  <string name="login">Sign in</string>
   <string name="login_title">Sign in on Envelop</string>
   <string name="login_tagline">Share private files easily,\nwithout losing their ownership.</string>
   <string name="login_button">Sign in with Blockstack</string>
@@ -25,14 +25,12 @@
   <string name="main_faq">FAQ</string>
   <string name="main_feedback_email_subject">Envelop feedback</string>
   <string name="logout">Logout</string>
-  <string name="logout_confirm">Are you sure?</string>
 
   <!-- FAQs -->
   <string name="faq_title">FAQs</string>
   <string name="faq_host_not_found">The FAQs web page could not be loaded. Please check your connection and try again.</string>
 
   <!-- Donate -->
-  <string name="donate_title">Donate</string>
   <string name="donate_tagline">Envelop is a free and open source app that enables private file sharing for everyone.
     We will never track or spam you.\nTo help support the maintenance and future developments of Envelop, please consider donating.
   </string>
@@ -68,7 +66,6 @@
   <string name="doc_share_chooser">Share file link</string>
   <string name="doc_open_download">Open download link</string>
   <string name="doc_delete">Delete file</string>
-  <string name="doc_delete_title">Are you sure?</string>
   <string name="doc_delete_message">Links shared to this file will no longer work.</string>
   <string name="doc_deleting">Deleting file</string>
   <string name="doc_delete_error">Error deleting file. Please try again.</string>

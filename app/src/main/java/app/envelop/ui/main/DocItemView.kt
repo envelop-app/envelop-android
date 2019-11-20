@@ -41,7 +41,7 @@ constructor(
     }
   }
 
-  fun openMenu(doc: Doc) {
+  private fun openMenu(doc: Doc) {
     DocMenuFragment
       .newInstance(doc)
       .show((context as AppCompatActivity).supportFragmentManager, FRAGMENT_DOC_MENU_TAG)

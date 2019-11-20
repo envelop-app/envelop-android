@@ -7,6 +7,7 @@ import com.google.gson.JsonPrimitive
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Suppress("unused")
 data class InnerJsonObject(
   val json: JsonObject = JsonObject()
 ) {
@@ -30,7 +31,7 @@ data class InnerJsonObject(
   fun set(key: JsonKey, value: String?) = json.addProperty(key.value, value)
 
   fun getLong(key: JsonKey) = optLong(key)!!
-  fun optLong(key: JsonKey) = (json.get(key.value) as? JsonPrimitive)?.asLong
+  private fun optLong(key: JsonKey) = (json.get(key.value) as? JsonPrimitive)?.asLong
   fun set(key: JsonKey, value: Long?) = json.addProperty(key.value, value)
 
   fun getInt(key: JsonKey) = optInt(key)!!
@@ -42,7 +43,7 @@ data class InnerJsonObject(
   fun set(key: JsonKey, value: Boolean?) = json.addProperty(key.value, value)
 
   fun getDate(key: JsonKey) = optDate(key)!!
-  fun optDate(key: JsonKey): Date? = optString(key)?.let { parseDateWithFallback(it) }
+  private fun optDate(key: JsonKey): Date? = optString(key)?.let { parseDateWithFallback(it) }
   fun set(key: JsonKey, value: Date?) = set(key, value?.let { dateTimeFormat.format(it) })
 
   fun getListString(key: JsonKey) = optListString(key)!!
@@ -61,6 +62,9 @@ data class InnerJsonObject(
     )
 
   override fun toString() = "InnerJsonObject(${hashCode()})"
+
+  fun clone() =
+    copy(json = json.deepCopy())
 
   private fun parseDateWithFallback(value: String) =
     try {

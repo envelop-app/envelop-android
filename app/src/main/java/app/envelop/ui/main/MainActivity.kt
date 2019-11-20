@@ -188,7 +188,7 @@ class MainActivity : BaseActivity() {
   private fun openLogoutConfirm() {
     logoutDialog?.dismiss()
     logoutDialog = AlertDialog.Builder(this)
-      .setTitle(R.string.logout_confirm)
+      .setTitle(R.string.confirm)
       .setNegativeButton(R.string.cancel, null)
       .setPositiveButton(R.string.logout) { _, _ -> viewModel.logoutClick() }
       .show()

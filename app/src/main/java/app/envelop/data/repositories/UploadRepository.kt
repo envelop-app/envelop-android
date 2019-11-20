@@ -1,9 +1,7 @@
 package app.envelop.data.repositories
 
 import androidx.room.*
-import app.envelop.data.models.Doc
 import app.envelop.data.models.Upload
-import app.envelop.data.models.UploadWithDoc
 import io.reactivex.Flowable
 
 @Dao

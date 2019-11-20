@@ -8,6 +8,7 @@ import app.envelop.data.models.UnsanitizedIndex
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
@@ -29,7 +30,7 @@ class IndexDatabase
 
   private val indexSubject = BehaviorSubject.create<Index>()
 
-  fun get() =
+  fun get(): Observable<Index> =
     Completable
       .defer {
         if (!indexSubject.hasValue()) {

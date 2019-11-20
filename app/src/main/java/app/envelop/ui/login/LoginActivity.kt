@@ -13,7 +13,6 @@ import app.envelop.ui.common.loading.LoadingManager
 import app.envelop.ui.main.MainActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity() {

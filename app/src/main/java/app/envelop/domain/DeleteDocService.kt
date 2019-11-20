@@ -8,6 +8,7 @@ import app.envelop.data.models.Doc
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.RemoteRepository
 import app.envelop.data.repositories.UploadRepository
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -38,7 +39,7 @@ class DeleteDocService
         } else Single.just(op)
       }
 
-  fun deletePending() =
+  fun deletePending(): Completable =
     docRepository
       .countDeleted()
       .filter { it > 0 }
@@ -66,7 +67,7 @@ class DeleteDocService
       .andThen(updateDocRemotely.delete(doc))
       .onErrorReturn { Operation.error(it) }
 
-  fun deleteLocalUploadFileIfNeeded(doc: Doc) =
+  private fun deleteLocalUploadFileIfNeeded(doc: Doc): Completable =
     uploadRepository
       .getByDocId(doc.id)
       .take(1)

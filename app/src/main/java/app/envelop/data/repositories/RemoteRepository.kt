@@ -29,7 +29,7 @@ class RemoteRepository
   private val blockstack by lazy { blockstackProvider.get() }
 
   fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean) =
-    createSingleForCall<Optional<T>>() { emitter ->
+    createSingleForCall<Optional<T>> { emitter ->
       blockstack.getFile(fileName, GetFileOptions(decrypt = encrypted)) {
         if (!it.hasErrors) {
           emitter.onSuccess(
@@ -49,7 +49,7 @@ class RemoteRepository
     }
 
   fun uploadByteArray(url: String, data: ByteArray, encrypted: Boolean) =
-    createSingleForCall<Unit>() { emitter ->
+    createSingleForCall<Unit> { emitter ->
       blockstack.putFile(
         url,
         data,
@@ -64,7 +64,7 @@ class RemoteRepository
     }
 
   fun <T> uploadJson(fileName: String, content: T, encrypted: Boolean) =
-    createSingleForCall<T>() { emitter ->
+    createSingleForCall<T> { emitter ->
       blockstack.putFile(
         fileName,
         gson.toJson(content),
@@ -79,7 +79,7 @@ class RemoteRepository
     }
 
   fun deleteFile(fileName: String) =
-    createSingleForCall<Unit>() { emitter ->
+    createSingleForCall<Unit> { emitter ->
       blockstack.deleteFile(fileName, DeleteFileOptions()) {
         if (it.hasErrors) {
           if (it.error?.startsWith("FileNotFound") == true) {
@@ -94,8 +94,8 @@ class RemoteRepository
       }
     }
 
-  fun getFilesList() =
-    createSingleForCall<List<String>>() { emitter ->
+  private fun getFilesList() =
+    createSingleForCall<List<String>> { emitter ->
       val list = mutableListOf<String>()
       blockstack.listFiles({ result ->
         result.value?.let { list.add(it) }
@@ -109,6 +109,7 @@ class RemoteRepository
     getFilesList()
       .mapIfSuccessful { list -> list.filter { it.startsWith(prefix) } }
 
+  @Suppress("unused") // Useful for debugging
   fun printListFiles() {
     getFilesList()
       .observeOnUI()

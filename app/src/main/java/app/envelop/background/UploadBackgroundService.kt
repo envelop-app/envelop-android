@@ -75,7 +75,7 @@ class UploadBackgroundService : Service() {
     disposables.clear()
   }
 
-  override fun onBind(intent: Intent) = null
+  override fun onBind(intent: Intent): Nothing? = null
 
   private fun buildNotification(state: UploadState.Uploading) =
     getNotificationBuilder()

@@ -15,17 +15,18 @@ constructor(
   PDF(R.drawable.ic_type_pdf);
 
   companion object {
-    private val MAPPING = mapOf(
-      Image to arrayOf("png", "gif", "jpg", "jpeg", "svg", "tif", "tiff", "ico"),
-      Audio to arrayOf("wav", "aac", "mp3", "oga", "weba", "midi"),
-      Video to arrayOf("avi", "mpeg", "mpg", "mp4", "ogv", "webm", "3gp", "mov"),
-      Archive to arrayOf("zip", "rar", "tar", "gz", "7z", "bz", "bz2", "arc"),
-      PDF to arrayOf("pdf")
-    )
+    private val MAPPINGS
+      get() = mapOf(
+        Image to arrayOf("png", "gif", "jpg", "jpeg", "svg", "tif", "tiff", "ico"),
+        Audio to arrayOf("wav", "aac", "mp3", "oga", "weba", "midi"),
+        Video to arrayOf("avi", "mpeg", "mpg", "mp4", "ogv", "webm", "3gp", "mov"),
+        Archive to arrayOf("zip", "rar", "tar", "gz", "7z", "bz", "bz2", "arc"),
+        PDF to arrayOf("pdf")
+      )
 
     fun fromContentType(type: String?) =
       type?.let {
-        MAPPING.entries.firstOrNull {
+        MAPPINGS.entries.firstOrNull {
           it.value.contains(type)
         }?.key
       } ?: Default

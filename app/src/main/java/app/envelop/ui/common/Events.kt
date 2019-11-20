@@ -28,13 +28,15 @@ fun Finish.Result.toActivityResult() =
     Finish.Result.Ok -> Activity.RESULT_OK
   }
 
-fun PublishSubject<Finish>.finish(result: Finish.Result = Finish.Result.Canceled) = onNext(Finish(result))
-fun BehaviorSubject<Finish>.finish(result: Finish.Result = Finish.Result.Canceled) = onNext(Finish(result))
+fun PublishSubject<Finish>.finish(result: Finish.Result = Finish.Result.Canceled) =
+  onNext(Finish(result))
+
+fun BehaviorSubject<Finish>.finish(result: Finish.Result = Finish.Result.Canceled) =
+  onNext(Finish(result))
 
 object Open
 
 fun PublishSubject<Open>.open() = onNext(Open)
-fun BehaviorSubject<Open>.open() = onNext(Open)
 
 sealed class LoadingState {
   object Loading : LoadingState()
@@ -49,8 +51,6 @@ sealed class VisibleState {
   object Hidden : VisibleState()
 }
 
-fun BehaviorSubject<VisibleState>.visible() = onNext(VisibleState.Visible)
-fun BehaviorSubject<VisibleState>.hidden() = onNext(VisibleState.Hidden)
 fun BehaviorSubject<VisibleState>.next(isVisible: Boolean) =
   onNext(if (isVisible) VisibleState.Visible else VisibleState.Hidden)
 

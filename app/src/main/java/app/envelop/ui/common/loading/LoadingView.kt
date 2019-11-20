@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import app.envelop.R
 import kotlinx.android.synthetic.main.view_loading.view.*
 

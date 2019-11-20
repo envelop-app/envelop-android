@@ -13,7 +13,7 @@ class PreferencesModule {
 
   @Provides
   @Singleton
-  fun sharedPreferences(context: Context, appMode: App.Mode) =
+  fun sharedPreferences(context: Context, appMode: App.Mode): SharedPreferences =
     context.getSharedPreferences(
       when (appMode) {
         App.Mode.Normal -> PREFERENCES_NAME

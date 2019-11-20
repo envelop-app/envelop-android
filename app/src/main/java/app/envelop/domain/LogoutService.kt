@@ -24,7 +24,7 @@ class LogoutService
     blockstackProvider.get()
   }
 
-  fun logout() =
+  fun logout(): Completable =
 
     Completable
       .fromAction {

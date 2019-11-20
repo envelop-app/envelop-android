@@ -2,6 +2,7 @@ package app.envelop.ui.common
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Menu
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
@@ -11,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat
 import app.envelop.R
 import app.envelop.ui.BaseActivity
 import com.jakewharton.rxbinding3.appcompat.itemClicks
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.view_toolbar.view.*
 
@@ -21,7 +23,7 @@ class Toolbar
   defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
-  val menu get() = innerToolbar.menu
+  val menu: Menu get() = innerToolbar.menu
 
   private val activity get() = (context as BaseActivity)
   private val itemClicks = PublishSubject.create<Int>()
@@ -37,7 +39,7 @@ class Toolbar
     title.setText(titleRes)
   }
 
-  fun setTitle(titleStr: String) {
+  private fun setTitle(titleStr: String) {
     title.text = titleStr
   }
 
@@ -60,9 +62,10 @@ class Toolbar
       .subscribe(itemClicks::onNext)
   }
 
-  fun itemClicks(itemId: Int? = null) =
+  fun itemClicks(itemId: Int? = null): Observable<Int> =
     itemClicks.filter { itemId == null || it == itemId }
 
+  @Suppress("unused")
   fun itemClicksThrottled(itemId: Int? = null) =
     itemClicks(itemId).throttleForClicks()
 

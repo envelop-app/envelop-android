@@ -3,9 +3,6 @@ package app.envelop.ui.main
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.FrameLayout
-import androidx.core.content.res.ResourcesCompat
-import app.envelop.R
 import com.airbnb.epoxy.ModelView
 
 @ModelView(autoLayout = ModelView.Size.MATCH_WIDTH_WRAP_HEIGHT)

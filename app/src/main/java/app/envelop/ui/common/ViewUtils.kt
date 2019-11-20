@@ -11,5 +11,6 @@ fun <T> Observable<T>.throttleForClicks() =
 fun View.clicksThrottled() =
   clicks().throttleForClicks()
 
+@Suppress("unused")
 fun MenuItem.clicksThrottled() =
   clicks().throttleForClicks()
