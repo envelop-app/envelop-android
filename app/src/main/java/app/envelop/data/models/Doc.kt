@@ -45,7 +45,7 @@ data class Doc(
   fun calculateParts(partSize: Long) = calculateNumParts(size, partSize)
 
   fun toJsonObject() =
-    innerJson.also {
+    innerJson.clone().also {
       it.set(Key.Id, id)
       it.set(Key.Name, name)
       it.set(Key.Url, url)

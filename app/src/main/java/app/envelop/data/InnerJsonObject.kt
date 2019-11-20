@@ -63,6 +63,9 @@ data class InnerJsonObject(
 
   override fun toString() = "InnerJsonObject(${hashCode()})"
 
+  fun clone() =
+    copy(json = json.deepCopy())
+
   private fun parseDateWithFallback(value: String) =
     try {
       dateTimeFormat.parse(value)
