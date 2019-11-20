@@ -15,8 +15,8 @@ android {
     applicationId 'app.envelop'
     minSdkVersion 21
     targetSdkVersion 29
-    versionCode 16
-    versionName "1.2.1"
+    versionCode 17
+    versionName "1.2.2"
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {

@@ -49,10 +49,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:drawableStart="@drawable/ic_bitcoin"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/donate_bitcoin"
+        app:icon="@drawable/ic_bitcoin"
         />
 
       <com.google.android.material.button.MaterialButton
@@ -60,20 +60,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:drawableStart="@drawable/ic_blockstack"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/donate_stacks"
+        app:icon="@drawable/ic_blockstack"
         />
 
       <com.google.android.material.button.MaterialButton
         android:id="@+id/donatePaypal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_paypal"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:text="@string/donate_paypal"
+        app:icon="@drawable/ic_paypal"
         />
 
     </LinearLayout>

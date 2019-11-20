@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- Theme -->
   <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -75,6 +75,7 @@
   <style name="Envelop.Button.Secondary" parent="Widget.MaterialComponents.Button">
     <item name="backgroundTint">?colorSecondary</item>
     <item name="android:textColor">?colorOnSecondary</item>
+    <item name="iconTint">?colorOnSecondary</item>
   </style>
 
 

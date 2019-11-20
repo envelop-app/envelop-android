@@ -28,7 +28,7 @@
 
   <!-- FAQs -->
   <string name="faq_title">FAQs</string>
-  <string name="faq_host_not_found">The FAQs web page could not be loaded. Please check your connection and try again.</string>
+  <string name="faq_host_not_found">The FAQs web page could not be loaded.</string>
 
   <!-- Donate -->
   <string name="donate_tagline">
@@ -36,7 +36,7 @@
     Envelop is a free and open source app that enables private file sharing for everyone.
     It doesn\'t compromise on your privacy, nor track or spam you.\n\n
     Every donation helps us maintain and further improve Envelop.
-    Let\'s build a better and fair Internet.
+    Let\'s build a better Internet!
   </string>
   <string name="donate_title">Make a donation</string>
   <string name="donate">Donate</string>
