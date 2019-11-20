@@ -87,17 +87,16 @@
 
     <activity
       android:name=".ui.donate.DonateActivity"
-      android:label="@string/donate"
+      android:label="@string/donate_title"
       android:theme="@style/AppTheme.Color"
       />
-
-    <service android:name=".background.UploadBackgroundService" />
 
     <meta-data
       android:name="preloaded_fonts"
       android:resource="@array/preloaded_fonts"
       />
 
-  </application>
+    <service android:name=".background.UploadBackgroundService" />
 
+  </application>
 </manifest>

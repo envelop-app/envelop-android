@@ -10,4 +10,5 @@
   <!-- Donate -->
   <string name="donate_crypto_link" tools:ignore="TypographyDashes">https://commerce.coinbase.com/checkout/6b9b0397-0481-483b-a08b-d46a915d99e6</string>
   <string name="donate_stack_link">https://explorer.blockstack.org/address/stacks/SP7HTEK3HGNMDDYTH7JRP890J2VB8KC181N65XCK</string>
+  <string name="donate_paypal_link">https://www.paypal.me/blocoio</string>
 </resources>

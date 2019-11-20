@@ -17,6 +17,7 @@ class DonateActivity : BaseActivity() {
     toolbar.enableNavigation()
     donateCrypto.setOnClickListener { openDonateCrypto() }
     donateStacks.setOnClickListener { openDonateStacksLink() }
+    donatePaypal.setOnClickListener { openDonatePaypalLink() }
   }
 
   private fun openDonateCrypto() {
@@ -26,6 +27,11 @@ class DonateActivity : BaseActivity() {
 
   private fun openDonateStacksLink() {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_stack_link)))
+    startActivity(intent)
+  }
+
+  private fun openDonatePaypalLink() {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_paypal_link)))
     startActivity(intent)
   }
 
