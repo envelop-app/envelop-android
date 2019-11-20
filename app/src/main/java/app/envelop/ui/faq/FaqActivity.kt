@@ -18,7 +18,6 @@ class FaqActivity : BaseActivity() {
 
   @Inject
   lateinit var messageManager: MessageManager
-  private var hadErrorLoadingWebView = false
 
   @SuppressLint("SetJavaScriptEnabled")
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,11 +31,6 @@ class FaqActivity : BaseActivity() {
     faq.webViewClient = CustomWebViewClient()
   }
 
-  private fun openBrowser(url: Uri) {
-    val intent = Intent(Intent.ACTION_VIEW, url)
-    startActivity(intent)
-  }
-
   inner class CustomChromeClient : WebChromeClient() {
     override fun onProgressChanged(view: WebView?, newProgress: Int) {
       progressBar.progress = newProgress
@@ -45,6 +39,8 @@ class FaqActivity : BaseActivity() {
   }
 
   inner class CustomWebViewClient : WebViewClient() {
+    private var hadErrorLoadingWebView = false
+
     override fun onReceivedError(
       view: WebView,
       request: WebResourceRequest,
@@ -68,6 +64,11 @@ class FaqActivity : BaseActivity() {
         faq.isVisible = true
         progressBar.isVisible = true
       }
+    }
+
+    private fun openBrowser(url: Uri) {
+      val intent = Intent(Intent.ACTION_VIEW, url)
+      startActivity(intent)
     }
   }
 

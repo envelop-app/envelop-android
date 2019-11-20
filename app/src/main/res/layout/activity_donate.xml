@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -9,50 +10,74 @@
 
   <include layout="@layout/shared_appbar" />
 
-  <LinearLayout
+  <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-    <TextView
+    <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center_vertical"
-      android:layout_marginStart="48dp"
-      android:layout_marginEnd="48dp"
-      android:layout_marginBottom="40dp"
-      android:text="@string/donate_tagline"
-      android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-      />
-
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/donateCrypto"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       android:layout_gravity="center"
-      android:layout_marginStart="48dp"
-      android:layout_marginEnd="48dp"
-      android:layout_marginBottom="16dp"
-      android:text="@string/donate_bitcoin"
-      android:paddingTop="8dp"
-      android:paddingBottom="8dp"
-      />
+      android:gravity="center"
+      android:orientation="vertical"
+      android:paddingStart="40dp"
+      android:paddingEnd="40dp"
+      android:paddingBottom="24dp"
+      >
 
-    <com.google.android.material.button.MaterialButton
-      android:id="@+id/donateStacks"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_gravity="center"
-      android:layout_marginStart="48dp"
-      android:layout_marginEnd="48dp"
-      android:text="@string/donate_stacks"
-      android:paddingTop="8dp"
-      android:paddingBottom="8dp"
-      />
+      <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_launcher_foreground"
+        />
 
-  </LinearLayout>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:lineSpacingExtra="4dp"
+        android:text="@string/donate_tagline"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        />
 
-</LinearLayout>
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/donateCrypto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:drawableStart="@drawable/ic_bitcoin"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/donate_bitcoin"
+        />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/donateStacks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:drawableStart="@drawable/ic_blockstack"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/donate_stacks"
+        />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/donatePaypal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_paypal"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:text="@string/donate_paypal"
+        />
+
+    </LinearLayout>
+
+  </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

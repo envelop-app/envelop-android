@@ -31,12 +31,18 @@
   <string name="faq_host_not_found">The FAQs web page could not be loaded. Please check your connection and try again.</string>
 
   <!-- Donate -->
-  <string name="donate_tagline">Envelop is a free and open source app that enables private file sharing for everyone.
-    We will never track or spam you.\nTo help support the maintenance and future developments of Envelop, please consider donating.
+  <string name="donate_tagline">
+    Thank you for considering donating to Envelop!
+    Envelop is a free and open source app that enables private file sharing for everyone.
+    It doesn\'t compromise on your privacy, nor track or spam you.\n\n
+    Every donation helps us maintain and further improve Envelop.
+    Let\'s build a better and fair Internet.
   </string>
+  <string name="donate_title">Make a donation</string>
   <string name="donate">Donate</string>
-  <string name="donate_bitcoin">Donate crypto\n(Bitcoin, Ethereum, …)</string>
-  <string name="donate_stacks">Donate stacks</string>
+  <string name="donate_bitcoin">Donate Crypto</string>
+  <string name="donate_stacks">Donate Stacks</string>
+  <string name="donate_paypal">Donate w/ Paypal</string>
 
   <!-- Upload -->
   <string name="upload_title">Envelop Upload</string>

@@ -37,4 +37,11 @@ class DonateActivityTest {
     onView(withId(R.id.donateStacks)).perform(click())
     intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(stacksUri)))
   }
+
+  @Test
+  fun donatePaypalTest() {
+    val stacksUri = Uri.parse(context.getString(R.string.donate_paypal_link))
+    onView(withId(R.id.donatePaypal)).perform(click())
+    intended(allOf(hasAction(Intent.ACTION_VIEW), hasData(stacksUri)))
+  }
 }

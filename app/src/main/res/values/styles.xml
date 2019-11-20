@@ -28,15 +28,15 @@
     <item name="fontFamily">@font/questrial</item>
 
     <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Envelop.LargeComponent</item>
-    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Envelop.MediumComponent</item>
+    <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Envelop.MediumComponent
+    </item>
 
     <item name="materialCardViewStyle">@style/Envelop.CardView</item>
-    <item name="materialButtonStyle">@style/Envelop.Button</item>
-
   </style>
 
   <style name="AppTheme.Color">
     <item name="android:colorBackground">@color/primary</item>
+    <item name="materialButtonStyle">@style/Envelop.Button.Secondary</item>
   </style>
 
   <style name="AppTheme.Splash">
@@ -72,9 +72,9 @@
     <item name="rippleColor">@color/primary</item>
   </style>
 
-  <style name="Envelop.Button" parent="Widget.MaterialComponents.Button">
-    <item name="backgroundTint">?colorSurface</item>
-    <item name="android:textColor">?colorOnSurface</item>
+  <style name="Envelop.Button.Secondary" parent="Widget.MaterialComponents.Button">
+    <item name="backgroundTint">?colorSecondary</item>
+    <item name="android:textColor">?colorOnSecondary</item>
   </style>
 
 
