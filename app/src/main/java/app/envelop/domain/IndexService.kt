@@ -24,10 +24,17 @@ class IndexService
   fun download(docsToKeep: List<Doc> = emptyList(), docToIgnore: List<Doc> = emptyList()) =
     remoteRepository
       .getJson(INDEX_FILE_NAME, UnsanitizedIndex::class, true)
-      .flatMapIfSuccessful { opt ->
-        when (opt) {
-          is Optional.Some -> indexSanitizer.sanitize(opt.element).map { Operation.success(it.docs) }
-          is Optional.None -> Single.just(Operation.success(emptyList()))
+      .flatMap { source ->
+        if (source.isSuccessful) {
+          val opt = source.result()
+          when (opt) {
+            is Optional.Some -> indexSanitizer.sanitize(opt.element).map { Operation.success(it.docs) }
+            is Optional.None -> Single.just(Operation.success(emptyList()))
+          }
+        } else if (source.is404 ){
+          Single.just(Operation.success(emptyList()))
+        } else {
+          Single.just(Operation.error(source.throwable()))
         }
       }
       .flatMapCompletableIfSuccessful { docsReceived ->

@@ -48,6 +48,9 @@ android {
       arg("room.schemaLocation", "$projectDir/schemas".toString())
     }
   }
+  packagingOptions {
+    exclude 'META-INF/*'
+  }
 }
 
 dependencies {
