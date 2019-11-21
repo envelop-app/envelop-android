@@ -15,13 +15,13 @@
         app:showAsAction="withText"
         />
       <item
-        android:id="@+id/feedback"
-        android:title="@string/main_feedback"
+        android:id="@+id/faq"
+        android:title="@string/main_faq"
         app:showAsAction="withText"
         />
       <item
-        android:id="@+id/faq"
-        android:title="@string/main_faq"
+        android:id="@+id/feedback"
+        android:title="@string/main_feedback"
         app:showAsAction="withText"
         />
       <item

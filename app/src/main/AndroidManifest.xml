@@ -87,7 +87,7 @@
 
     <activity
       android:name=".ui.donate.DonateActivity"
-      android:label="@string/donate_title"
+      android:label="@string/donate"
       android:theme="@style/AppTheme.Color"
       />
 
