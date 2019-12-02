@@ -12,6 +12,7 @@ import io.reactivex.SingleEmitter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.rx2.rxSingle
 import org.blockstack.android.sdk.BlockstackSession
 import org.blockstack.android.sdk.model.DeleteFileOptions
 import org.blockstack.android.sdk.model.GetFileOptions
@@ -33,7 +34,7 @@ class RemoteRepository
 
     fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean) =
         createSingleForCall<Optional<T>> { emitter ->
-            CoroutineScope(Dispatchers.IO).launch {
+            rxSingle(Dispatchers.IO) {
                 val it = blockstack.getFile(fileName, GetFileOptions(decrypt = encrypted))
                 if (!it.hasErrors) {
                     emitter.onSuccess(
