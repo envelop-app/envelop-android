@@ -8,9 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import app.envelop.BuildConfig
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
@@ -24,7 +21,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_doc_menu.*
 import javax.inject.Inject
-
 
 class DocMenuFragment : BottomSheetDialogFragment() {
 
@@ -50,19 +46,10 @@ class DocMenuFragment : BottomSheetDialogFragment() {
     super.onViewCreated(view, savedInstanceState)
     (activity as BaseActivity).component.inject(this)
 
-    (activity as BaseActivity)
-      .lifecycle
-      .addObserver(object : LifecycleObserver {
-        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-        fun onStop() {
-          dismiss()
-        }
-      })
-
     copyLink
       .clicksThrottled()
       .flatMap { viewModel.link().take(1) }
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
         dismiss()
@@ -72,7 +59,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
     share
       .clicksThrottled()
       .flatMap { viewModel.link().take(1) }
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
         dismiss()
@@ -82,7 +69,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
     openLink
       .clicksThrottled()
       .flatMap { viewModel.link().take(1) }
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
         dismiss()
@@ -91,37 +78,37 @@ class DocMenuFragment : BottomSheetDialogFragment() {
 
     delete
       .clicksThrottled()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { viewModel.deleteClicked() }
 
     viewModel
       .doc()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { setDocInfo(it) }
 
     viewModel
       .openDeleteConfirm()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { openDeleteConfirm() }
 
     viewModel
       .openCannotDeleteConfirm()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { openCannotDeleteAlert() }
 
     viewModel
       .isDeleting()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { loadingManager.apply(it, R.string.doc_deleting) }
 
     viewModel
       .errors()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe {
         messageManager.showError(
@@ -133,7 +120,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
 
     viewModel
       .finish()
-      .bindToLifecycle(activity as BaseActivity)
+      .bindToLifecycle(this)
       .observeOnUI()
       .subscribe { dismiss() }
 
@@ -148,6 +135,7 @@ class DocMenuFragment : BottomSheetDialogFragment() {
   }
 
   private fun setDocInfo(it: Doc) {
+    if (icon == null) return // Protect against premature fragment destruction
     icon.contentDescription = it.contentType
     icon.setImageResource(it.fileType.iconRes)
     name.text = it.name
@@ -194,5 +182,4 @@ class DocMenuFragment : BottomSheetDialogFragment() {
         }
       }
   }
-
 }
