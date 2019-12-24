@@ -1,5 +1,6 @@
 package app.envelop.domain
 
+import app.envelop.common.Operation
 import app.envelop.common.flatMapIfSuccessful
 import app.envelop.common.mapIfSuccessful
 import app.envelop.data.models.Doc
@@ -20,7 +21,7 @@ class UpdateDocRemotely
   private val gson: Gson
 ) {
 
-  fun update(doc: Doc) =
+  fun update(doc: Doc): Single<Operation<Doc>> =
     upload(doc)
       .flatMapIfSuccessful { indexService.uploadKeepingDoc(doc) }
       .mapIfSuccessful { doc }
