@@ -12,7 +12,7 @@ import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
 import org.blockstack.android.sdk.*
 import org.blockstack.android.sdk.model.BlockstackConfig
-import org.blockstack.android.sdk.model.toBlockstackConfig
+import java.net.URI
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -21,8 +21,12 @@ class BlockstackModule {
 
   @Provides
   fun blockstackConfig(resources: Resources) =
-    resources.getString(R.string.blockstack_app_url)
-      .toBlockstackConfig(arrayOf(Scope.StoreWrite, Scope.PublishData))
+    BlockstackConfig(
+      URI(resources.getString(R.string.blockstack_app_url)),
+      "/redirect",
+      "/manifest.json",
+      arrayOf(BaseScope.StoreWrite.scope, BaseScope.PublishData.scope)
+    )
 
   @Provides
   @Singleton
@@ -42,13 +46,11 @@ class BlockstackModule {
 
   @Provides
   @Singleton
-  fun blockstackExecutor(context: Context, @Named("blockstack") scheduler: Scheduler): Executor =
-    BlockstackExecutor(context, scheduler)
-
+  fun blockstackSession(config: BlockstackConfig, sessionStore: ISessionStore) =
+    BlockstackSession(sessionStore, config)
 
   @Provides
   @Singleton
-  fun blockstackSession(context: Context, config: BlockstackConfig, sessionStore: ISessionStore, executor: Executor) =
-    BlockstackSession(context, config, sessionStore = sessionStore, executor = executor)
-
+  fun blockstackSignIn(config: BlockstackConfig, sessionStore: ISessionStore) =
+    BlockstackSignIn(sessionStore, config)
 }
