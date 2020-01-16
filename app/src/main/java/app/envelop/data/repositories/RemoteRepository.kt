@@ -30,6 +30,8 @@ class RemoteRepository
         Optional.create(
           result.value?.let { contents -> gson.fromJson(contents.toString(), klass.java) }
         )
+      } else if (result.error?.code?.code == "unknown" && result.error?.message?.endsWith("404") == true) {
+        Optional.None
       } else {
         Timber.w(result.error?.toString())
         throw GetError("Error getting $fileName: ${result.error}")

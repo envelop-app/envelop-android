@@ -1,9 +1,6 @@
 package app.envelop.domain
 
-import app.envelop.common.Operation
-import app.envelop.common.Optional
-import app.envelop.common.flatMapCompletableIfSuccessful
-import app.envelop.common.flatMapIfSuccessful
+import app.envelop.common.*
 import app.envelop.data.mappers.IndexSanitizer
 import app.envelop.data.models.Doc
 import app.envelop.data.models.Index
