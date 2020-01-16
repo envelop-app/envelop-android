@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.5] - Unreleased
 
 ### Fixed
-- Context.startForegroundService removed due to unexpected problems. This call was replaced by Context.startService()
+- `Context.startForegroundService` was causing ANRs issues, so it was replaced by `Context.startService()`
 
 ## [1.2.4] - 2019-12-24
 
