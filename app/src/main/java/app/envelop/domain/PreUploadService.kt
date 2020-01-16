@@ -2,7 +2,6 @@ package app.envelop.domain
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
 import app.envelop.background.UploadBackgroundService
 import app.envelop.common.*
 import app.envelop.data.models.Doc
@@ -46,11 +45,7 @@ class PreUploadService
 
   private fun startBackgroundService() {
     UploadBackgroundService.getIntent(context).also { intent ->
-      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        context.startForegroundService(intent)
-      } else {
-        context.startService(intent)
-      }
+      context.startService(intent)
     }
   }
 
