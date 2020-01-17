@@ -78,5 +78,4 @@ class DocTest {
       doc.toJsonObject().json.getAsJsonPrimitive("new_field").asString
     )
   }
-
 }

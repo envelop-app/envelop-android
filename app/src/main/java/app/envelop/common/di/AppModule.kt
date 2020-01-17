@@ -9,6 +9,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import java.util.*
 import javax.inject.Singleton
 
 @Module
@@ -38,5 +39,8 @@ class AppModule(
       .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
       .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ")
       .create()
+
+  @Provides
+  fun locale(): Locale = Locale.getDefault()
 
 }

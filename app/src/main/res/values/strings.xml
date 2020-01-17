@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <!-- Common -->
   <string name="app_name">Envelop</string>
   <string name="back">Back</string>
@@ -79,5 +79,13 @@
     This file was uploaded on a more recent version of Envelop.
     Please update your app to be able to delete your file.
   </string>
+  <plurals name="min">
+    <item quantity="one">%d min</item>
+    <item quantity="other">%d mins</item>
+  </plurals>
+  <plurals name="hour">
+    <item quantity="one">%d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
 
 </resources>
