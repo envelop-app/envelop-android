@@ -7,4 +7,5 @@ object AppHelper {
   val context get() = InstrumentationRegistry.getInstrumentation().targetContext!!
   val app get() = context.applicationContext as App
   val appComponent get() = app.component
+  val resources get() = context.resources
 }

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - `Context.startForegroundService` was causing ANRs issues, so it was replaced by `Context.startService()`
+- `getRelativeDateTimeStringUpload()` was returning wrong date formats for some Locales
 
 ## [1.2.4] - 2019-12-24
 
