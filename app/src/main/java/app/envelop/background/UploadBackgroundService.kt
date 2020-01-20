@@ -45,7 +45,7 @@ class UploadBackgroundService : Service() {
   }
 
   override fun onCreate() {
-    (applicationContext as App).component.inject(this)
+    (applicationContext as? App)?.component?.inject(this) ?: return
 
     uploadService
       .state()

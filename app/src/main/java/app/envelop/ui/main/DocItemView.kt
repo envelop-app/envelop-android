@@ -22,7 +22,7 @@ constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
   @Inject
-  lateinit var getDate: GetFormattedDateString
+  lateinit var getDate: FormatRelativeDate
 
   init {
     (context as BaseActivity).component.inject(this)
@@ -36,7 +36,7 @@ constructor(
     name.text = doc.name
     size.text = doc.humanSize
     uploadDate.text = if (doc.uploaded) {
-      getDate.toDateStringFormatted(doc.createdAt)
+      getDate.format(doc.createdAt)
     } else {
       resources.getString(R.string.uploading)
     }
