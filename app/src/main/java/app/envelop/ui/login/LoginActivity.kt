@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import app.envelop.R
+import app.envelop.ui.common.SystemBars.setSystemBarsStyle
 import app.envelop.common.rx.observeOnUI
 import app.envelop.domain.LoginService
 import app.envelop.ui.BaseActivity
@@ -34,6 +35,7 @@ class LoginActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_login)
+    window.setSystemBarsStyle(this)
 
     login
       .clicksThrottled()

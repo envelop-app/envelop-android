@@ -19,4 +19,6 @@
   <color name="iconTint">#87000000</color>
   <color name="divider">#18000000</color>
   <color name="containerBackground">#FDDA8B</color>
+  <color name="transparent">#00000000</color>
+  <color name="primaryTransparent">#D9FBC02D</color>
 </resources>

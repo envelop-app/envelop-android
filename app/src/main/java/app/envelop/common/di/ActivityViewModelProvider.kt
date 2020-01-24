@@ -3,7 +3,6 @@ package app.envelop.common.di
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import javax.inject.Inject
 
 @PerActivity

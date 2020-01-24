@@ -5,6 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import app.envelop.R
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
+import app.envelop.ui.common.SystemBars.setSystemBarsStyle
 import app.envelop.ui.BaseActivity
 import kotlinx.android.synthetic.main.activity_donate.*
 import kotlinx.android.synthetic.main.shared_appbar.*
@@ -14,6 +16,8 @@ class DonateActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_donate)
+    window.setSystemBarsStyle(this)
+    toolbar.addSystemWindowInsetToPadding(top = true)
     toolbar.enableNavigation()
     donateCrypto.setOnClickListener { openDonateCrypto() }
     donateStacks.setOnClickListener { openDonateStacksLink() }

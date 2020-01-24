@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.webkit.*
 import androidx.core.view.isVisible
 import app.envelop.R
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
+import app.envelop.ui.common.SystemBars.setSystemBarsStyle
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.MessageManager
 import kotlinx.android.synthetic.main.activity_faq.*
@@ -24,6 +26,8 @@ class FaqActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_faq)
+    window.setSystemBarsStyle(this)
+    toolbar.addSystemWindowInsetToPadding(top = true)
     toolbar.enableNavigation()
     faq.settings.javaScriptEnabled = true
     faq.loadUrl(getString(R.string.faq_url))

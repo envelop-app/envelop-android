@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
   <!-- Theme -->
   <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -22,7 +22,9 @@
     <item name="colorOnBackground">@color/colorOnSurface</item>
     <item name="scrimBackground">@color/foregroundLight</item>
 
-    <item name="android:statusBarColor">@color/primaryDark</item>
+    <item name="android:navigationBarColor">#D9FBC02D</item>
+    <item name="android:statusBarColor">@android:color/transparent</item>
+
     <item name="colorError">@color/error</item>
 
     <item name="fontFamily">@font/questrial</item>
