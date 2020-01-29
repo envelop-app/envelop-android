@@ -4,21 +4,27 @@ import app.envelop.data.models.UnsanitizedIndex
 import app.envelop.data.models.User
 import app.envelop.domain.UserService
 import com.google.gson.JsonParser
-import io.mockk.every
-import io.mockk.mockk
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 
 class IndexSanitizerTest {
 
   private val username = "johnsmith"
-  private val userService = mockk<UserService>().also {
-    every { it.userSingle() } returns Single.just(
-      User(username = username, decentralizedId = "", hubUrl = "", profile = null)
+  private val userService = mock<UserService>()
+  private val subject = IndexSanitizer(userService)
+
+  @Before
+  fun setUp() {
+    whenever(userService.userSingle()).thenReturn(
+      Single.just(
+        User(username = username, decentralizedId = "", hubUrl = "", profile = null)
+      )
     )
   }
-  private val subject = IndexSanitizer(userService)
 
   @Test
   fun sanitize() {

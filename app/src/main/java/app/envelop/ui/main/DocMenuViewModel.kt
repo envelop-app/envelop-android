@@ -19,7 +19,7 @@ class DocMenuViewModel
   docLinkBuilder: DocLinkBuilder
 ) : BaseViewModel() {
 
-  private val docIdReceived = BehaviorSubject.create<String>()
+  private val docIdReceived = PublishSubject.create<String>()
   private val deleteClicks = PublishSubject.create<Click>()
   private val deleteConfirmClicks = PublishSubject.create<Click>()
 
@@ -33,10 +33,21 @@ class DocMenuViewModel
 
   init {
     docIdReceived
-      .flatMap { getDocService.get(it) }
-      .filter { it is Optional.Some }
-      .map { it.element()!! }
-      .subscribe(doc::onNext)
+      .switchMap { getDocService.get(it) }
+      .subscribe {
+        if (it is Optional.Some && !it.element.deleted) {
+          doc.onNext(it.element)
+        }
+      }
+      .addTo(disposables)
+
+    docIdReceived
+      .switchMap { getDocService.get(it) }
+      .subscribe {
+        if (it is Optional.None || it.element()?.deleted == true) {
+          finish.finish()
+        }
+      }
       .addTo(disposables)
 
     doc
@@ -88,5 +99,4 @@ class DocMenuViewModel
   sealed class Error {
     object DeleteError : Error()
   }
-
 }

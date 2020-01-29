@@ -3,10 +3,10 @@ package app.envelop.ui.main
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
-import androidx.appcompat.app.AppCompatActivity
 import app.envelop.R
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
+import com.airbnb.epoxy.CallbackProp
 import com.airbnb.epoxy.ModelProp
 import com.airbnb.epoxy.ModelView
 import kotlinx.android.synthetic.main.item_doc.view.*
@@ -40,19 +40,12 @@ constructor(
     } else {
       resources.getString(R.string.uploading)
     }
+  }
+
+  @CallbackProp
+  fun setClickListener(listener: (() -> Unit)?) {
     getChildAt(0).setOnClickListener {
-      openMenu(doc)
+      listener?.invoke()
     }
   }
-
-  private fun openMenu(doc: Doc) {
-    DocMenuFragment
-      .newInstance(doc)
-      .show((context as AppCompatActivity).supportFragmentManager, FRAGMENT_DOC_MENU_TAG)
-  }
-
-  companion object {
-    private const val FRAGMENT_DOC_MENU_TAG = "doc_menu"
-  }
-
 }

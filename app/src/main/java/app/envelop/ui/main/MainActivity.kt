@@ -15,11 +15,12 @@ import app.envelop.ui.common.LoadingState
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.setVisible
-import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.donate.DonateActivity
+import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
+import com.jakewharton.rxbinding3.view.scrollChangeEvents
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -86,6 +87,11 @@ class MainActivity : BaseActivity() {
         }
       }
 
+    list
+      .scrollChangeEvents()
+      .bindToLifecycle(this)
+      .subscribe { if (docMenu.isOpen()) docMenu.hide() }
+
     viewModel
       .user()
       .bindToLifecycle(this)
@@ -150,6 +156,10 @@ class MainActivity : BaseActivity() {
     logoutDialog = null
   }
 
+  override fun onBackPressed() {
+    if (docMenu.isOpen()) docMenu.hide() else super.onBackPressed()
+  }
+
   private fun setListModels(docs: List<Doc>) {
     list.withModels {
       // Invisible top view to make sure new items are visible when added
@@ -160,9 +170,14 @@ class MainActivity : BaseActivity() {
         docItemView {
           id(doc.id)
           item(doc)
+          clickListener { openDocMenu(doc) }
         }
       }
     }
+  }
+
+  private fun openDocMenu(doc: Doc) {
+    docMenu.showDoc(doc.id)
   }
 
   private fun openFeedback() {
@@ -180,7 +195,7 @@ class MainActivity : BaseActivity() {
   private fun openFaq() {
     startActivity(FaqActivity.getIntent(this))
   }
-  
+
   private fun openDonate() {
     startActivity(DonateActivity.getIntent(this))
   }
