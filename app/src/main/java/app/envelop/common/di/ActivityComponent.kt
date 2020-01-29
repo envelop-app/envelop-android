@@ -2,11 +2,11 @@ package app.envelop.common.di
 
 import app.envelop.ui.common.Toolbar
 import app.envelop.ui.faq.FaqActivity
-import app.envelop.ui.share.ShareActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.main.DocItemView
-import app.envelop.ui.main.DocMenuFragment
+import app.envelop.ui.main.DocMenuView
 import app.envelop.ui.main.MainActivity
+import app.envelop.ui.share.ShareActivity
 import app.envelop.ui.upload.UploadActivity
 import dagger.Subcomponent
 
@@ -22,7 +22,7 @@ interface ActivityComponent {
 
   // Views
 
-  fun inject(docMenuFragment: DocMenuFragment)
+  fun inject(view: DocMenuView)
   fun inject(toolbar: Toolbar)
 
   // Activities

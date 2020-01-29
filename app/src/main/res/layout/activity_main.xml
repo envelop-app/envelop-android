@@ -26,6 +26,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
+
     <com.airbnb.epoxy.EpoxyRecyclerView
       android:id="@+id/list"
       android:layout_width="match_parent"
@@ -73,6 +74,17 @@
     android:layout_margin="24dp"
     android:text="@string/upload"
     app:icon="@drawable/ic_add"
+    />
+
+  <app.envelop.ui.main.DocMenuView
+    android:id="@+id/docMenu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?colorSurface"
+    android:elevation="16dp"
+    app:behavior_hideable="true"
+    app:behavior_skipCollapsed="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

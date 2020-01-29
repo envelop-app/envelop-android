@@ -13,7 +13,7 @@ class ActivityViewModelProvider
   factory: ViewModelProvider.Factory
 ) {
 
-  private val viewModelProvider: ViewModelProvider = ViewModelProviders.of(activity, factory)
+  private val viewModelProvider: ViewModelProvider = ViewModelProvider(activity, factory)
 
   operator fun <T : ViewModel> get(viewModelClass: Class<T>): T {
     return viewModelProvider.get(viewModelClass)
