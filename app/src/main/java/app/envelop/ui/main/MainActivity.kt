@@ -7,6 +7,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.RecyclerView
 import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
@@ -20,7 +21,6 @@ import app.envelop.ui.faq.FaqActivity
 import app.envelop.ui.login.LoginActivity
 import app.envelop.ui.upload.UploadActivity
 import com.jakewharton.rxbinding3.swiperefreshlayout.refreshes
-import com.jakewharton.rxbinding3.view.scrollChangeEvents
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -78,6 +78,13 @@ class MainActivity : BaseActivity() {
       .bindToLifecycle(this)
       .subscribe { viewModel.refresh() }
 
+    list
+      .addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+          if (newState == RecyclerView.SCROLL_STATE_DRAGGING) docMenu.hide()
+        }
+      })
+
     results
       .filter { it.requestCode == REQUEST_FILE && it.resultCode == Activity.RESULT_OK }
       .bindToLifecycle(this)
@@ -86,11 +93,6 @@ class MainActivity : BaseActivity() {
           viewModel.uploadFileReceived(it)
         }
       }
-
-    list
-      .scrollChangeEvents()
-      .bindToLifecycle(this)
-      .subscribe { if (docMenu.isOpen()) docMenu.hide() }
 
     viewModel
       .user()

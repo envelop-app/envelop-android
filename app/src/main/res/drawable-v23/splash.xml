@@ -5,12 +5,10 @@
       <solid android:color="@color/primary" />
     </shape>
   </item>
-  <item android:gravity="center">
-    <bitmap
-      android:width="256dp"
-      android:height="256dp"
-      android:gravity="center"
-      android:src="@drawable/ic_launcher_foreground"
-      />
-  </item>
+  <item
+    android:width="256dp"
+    android:height="256dp"
+    android:drawable="@drawable/ic_launcher_foreground"
+    android:gravity="center"
+    />
 </layer-list>
