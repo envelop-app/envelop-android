@@ -8,29 +8,28 @@ import androidx.core.content.ContextCompat
 import app.envelop.R
 
 object SystemBars {
+
+  private val fullScreenModeFlags: Int
+    get() {
+      var flags = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or
+        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+      }
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+      }
+      return flags
+    }
+
   fun Window.setSystemBarsStyle(context: Context) {
-    decorView.systemUiVisibility =
-      getFullScreenModeFlags()
-    navigationBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-      ContextCompat.getColor(context, R.color.transparent)
-    } else {
-      ContextCompat.getColor(context, R.color.primaryTransparent)
+    decorView.systemUiVisibility = fullScreenModeFlags
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      navigationBarColor = ContextCompat.getColor(context, R.color.transparent)
     }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       navigationBarDividerColor = ContextCompat.getColor(context, R.color.transparent)
     }
   }
-
-  private fun getFullScreenModeFlags() =
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-        View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-        or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
-    } else {
-      (View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-        or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-    }
 }

@@ -5,9 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import app.envelop.R
-import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
-import app.envelop.ui.common.SystemBars.setSystemBarsStyle
 import app.envelop.ui.BaseActivity
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
 import kotlinx.android.synthetic.main.activity_donate.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 
@@ -16,27 +15,31 @@ class DonateActivity : BaseActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_donate)
-    window.setSystemBarsStyle(this)
+
     toolbar.addSystemWindowInsetToPadding(top = true)
     toolbar.enableNavigation()
+
     donateCrypto.setOnClickListener { openDonateCrypto() }
     donateStacks.setOnClickListener { openDonateStacksLink() }
     donatePaypal.setOnClickListener { openDonatePaypalLink() }
   }
 
   private fun openDonateCrypto() {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_crypto_link)))
-    startActivity(intent)
+    startActivity(
+      Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_crypto_link)))
+    )
   }
 
   private fun openDonateStacksLink() {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_stack_link)))
-    startActivity(intent)
+    startActivity(
+      Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_stack_link)))
+    )
   }
 
   private fun openDonatePaypalLink() {
-    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_paypal_link)))
-    startActivity(intent)
+    startActivity(
+      Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.donate_paypal_link)))
+    )
   }
 
   companion object {

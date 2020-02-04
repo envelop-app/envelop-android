@@ -26,9 +26,10 @@ class FaqActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_faq)
-    window.setSystemBarsStyle(this)
+
     toolbar.addSystemWindowInsetToPadding(top = true)
     toolbar.enableNavigation()
+
     faq.settings.javaScriptEnabled = true
     faq.loadUrl(getString(R.string.faq_url))
     faq.webChromeClient = CustomChromeClient()

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
   <!-- Theme -->
   <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -13,6 +13,7 @@
     <item name="colorSecondaryVariant">@color/secondaryDark</item>
     <item name="colorOnPrimary">@color/colorOnPrimary</item>
     <item name="colorOnSecondary">@color/colorOnSecondary</item>
+    <item name="colorError">@color/error</item>
     <item name="colorOnError">@color/colorOnPrimary</item>
 
     <item name="colorSurface">@color/surface</item>
@@ -22,10 +23,10 @@
     <item name="colorOnBackground">@color/colorOnSurface</item>
     <item name="scrimBackground">@color/foregroundLight</item>
 
-    <item name="android:navigationBarColor">#D9FBC02D</item>
     <item name="android:statusBarColor">@android:color/transparent</item>
-
-    <item name="colorError">@color/error</item>
+    <item name="android:navigationBarColor">@color/backgroundTransparent</item>
+    <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
+    <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
 
     <item name="fontFamily">@font/questrial</item>
 
@@ -36,12 +37,18 @@
     <item name="materialCardViewStyle">@style/Envelop.CardView</item>
   </style>
 
+  <style name="AppTheme.Transparent">
+    <item name="android:colorBackground">@color/backgroundTransparent</item>
+    <item name="android:navigationBarColor">@color/backgroundTransparent</item>
+  </style>
+
   <style name="AppTheme.Color">
     <item name="android:colorBackground">@color/primary</item>
+    <item name="android:navigationBarColor">@color/primaryTransparent</item>
     <item name="materialButtonStyle">@style/Envelop.Button.Secondary</item>
   </style>
 
-  <style name="AppTheme.Splash">
+  <style name="AppTheme.Color.Splash">
     <item name="android:windowBackground">@drawable/splash</item>
   </style>
 

@@ -14,11 +14,14 @@
   <color name="foregroundLight">#F5F5F5</color>
   <color name="error">#FF0000</color>
 
+  <color name="transparent">#00000000</color>
+  <color name="primaryTransparent">#D9FBC02D</color>
+  <color name="backgroundTransparent">#D9FFFFFF</color>
+
   <color name="ic_launcher_background">@color/primary</color>
   <color name="blockstack">#211F6D</color>
   <color name="iconTint">#87000000</color>
   <color name="divider">#18000000</color>
   <color name="containerBackground">#FDDA8B</color>
-  <color name="transparent">#00000000</color>
-  <color name="primaryTransparent">#D9FBC02D</color>
+
 </resources>

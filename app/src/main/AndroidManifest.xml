@@ -27,7 +27,7 @@
       android:name=".ui.main.MainActivity"
       android:label="@string/app_name"
       android:launchMode="singleTop"
-      android:theme="@style/AppTheme.Splash"
+      android:theme="@style/AppTheme.Color.Splash"
       >
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
@@ -71,6 +71,7 @@
     <activity
       android:name=".ui.upload.UploadActivity"
       android:label="@string/upload_title"
+      android:theme="@style/AppTheme.Transparent"
       >
       <intent-filter>
         <action android:name="android.intent.action.SEND" />

@@ -9,12 +9,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import app.envelop.R
-import app.envelop.ui.common.Insets.addSystemWindowInsetToMargin
-import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
-import app.envelop.ui.common.SystemBars.setSystemBarsStyle
 import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
+import app.envelop.ui.common.Insets.addSystemWindowInsetToMargin
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
 import app.envelop.ui.common.LoadingState
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
@@ -45,12 +44,14 @@ class MainActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_main)
+
     toolbar.setTitle(R.string.main_title)
     toolbar.setupMenu(R.menu.main)
-    window.setSystemBarsStyle(this)
+
     toolbar.addSystemWindowInsetToPadding(top = true)
     upload.addSystemWindowInsetToMargin(bottom = true)
     list.addSystemWindowInsetToPadding(bottom = true)
+    docMenu.addSystemWindowInsetToPadding(bottom = true)
 
     toolbar
       .itemClicks(R.id.feedback)
