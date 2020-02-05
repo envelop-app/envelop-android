@@ -11,6 +11,7 @@ import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.DocActions
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
 import app.envelop.ui.common.clicksThrottled
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_share.*
@@ -34,7 +35,9 @@ class ShareActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_share)
+
     toolbar.enableNavigation(R.drawable.ic_close, R.string.close)
+    toolbar.addSystemWindowInsetToPadding(top = true)
 
     viewModel
       .doc()

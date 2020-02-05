@@ -42,10 +42,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:ellipsize="middle"
+        android:ellipsize="end"
         android:maxLines="2"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        tools:text="AWEsome.jpg"
+        tools:text="AWEsomeAWEsomeAWEsomeAWEsomeAWEsomeAWEsomeAWEsomeAWEsomeAWEsome.jpg"
         />
 
       <TextView

@@ -7,6 +7,7 @@ import app.envelop.R
 import app.envelop.common.rx.observeOnUI
 import app.envelop.domain.LoginService
 import app.envelop.ui.BaseActivity
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.loading.LoadingManager
@@ -34,6 +35,8 @@ class LoginActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     component.inject(this)
     setContentView(R.layout.activity_login)
+
+    container.addSystemWindowInsetToPadding(top = true, bottom = true)
 
     login
       .clicksThrottled()

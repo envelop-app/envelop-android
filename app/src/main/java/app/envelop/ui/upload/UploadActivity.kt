@@ -10,8 +10,8 @@ import app.envelop.common.rx.observeOnUI
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.loading.LoadingManager
-import app.envelop.ui.share.ShareActivity
 import app.envelop.ui.login.LoginActivity
+import app.envelop.ui.share.ShareActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import javax.inject.Inject
 
