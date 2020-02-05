@@ -15,6 +15,7 @@ import app.envelop.common.rx.observeOnUI
 import app.envelop.data.models.Doc
 import app.envelop.ui.BaseActivity
 import app.envelop.ui.common.DocActions
+import app.envelop.ui.common.Insets.addSystemWindowInsetToPadding
 import app.envelop.ui.common.MessageManager
 import app.envelop.ui.common.clicksThrottled
 import app.envelop.ui.common.loading.LoadingManager
@@ -48,6 +49,7 @@ constructor(
   init {
     activity.component.inject(this)
     inflate(context, R.layout.view_doc_menu, this)
+    addSystemWindowInsetToPadding(bottom = true)
 
     copyLink
       .clicksThrottled()
@@ -154,6 +156,8 @@ constructor(
     icon.setImageResource(doc.fileType.iconRes)
     name.text = doc.name
     size.text = doc.humanSize
+    behaviour?.state = BottomSheetBehavior.STATE_EXPANDED
+    requestLayout() // Reposition bottom sheet according to the new view height
   }
 
   private fun openDeleteConfirm() {

@@ -51,7 +51,6 @@ class MainActivity : BaseActivity() {
     toolbar.addSystemWindowInsetToPadding(top = true)
     upload.addSystemWindowInsetToMargin(bottom = true)
     list.addSystemWindowInsetToPadding(bottom = true)
-    docMenu.addSystemWindowInsetToPadding(bottom = true)
 
     toolbar
       .itemClicks(R.id.feedback)
