@@ -5,7 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.SingleSource
 
-class Operation<out T>(
+data class Operation<out T>(
   private val result: T? = null,
   private val throwable: Throwable? = null
 ) {

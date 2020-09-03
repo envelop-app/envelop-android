@@ -3,6 +3,7 @@ package app.envelop.domain
 import android.app.Activity
 import app.envelop.common.Operation
 import app.envelop.common.di.PerActivity
+import app.envelop.common.rx.rxSingleToOperation
 import app.envelop.common.toOperation
 import app.envelop.data.models.Profile
 import app.envelop.data.models.User
@@ -25,9 +26,9 @@ class LoginService
 ) {
 
   fun login() =
-    rxSingle {
+    rxSingleToOperation {
       blockstackSignInProvider.get().redirectUserToSignIn(activity)
-    }.toOperation()
+    }
 
   fun finishLogin(response: String?): Single<Operation<Unit>> {
     if (response == null) {
@@ -51,7 +52,8 @@ class LoginService
 
   private fun UserData?.isComplete() =
     this?.let {
-      !it.json.optString("username").isNullOrBlank()
+      val username = it.json.optString("username")
+      (!username.isNullOrBlank() && username != "null")
     } ?: false
 
   private fun UserData.toUser() =

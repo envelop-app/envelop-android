@@ -25,6 +25,7 @@ abstract class BaseActivity : AppCompatActivity() {
     window.setSystemBarsStyle(this)
   }
 
+  @Suppress("DEPRECATION")
   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
     results.onNext(ActivityResult(requestCode, resultCode, data))

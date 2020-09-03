@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 package app.envelop.ui.common
 
 import android.content.Context

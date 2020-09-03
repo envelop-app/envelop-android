@@ -1,10 +1,13 @@
 package app.envelop.data.repositories
 
+import app.envelop.common.Operation
 import app.envelop.common.Optional
 import app.envelop.common.mapIfSuccessful
 import app.envelop.common.rx.observeOnUI
+import app.envelop.common.rx.rxSingleToOperation
 import app.envelop.common.toOperation
 import com.google.gson.Gson
+import io.reactivex.Single
 import kotlinx.coroutines.rx2.rxSingle
 import org.blockstack.android.sdk.BlockstackSession
 import org.blockstack.android.sdk.model.DeleteFileOptions
@@ -23,8 +26,8 @@ class RemoteRepository
 
   private val blockstack by lazy { blockstackProvider.get() }
 
-  fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean) =
-    rxSingle {
+  fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean): Single<Operation<Optional<T>>> =
+    rxSingleToOperation {
       val result = blockstack.getFile(fileName, GetFileOptions(decrypt = encrypted))
       if (!result.hasErrors) {
         Optional.create(
@@ -36,10 +39,10 @@ class RemoteRepository
         Timber.w(result.error?.toString())
         throw GetError("Error getting $fileName: ${result.error}")
       }
-    }.toOperation()
+    }
 
   fun uploadByteArray(url: String, data: ByteArray, encrypted: Boolean) =
-    rxSingle {
+    rxSingleToOperation {
       val result = blockstack.putFile(
         url,
         data,
@@ -48,10 +51,10 @@ class RemoteRepository
       if (!result.hasValue) {
         throw UploadError("Error uploading ${url}: ${result.error}")
       }
-    }.toOperation()
+    }
 
   fun <T : Any> uploadJson(fileName: String, content: T, encrypted: Boolean) =
-    rxSingle {
+    rxSingleToOperation {
       val result = blockstack.putFile(
         fileName,
         gson.toJson(content),
@@ -62,26 +65,26 @@ class RemoteRepository
       } else {
         throw UploadError("Error uploading $fileName: ${result.error}")
       }
-    }.toOperation()
+    }
 
   fun deleteFile(fileName: String) =
-    rxSingle {
+    rxSingleToOperation {
       val it = blockstack.deleteFile(fileName, DeleteFileOptions())
       if (it.hasErrors && it.error?.message?.startsWith("FileNotFound") != true) {
         Timber.w(it.error?.toString())
         throw DeleteError(it.error?.toString())
       }
-    }.toOperation()
+    }
 
   private fun getFilesList() =
-    rxSingle {
+    rxSingleToOperation {
       val list = mutableListOf<String>()
       blockstack.listFiles { result ->
         result.value?.let { list.add(it) }
         true
       }
       list
-    }.toOperation()
+    }
 
   fun getFilesList(prefix: String) =
     getFilesList()
