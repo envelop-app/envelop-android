@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import org.blockstack.android.sdk.BlockstackSession
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.net.SocketTimeoutException
 import javax.inject.Provider
 
 class RemoteRepositoryTest {
@@ -18,19 +17,17 @@ class RemoteRepositoryTest {
     @Test
     fun exceptionHandling() {
       val blockStackSessionMock = mock<BlockstackSession>()
-      val exception = SocketTimeoutException()
+      val exception = RuntimeException()
 
       GlobalScope.launch {
-        whenever(blockStackSessionMock.getFile(any(), any())).then {
-          throw exception
-        }
+        whenever(blockStackSessionMock.getFile(any(), any())).thenThrow(exception)
       }
 
       val remoteRepo = RemoteRepository(Provider { blockStackSessionMock }, Gson())
-      val result = remoteRepo.getJson("index", this::class, true).blockingGet()
+      val result = remoteRepo.getJson("index", Unit::class, true).blockingGet()
 
       assertEquals(
-        Operation.error<Exception>(exception),
+        Operation.error<RemoteRepository>(exception),
         result
       )
     }

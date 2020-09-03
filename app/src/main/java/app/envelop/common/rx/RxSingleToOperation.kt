@@ -26,9 +26,6 @@ public fun <T : Any> rxSingleToOperation(
   context: CoroutineContext = EmptyCoroutineContext,
   block: suspend CoroutineScope.() -> T
 ):  Single<Operation<T>> {
-  require(context[Job] === null) { "Single context cannot contain job in it." +
-    "Its lifecycle should be managed via Disposable handle. Had $context" }
-
    return rxSingle(context) {
      try {
        Operation.success(block.invoke(this))

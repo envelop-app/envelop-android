@@ -52,7 +52,8 @@ class LoginService
 
   private fun UserData?.isComplete() =
     this?.let {
-      !it.json.optString("username").isNullOrBlank()
+      val username = it.json.optString("username")
+      (!username.isNullOrBlank() && username != "null")
     } ?: false
 
   private fun UserData.toUser() =

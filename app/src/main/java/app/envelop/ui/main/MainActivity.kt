@@ -218,6 +218,7 @@ class MainActivity : BaseActivity() {
       .show()
   }
 
+  @Suppress("DEPRECATION")
   private fun openFileIntent() {
     startActivityForResult(
       Intent(Intent.ACTION_GET_CONTENT).apply {

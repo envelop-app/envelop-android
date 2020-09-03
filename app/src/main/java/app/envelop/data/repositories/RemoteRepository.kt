@@ -27,7 +27,7 @@ class RemoteRepository
   private val blockstack by lazy { blockstackProvider.get() }
 
   fun <T : Any> getJson(fileName: String, klass: KClass<T>, encrypted: Boolean): Single<Operation<Optional<T>>> =
-    rxSingle {
+    rxSingleToOperation {
       val result = blockstack.getFile(fileName, GetFileOptions(decrypt = encrypted))
       if (!result.hasErrors) {
         Optional.create(
@@ -39,7 +39,7 @@ class RemoteRepository
         Timber.w(result.error?.toString())
         throw GetError("Error getting $fileName: ${result.error}")
       }
-    }.toOperation()
+    }
 
   fun uploadByteArray(url: String, data: ByteArray, encrypted: Boolean) =
     rxSingleToOperation {
