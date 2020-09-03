@@ -52,5 +52,5 @@ class RxSingleToOperationKtTest {
       result
     )
   }
-  
+
 }
