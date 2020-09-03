@@ -40,7 +40,6 @@ class RxSingleToOperationKtTest {
 
   @Test
   fun rxSingleOperationErrorExceptionSubscribed() {
-
     val exception = SocketTimeoutException()
     val stream = rxSingleToOperation {
       throw exception
@@ -53,5 +52,5 @@ class RxSingleToOperationKtTest {
       result
     )
   }
-
+  
 }
