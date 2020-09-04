@@ -4,6 +4,7 @@ import app.envelop.common.Optional
 import app.envelop.data.models.Upload
 import app.envelop.data.repositories.DocRepository
 import app.envelop.data.repositories.UploadRepository
+import app.envelop.test.DocFactory
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
@@ -22,10 +23,8 @@ class GetDocServiceTest {
 
     @Test
     fun get() {
-        val value = Observable.just(Optional.create("Hello World"))
-        whenever(docRepositoryMock.get(any())).then {
-            value
-        }
+        val value = Observable.just(Optional.create(DocFactory.build()))
+        whenever(docRepositoryMock.get(any())).thenReturn(value)
 
         val result = docService.get("")
 
@@ -39,9 +38,7 @@ class GetDocServiceTest {
     fun getUpload() {
         val uploadObject = Upload()
         val value = Flowable.just(listOf(uploadObject))
-        whenever(uploadRepositoryMock.getByDocId(any())).then {
-            value
-        }
+        whenever(uploadRepositoryMock.getByDocId(any())).thenReturn(value)
 
         val result = docService.getUpload("")
                                 .blockingFirst()
