@@ -29,6 +29,13 @@ jobs:
       - name: Run unit tests
         run: ./gradlew testDebug
 
+      - name: Upload Unit Test results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: tests-results
+          path: app/build/reports/tests/testDebugUnitTest/
+
       - name: Build androidTest APK
         run: ./gradlew :app:assembleDebugAndroidTest
 
