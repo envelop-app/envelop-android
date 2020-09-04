@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Code Coverage to GetDocService
+
 ### Fixed
 - Socket Timeout Exceptions and GaiExceptions on unsubscribed RxSingles
 
