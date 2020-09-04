@@ -42,15 +42,17 @@ class LoginService
 
     return rxSingle {
       val userData = blockstackProvider.get().handlePendingSignIn(authResponseTokens.last())
-      if (userData.hasValue && userData.value.isComplete()) {
+      if (userData.hasValue && userData.value.containsValidUsername()) {
         userRepository.setUser(userData.value?.toUser())
+      } else if (!userData.value.containsValidUsername()) {
+        throw UnverifiedUsername("Invalid Username")
       } else {
         throw Error(userData.error?.message)
       }
     }.toOperation()
   }
 
-  private fun UserData?.isComplete() =
+  private fun UserData?.containsValidUsername() =
     this?.let {
       val username = it.json.optString("username")
       (!username.isNullOrBlank() && username != "null")
@@ -73,5 +75,6 @@ class LoginService
     )
 
   class Error(message: String?) : Exception(message)
+  class UnverifiedUsername(message: String?) : Exception(message)
 
 }
