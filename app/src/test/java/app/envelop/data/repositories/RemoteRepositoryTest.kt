@@ -24,12 +24,10 @@ class RemoteRepositoryTest {
       whenever(blockStackSessionMock.getFile(any(), any())).thenThrow(RuntimeException())
     }
 
-      val remoteRepo = RemoteRepository(Provider { blockStackSessionMock }, Gson())
-      val result = remoteRepo.getJson("index", Unit::class, true).blockingGet()
-
+    val remoteRepo = RemoteRepository(Provider { blockStackSessionMock }, Gson())
+    val result = remoteRepo.getJson("index", Unit::class, true).blockingGet()
 
     assertThat(result, instanceOf(Operation.error<Unit>(RuntimeException())::class.java))
-
   }
 }
 

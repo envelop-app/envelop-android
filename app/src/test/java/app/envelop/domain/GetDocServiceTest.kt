@@ -15,37 +15,37 @@ import org.junit.Test
 
 
 class GetDocServiceTest {
+  val docRepositoryMock = mock<DocRepository>()
+  val uploadRepositoryMock = mock<UploadRepository>()
 
-    val docRepositoryMock = mock<DocRepository>()
-    val uploadRepositoryMock = mock<UploadRepository>()
+  val docService = GetDocService(docRepositoryMock, uploadRepositoryMock)
 
-    val docService = GetDocService(docRepositoryMock, uploadRepositoryMock)
+  @Test
+  fun get() {
+    val value = Observable.just(Optional.create(DocFactory.build()))
+    whenever(docRepositoryMock.get(any())).thenReturn(value)
 
-    @Test
-    fun get() {
-        val value = Observable.just(Optional.create(DocFactory.build()))
-        whenever(docRepositoryMock.get(any())).thenReturn(value)
+    val result = docService.get("")
 
-        val result = docService.get("")
+    assertEquals(
+      result,
+      value
+    )
+  }
 
-        assertEquals(
-            result,
-            value
-        )
-    }
+  @Test
+  fun getUpload() {
+    val uploadObject = Upload()
+    val value = Flowable.just(listOf(uploadObject))
+    whenever(uploadRepositoryMock.getByDocId(any())).thenReturn(value)
 
-    @Test
-    fun getUpload() {
-        val uploadObject = Upload()
-        val value = Flowable.just(listOf(uploadObject))
-        whenever(uploadRepositoryMock.getByDocId(any())).thenReturn(value)
+    val result = docService.getUpload("")
+      .blockingFirst()
+      .element()
 
-        val result = docService.getUpload("")
-                                .blockingFirst()
-                                .element()
-        assertEquals(
-            uploadObject,
-            result
-        )
-    }
+    assertEquals(
+      uploadObject,
+      result
+    )
+  }
 }
