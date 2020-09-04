@@ -3,32 +3,28 @@ package app.envelop.domain
 import android.app.Activity
 import app.envelop.common.Operation
 import app.envelop.common.di.PerActivity
+import app.envelop.common.mapIfSuccessful
 import app.envelop.common.rx.rxSingleToOperation
 import app.envelop.common.toOperation
+import app.envelop.data.BlockstackLogin
 import app.envelop.data.models.Profile
 import app.envelop.data.models.User
 import app.envelop.data.repositories.UserRepository
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.rxSingle
-import org.blockstack.android.sdk.BlockstackSession
-import org.blockstack.android.sdk.BlockstackSignIn
 import org.blockstack.android.sdk.model.UserData
 import javax.inject.Inject
-import javax.inject.Provider
 
 @PerActivity
 class LoginService
 @Inject constructor(
-  private val blockstackProvider: Provider<BlockstackSession>,
-  private val blockstackSignInProvider: Provider<BlockstackSignIn>,
-  private val userRepository: UserRepository,
-  private val activity: Activity
+  private val blockstackLogin: BlockstackLogin,
+  private val userRepository: UserRepository
 ) {
 
-  fun login() =
-    rxSingleToOperation {
-      blockstackSignInProvider.get().redirectUserToSignIn(activity)
-    }
+
+  fun login() = blockstackLogin.redirectUserToSignIn()
+
 
   fun finishLogin(response: String?): Single<Operation<Unit>> {
     if (response == null) {
@@ -40,22 +36,19 @@ class LoginService
       return Single.just(Operation.error(Error("Invalid response")))
     }
 
-    return rxSingle {
-      val userData = blockstackProvider.get().handlePendingSignIn(authResponseTokens.last())
-      if (userData.hasValue && userData.value.containsValidUsername()) {
-        userRepository.setUser(userData.value?.toUser())
-      } else if (!userData.value.containsValidUsername()) {
-        throw UnverifiedUsername("Invalid Username")
-      } else {
-        throw Error(userData.error?.message)
-      }
-    }.toOperation()
+    return blockstackLogin.handlePendingSignIn(authResponseTokens.last())
+      .mapIfSuccessful { userData ->
+        if (userData.containsValidUsername()) {
+          userRepository.setUser(userData.toUser())
+        } else {
+          throw UsernameMissing("Invalid Username")
+        }
+      }.onErrorReturn { Operation.error(it) }
   }
 
   private fun UserData?.containsValidUsername() =
-    this?.let {
-      val username = it.json.optString("username")
-      (!username.isNullOrBlank() && username != "null")
+    this?.json?.optString("username")?.let { username ->
+      (!username.isBlank() && username != "null")
     } ?: false
 
   private fun UserData.toUser() =
@@ -75,6 +68,6 @@ class LoginService
     )
 
   class Error(message: String?) : Exception(message)
-  class UnverifiedUsername(message: String?) : Exception(message)
+  class UsernameMissing(message: String?) : Exception(message)
 
 }

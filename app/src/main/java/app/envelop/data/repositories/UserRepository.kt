@@ -9,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Provider
 
-class UserRepository
+open class UserRepository
 @Inject constructor(
   rxPreferencesProvider: Provider<RxSharedPreferences>,
   gson: Gson

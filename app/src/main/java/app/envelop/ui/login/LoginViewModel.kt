@@ -1,7 +1,7 @@
 package app.envelop.ui.login
 
 import app.envelop.domain.LoginService
-import app.envelop.domain.LoginService.UnverifiedUsername
+import app.envelop.domain.LoginService.UsernameMissing
 import app.envelop.ui.BaseViewModel
 import app.envelop.ui.common.*
 import io.reactivex.rxkotlin.addTo
@@ -45,7 +45,7 @@ class LoginViewModel
           finishToMain.finish(Finish.Result.Ok)
         } else {
           Timber.w(it.throwable())
-          errors.onNext(if (it.throwable() is UnverifiedUsername) Error.UsernameMissing else Error.LoginError )
+          errors.onNext(if (it.throwable() is UsernameMissing) Error.UsernameMissing else Error.LoginError)
         }
       }
       .addTo(disposables)
