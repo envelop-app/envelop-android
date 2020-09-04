@@ -11,8 +11,6 @@ import kotlin.coroutines.ContinuationInterceptor
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-
-
 /**
  * Creates cold [single][Single] that will run a given [block] in a coroutine and emits its result wrapped in [Operation]
  * The Value is wrapped so it can handle Exceptions even when those are launch after unsubscribing avoiding of propagation
