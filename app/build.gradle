@@ -37,8 +37,7 @@ android {
     checkAllWarnings true
     warningsAsErrors true
     abortOnError true
-    disable 'CheckResult','AppLinksAutoVerifyWarning','GoogleAppIndexingApiWarning',
-        'TrustAllX509TrustManager','SelectableText'
+    lintConfig file('lint.xml')
   }
   androidExtensions {
     experimental = true
@@ -125,6 +124,5 @@ dependencies {
   androidTestImplementation 'androidx.test.ext:junit:1.1.2'
   androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
   androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
-  //noinspection GradleDependency
-  androidTestImplementation 'org.mockito:mockito-android:3.4.6' //3.5 has an issue
+  androidTestImplementation 'org.mockito:mockito-android:3.4.6' //3.5 has an issue (lint.xml)
 }
