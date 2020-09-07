@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+
+    <issue id="GradleDependency">
+        <ignore regexp="newer version of org.mockito:mockito-android than 3.4.6 is available: .*" />
+    </issue>
+    <issue id="NewerVersionAvailable">
+        <ignore regexp="newer version of org.mockito:mockito-android than 3.4.6 is available: .*" />
+    </issue>
+
+    <issue id="CheckResult" severity="informational" />
+    <issue id="AppLinksAutoVerifyWarning" severity="informational" />
+    <issue id="GoogleAppIndexingApiWarning" severity="informational" />
+    <issue id="TrustAllX509TrustManager" severity="informational" />
+    <issue id="SelectableText" severity="informational" />
+
+</lint>

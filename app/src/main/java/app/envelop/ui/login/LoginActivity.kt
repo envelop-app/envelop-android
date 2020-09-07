@@ -58,7 +58,8 @@ class LoginActivity : BaseActivity() {
       .subscribe {
         messageManager.showError(
           when (it) {
-            LoginViewModel.Error.LoginError -> R.string.login_error
+            LoginViewModel.Error.UsernameMissing -> R.string.login_username_error
+            else -> R.string.login_error
           }
         )
       }
