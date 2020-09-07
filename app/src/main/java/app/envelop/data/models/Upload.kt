@@ -45,7 +45,7 @@ data class UploadWithDoc(
             (baseEncryptionSpec as Pbkdf2AesEncryptionSpec).copy(iv = doc.partIVs!![part])
           UploadPart(
             part = part,
-            fileUri = Uri.parse(upload.fileUriPath),
+            fileUri = upload.fileUriPath,
             baseUrl = doc.url,
             partSize = upload.partSize,
             passcode = passcode,
@@ -58,7 +58,7 @@ data class UploadWithDoc(
 
 data class UploadPart(
   val part: Int,
-  val fileUri: Uri,
+  val fileUri: String,
   val baseUrl: String,
   val partSize: Long,
   val passcode: String,

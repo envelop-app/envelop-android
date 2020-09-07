@@ -36,8 +36,8 @@ class FileHandler
     context.deleteFile(fileUri.lastPathSegment)
   }
 
-  fun localFileToByteArray(fileUri: Uri, start: Long = 0, maxLength: Long = Long.MAX_VALUE) =
-    context.openFileInput(fileUri.lastPathSegment)
+  fun localFileToByteArray(fileUri: String, start: Long = 0, maxLength: Long = Long.MAX_VALUE) =
+    context.openFileInput(Uri.parse(fileUri).lastPathSegment)
       ?.use { inputStream ->
 
         val byteBuffer = ByteArrayOutputStream()
