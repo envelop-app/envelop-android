@@ -42,7 +42,7 @@ data class InnerJsonObject(
   fun optBoolean(key: JsonKey) = (json.get(key.value) as? JsonPrimitive)?.asBoolean
   fun set(key: JsonKey, value: Boolean?) = json.addProperty(key.value, value)
 
-  fun getDate(key: JsonKey) = optDate(key)!!
+  fun getDate(key: JsonKey): Date = optDate(key) ?: Date()
   private fun optDate(key: JsonKey): Date? = optString(key)?.let { parseDateWithFallback(it) }
   fun set(key: JsonKey, value: Date?) = set(key, value?.let { dateTimeFormat.format(it) })
 
