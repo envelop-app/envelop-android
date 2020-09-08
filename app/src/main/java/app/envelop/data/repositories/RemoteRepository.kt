@@ -5,10 +5,8 @@ import app.envelop.common.Optional
 import app.envelop.common.mapIfSuccessful
 import app.envelop.common.rx.observeOnUI
 import app.envelop.common.rx.rxSingleToOperation
-import app.envelop.common.toOperation
 import com.google.gson.Gson
 import io.reactivex.Single
-import kotlinx.coroutines.rx2.rxSingle
 import org.blockstack.android.sdk.BlockstackSession
 import org.blockstack.android.sdk.model.DeleteFileOptions
 import org.blockstack.android.sdk.model.GetFileOptions

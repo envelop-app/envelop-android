@@ -36,7 +36,7 @@ class UploadService
   private val disposables = CompositeDisposable()
   private val state = BehaviorSubject.createDefault<UploadState>(UploadState.Idle)
 
-  fun state(): Observable<UploadState> = state.hide()
+  fun state(): Observable<UploadState> = state.hide().distinctUntilChanged()
 
   fun startUpload() {
     if (state.value !is UploadState.Idle) return
