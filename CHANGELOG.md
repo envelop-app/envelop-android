@@ -8,9 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.9] - 2019-09-07
 
 ### Fixed
+- Protected against potential Nullpointer exceptions on getDate from json object
+
+## [1.2.9] - 2019-09-07
+
+### Fixed
 - Error Message for Invalid Username
 - Socket Timeout Exceptions and GaiExceptions on unsubscribed RxSingles
-- potential Nullpointer exception on getDate from json object
 
 ## [1.2.8] - 2019-02-05
 
