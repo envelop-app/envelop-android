@@ -10,26 +10,27 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 
 class LoginViewModelTest {
 
     val loginService = mock<LoginService>()
-    val loginViewModel = LoginViewModel()
-
-    @Before
-    fun setUp() {
-        loginViewModel.loginService = loginService
+  val loginViewModel = LoginViewModel().also {
+    it.loginService = loginService
     }
 
     @Test
-    fun isLoggingIn() {
+    fun isLoggingInLoadingState() {
         whenever(loginService.login()).doReturn(Single.just(Operation()))
 
         val valueStream = loginViewModel.isLoggingIn().test()
         loginViewModel.loginClick()
+
+      assertEquals(
+        valueStream.values()[valueStream.values().size - 2],
+        LoadingState.Loading
+      )
 
         assertEquals(
             valueStream.values().last(),
@@ -50,13 +51,7 @@ class LoginViewModelTest {
     @Test
     fun errorsAuth() {
         whenever(loginService.finishLogin(any())).doReturn(
-            Single.just(
-                Operation(
-                    throwable = LoginService.UsernameMissing(
-                        ""
-                    )
-                )
-            )
+          Single.just(Operation.error(LoginService.UsernameMissing("")))
         )
 
         val errorStream = loginViewModel.errors().test()
