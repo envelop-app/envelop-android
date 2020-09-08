@@ -15,59 +15,59 @@ import org.junit.Test
 
 class LoginViewModelTest {
 
-    val loginService = mock<LoginService>()
+  val loginService = mock<LoginService>()
   val loginViewModel = LoginViewModel().also {
     it.loginService = loginService
-    }
+  }
 
-    @Test
-    fun isLoggingInLoadingState() {
-        whenever(loginService.login()).doReturn(Single.just(Operation()))
+  @Test
+  fun isLoggingInLoadingState() {
+    whenever(loginService.login()).doReturn(Single.just(Operation()))
 
-        val valueStream = loginViewModel.isLoggingIn().test()
-        loginViewModel.loginClick()
+    val valueStream = loginViewModel.isLoggingIn().test()
+    loginViewModel.loginClick()
 
-      assertEquals(
-        valueStream.values()[valueStream.values().size - 2],
-        LoadingState.Loading
-      )
+    assertEquals(
+      valueStream.values()[valueStream.values().size - 2],
+      LoadingState.Loading
+    )
 
-        assertEquals(
-            valueStream.values().last(),
-            LoadingState.Idle
-        )
-    }
+    assertEquals(
+      valueStream.values().last(),
+      LoadingState.Idle
+    )
+  }
 
-    @Test
-    fun errorsLogin() {
-        whenever(loginService.login()).doReturn(Single.just(Operation(throwable = RuntimeException())))
+  @Test
+  fun errorsLogin() {
+    whenever(loginService.login()).doReturn(Single.just(Operation(throwable = RuntimeException())))
 
-        val errorStream = loginViewModel.errors().test()
-        loginViewModel.loginClick()
+    val errorStream = loginViewModel.errors().test()
+    loginViewModel.loginClick()
 
-        errorStream.assertValue(LoginViewModel.Error.LoginError)
-    }
+    errorStream.assertValue(LoginViewModel.Error.LoginError)
+  }
 
-    @Test
-    fun errorsAuth() {
-        whenever(loginService.finishLogin(any())).doReturn(
-          Single.just(Operation.error(LoginService.UsernameMissing("")))
-        )
+  @Test
+  fun errorsAuth() {
+    whenever(loginService.finishLogin(any())).doReturn(
+      Single.just(Operation.error(LoginService.UsernameMissing("")))
+    )
 
-        val errorStream = loginViewModel.errors().test()
-        loginViewModel.authDataReceived("")
+    val errorStream = loginViewModel.errors().test()
+    loginViewModel.authDataReceived("")
 
-        errorStream.assertValue(LoginViewModel.Error.UsernameMissing)
-    }
+    errorStream.assertValue(LoginViewModel.Error.UsernameMissing)
+  }
 
-    @Test
-    fun finishToMain() {
-        whenever(loginService.finishLogin(any())).doReturn(Single.just(Operation()))
+  @Test
+  fun finishToMain() {
+    whenever(loginService.finishLogin(any())).doReturn(Single.just(Operation()))
 
-        val finishStream = loginViewModel.finishToMain().test()
-        loginViewModel.authDataReceived("")
+    val finishStream = loginViewModel.finishToMain().test()
+    loginViewModel.authDataReceived("")
 
-        val finishResult = finishStream.values().first()
-        assertEquals(finishResult.result, Finish.Result.Ok)
-    }
+    val finishResult = finishStream.values().first()
+    assertEquals(finishResult.result, Finish.Result.Ok)
+  }
 }
