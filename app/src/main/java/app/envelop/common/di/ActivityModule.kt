@@ -1,6 +1,7 @@
 package app.envelop.common.di
 
 import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import app.envelop.ui.BaseActivity
 import dagger.Module
@@ -19,5 +20,8 @@ class ActivityModule(
 
   @Provides
   fun fragmentActivity(): FragmentActivity = activity
+
+  @Provides
+  fun appCompatActivity(): AppCompatActivity = activity
 
 }

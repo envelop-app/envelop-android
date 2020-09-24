@@ -12,6 +12,7 @@ import app.envelop.data.models.User
 import app.envelop.data.repositories.UserRepository
 import io.reactivex.Single
 import kotlinx.coroutines.rx2.rxSingle
+import org.blockstack.android.sdk.BlockstackSignIn
 import org.blockstack.android.sdk.model.UserData
 import javax.inject.Inject
 
@@ -28,15 +29,9 @@ class LoginService
 
   fun finishLogin(response: String?): Single<Operation<Unit>> {
     if (response == null) {
-      return Single.just(Operation.error(Error("Empty response")))
-    }
-
-    val authResponseTokens = response.split("/")
-    if (authResponseTokens.size < 2) {
       return Single.just(Operation.error(Error("Invalid response")))
     }
-
-    return blockstackLogin.handlePendingSignIn(authResponseTokens.last())
+    return blockstackLogin.handlePendingSignIn(response)
       .mapIfSuccessful { userData ->
         if (userData.containsValidUsername()) {
           userRepository.setUser(userData.toUser())
@@ -66,6 +61,10 @@ class LoginService
         )
       }
     )
+
+  fun provideBlockstackSignIn() : BlockstackSignIn {
+    return blockstackLogin.blockstackSignInProvider.get()
+  }
 
   class Error(message: String?) : Exception(message)
   class UsernameMissing(message: String?) : Exception(message)

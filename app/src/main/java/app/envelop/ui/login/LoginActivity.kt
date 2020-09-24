@@ -14,9 +14,11 @@ import app.envelop.ui.common.loading.LoadingManager
 import app.envelop.ui.main.MainActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_login.*
+import org.blockstack.android.sdk.BlockstackSignIn
+import org.blockstack.android.sdk.ui.SignInProvider
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity() {
+class LoginActivity : BaseActivity(), SignInProvider {
 
   @Inject
   lateinit var loginService: LoginService
@@ -74,7 +76,7 @@ class LoginActivity : BaseActivity() {
       }
 
     if (intent?.action == Intent.ACTION_VIEW) {
-      viewModel.authDataReceived(intent?.dataString)
+      viewModel.authDataReceived(intent.data?.getQueryParameter("authResponse"))
     }
   }
 
@@ -86,4 +88,9 @@ class LoginActivity : BaseActivity() {
   companion object {
     fun getIntent(context: Context) = Intent(context, LoginActivity::class.java)
   }
+
+  override fun provideBlockstackSignIn(): BlockstackSignIn {
+    return loginService.provideBlockstackSignIn()
+  }
+
 }
