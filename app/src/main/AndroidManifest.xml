@@ -75,7 +75,6 @@
       </intent-filter>
     </activity>
 
-
     <activity
       android:name=".ui.upload.UploadActivity"
       android:label="@string/upload_title"

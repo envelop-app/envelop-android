@@ -1,6 +1,6 @@
 package app.envelop.data
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import app.envelop.common.rx.rxSingleToOperation
 import org.blockstack.android.sdk.BlockstackConnect
 
@@ -12,7 +12,7 @@ open class BlockstackLogin
 @Inject constructor(
   private val blockstackProvider: Provider<BlockstackSession>,
   private val blockstackConnectProvider: Provider<BlockstackConnect>,
-  private val activity: AppCompatActivity
+  private val activity: Activity
 ) {
 
   open fun login() =  blockstackConnectProvider.get().connect(activity)

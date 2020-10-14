@@ -20,7 +20,6 @@ import javax.inject.Singleton
 class BlockstackModule {
 
   @Provides
-  @Singleton
   fun blockstackConfig(resources: Resources) =
     BlockstackConfig(
       URI(resources.getString(R.string.blockstack_app_url)),
