@@ -82,6 +82,7 @@ dependencies {
   implementation 'com.google.code.gson:gson:2.8.6'
 
   // Blockstack
+  //noinspection GradleDependency
   implementation 'com.github.blockstack:blockstack-android:0.6.0'
 
   // Dependency Injection
