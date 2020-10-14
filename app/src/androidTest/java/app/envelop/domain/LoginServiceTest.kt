@@ -1,6 +1,5 @@
 package app.envelop.domain
 
-import org.blockstack.android.sdk.model.UserData
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.envelop.common.Operation
 import app.envelop.data.BlockstackLogin
@@ -10,8 +9,8 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
+import org.blockstack.android.sdk.model.UserData
 import org.json.JSONObject
-
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -27,7 +26,7 @@ class LoginServiceTest {
     @Test
     fun login() {
         val result = finishLoginService.login()
-        verify(blockstackLoginMock).redirectUserToSignIn()
+        verify(blockstackLoginMock).login()
     }
 
     @Test

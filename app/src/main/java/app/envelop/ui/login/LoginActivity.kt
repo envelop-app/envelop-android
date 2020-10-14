@@ -14,11 +14,9 @@ import app.envelop.ui.common.loading.LoadingManager
 import app.envelop.ui.main.MainActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_login.*
-import org.blockstack.android.sdk.BlockstackSignIn
-import org.blockstack.android.sdk.ui.SignInProvider
 import javax.inject.Inject
 
-class LoginActivity : BaseActivity(), SignInProvider {
+class LoginActivity : BaseActivity() {
 
   @Inject
   lateinit var loginService: LoginService
@@ -42,7 +40,7 @@ class LoginActivity : BaseActivity(), SignInProvider {
 
     login
       .clicksThrottled()
-      .observeOnUI()
+      .bindToLifecycle(this)
       .subscribe { viewModel.loginClick() }
 
     viewModel
@@ -87,10 +85,6 @@ class LoginActivity : BaseActivity(), SignInProvider {
 
   companion object {
     fun getIntent(context: Context) = Intent(context, LoginActivity::class.java)
-  }
-
-  override fun provideBlockstackSignIn(): BlockstackSignIn {
-    return loginService.provideBlockstackSignIn()
   }
 
 }

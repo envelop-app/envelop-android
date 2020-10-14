@@ -8,6 +8,7 @@ import app.envelop.common.rx.rxSingleToOperation
 import com.google.gson.Gson
 import io.reactivex.Single
 import org.blockstack.android.sdk.BlockstackSession
+import org.blockstack.android.sdk.ErrorCode
 import org.blockstack.android.sdk.model.DeleteFileOptions
 import org.blockstack.android.sdk.model.GetFileOptions
 import org.blockstack.android.sdk.model.PutFileOptions
@@ -31,7 +32,7 @@ class RemoteRepository
         Optional.create(
           result.value?.let { contents -> gson.fromJson(contents.toString(), klass.java) }
         )
-      } else if (result.error?.code?.code == "unknown" && result.error?.message?.endsWith("404") == true) {
+      } else if (result.error?.code == ErrorCode.NetworkError && result.error?.parameter == "404") {
         Optional.None
       } else {
         Timber.w(result.error?.toString())
@@ -68,7 +69,7 @@ class RemoteRepository
   fun deleteFile(fileName: String) =
     rxSingleToOperation {
       val it = blockstack.deleteFile(fileName, DeleteFileOptions())
-      if (it.hasErrors && it.error?.message?.startsWith("FileNotFound") != true) {
+      if (it.error?.code == ErrorCode.NetworkError && it.error?.parameter == "404") {
         Timber.w(it.error?.toString())
         throw DeleteError(it.error?.toString())
       }

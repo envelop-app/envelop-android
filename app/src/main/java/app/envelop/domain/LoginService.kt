@@ -1,18 +1,13 @@
 package app.envelop.domain
 
-import android.app.Activity
 import app.envelop.common.Operation
 import app.envelop.common.di.PerActivity
 import app.envelop.common.mapIfSuccessful
-import app.envelop.common.rx.rxSingleToOperation
-import app.envelop.common.toOperation
 import app.envelop.data.BlockstackLogin
 import app.envelop.data.models.Profile
 import app.envelop.data.models.User
 import app.envelop.data.repositories.UserRepository
 import io.reactivex.Single
-import kotlinx.coroutines.rx2.rxSingle
-import org.blockstack.android.sdk.BlockstackSignIn
 import org.blockstack.android.sdk.model.UserData
 import javax.inject.Inject
 
@@ -24,7 +19,7 @@ class LoginService
 ) {
 
 
-  fun login() = blockstackLogin.redirectUserToSignIn()
+  fun login() = blockstackLogin.login()
 
 
   fun finishLogin(response: String?): Single<Operation<Unit>> {
@@ -61,10 +56,6 @@ class LoginService
         )
       }
     )
-
-  fun provideBlockstackSignIn() : BlockstackSignIn {
-    return blockstackLogin.blockstackSignInProvider.get()
-  }
 
   class Error(message: String?) : Exception(message)
   class UsernameMissing(message: String?) : Exception(message)

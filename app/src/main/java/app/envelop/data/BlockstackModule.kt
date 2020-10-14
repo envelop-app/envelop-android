@@ -20,6 +20,7 @@ import javax.inject.Singleton
 class BlockstackModule {
 
   @Provides
+  @Singleton
   fun blockstackConfig(resources: Resources) =
     BlockstackConfig(
       URI(resources.getString(R.string.blockstack_app_url)),
@@ -53,4 +54,9 @@ class BlockstackModule {
   @Singleton
   fun blockstackSignIn(config: BlockstackConfig, sessionStore: ISessionStore) =
     BlockstackSignIn(sessionStore, config)
+
+  @Provides
+  @Singleton
+  fun blockstackConnect(config: BlockstackConfig, sessionStore: ISessionStore) =
+    BlockstackConnect.config(config, sessionStore)
 }

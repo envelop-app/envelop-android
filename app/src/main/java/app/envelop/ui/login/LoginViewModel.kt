@@ -26,12 +26,8 @@ class LoginViewModel
 
     loginClicks
       .doOnNext { isLoggingIn.loading() }
-      .flatMapSingle { loginService.login() }
       .subscribe {
-        if (it.isError) {
-          Timber.w(it.throwable())
-          errors.onNext(Error.LoginError)
-        }
+        loginService.login()
         isLoggingIn.idle()
       }
       .addTo(disposables)
