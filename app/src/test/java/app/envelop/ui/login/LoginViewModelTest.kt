@@ -22,7 +22,6 @@ class LoginViewModelTest {
 
   @Test
   fun isLoggingInLoadingState() {
-    whenever(loginService.login()).doReturn(Single.just(Operation()))
 
     val valueStream = loginViewModel.isLoggingIn().test()
     loginViewModel.loginClick()
@@ -36,16 +35,6 @@ class LoginViewModelTest {
       valueStream.values().last(),
       LoadingState.Idle
     )
-  }
-
-  @Test
-  fun errorsLogin() {
-    whenever(loginService.login()).doReturn(Single.just(Operation(throwable = RuntimeException())))
-
-    val errorStream = loginViewModel.errors().test()
-    loginViewModel.loginClick()
-
-    errorStream.assertValue(LoginViewModel.Error.LoginError)
   }
 
   @Test

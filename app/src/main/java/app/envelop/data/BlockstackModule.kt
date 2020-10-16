@@ -53,4 +53,9 @@ class BlockstackModule {
   @Singleton
   fun blockstackSignIn(config: BlockstackConfig, sessionStore: ISessionStore) =
     BlockstackSignIn(sessionStore, config)
+
+  @Provides
+  @Singleton
+  fun blockstackConnect(config: BlockstackConfig, sessionStore: ISessionStore) =
+    BlockstackConnect.config(config, sessionStore)
 }

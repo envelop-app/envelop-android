@@ -40,7 +40,7 @@ class LoginActivity : BaseActivity() {
 
     login
       .clicksThrottled()
-      .observeOnUI()
+      .bindToLifecycle(this)
       .subscribe { viewModel.loginClick() }
 
     viewModel
@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity() {
       }
 
     if (intent?.action == Intent.ACTION_VIEW) {
-      viewModel.authDataReceived(intent?.dataString)
+      viewModel.authDataReceived(intent.data?.getQueryParameter("authResponse"))
     }
   }
 
@@ -86,4 +86,5 @@ class LoginActivity : BaseActivity() {
   companion object {
     fun getIntent(context: Context) = Intent(context, LoginActivity::class.java)
   }
+
 }

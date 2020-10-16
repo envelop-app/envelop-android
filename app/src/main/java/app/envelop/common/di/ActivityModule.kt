@@ -19,5 +19,4 @@ class ActivityModule(
 
   @Provides
   fun fragmentActivity(): FragmentActivity = activity
-
 }
