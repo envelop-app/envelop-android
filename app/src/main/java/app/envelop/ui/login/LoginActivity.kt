@@ -74,7 +74,7 @@ class LoginActivity : BaseActivity() {
       }
 
     if (intent?.action == Intent.ACTION_VIEW) {
-      viewModel.authDataReceived(intent.data?.getQueryParameter("authResponse"))
+      viewModel.authDataReceived(intent.data?.getQueryParameter("authResponse") ?: intent.data?.lastPathSegment)
     }
   }
 
