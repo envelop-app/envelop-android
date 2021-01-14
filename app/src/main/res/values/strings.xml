@@ -19,7 +19,8 @@
   <string name="dismiss">Dismiss</string>
   <string name="learn_more">Learn More</string>
   <string name="learn_more_url">https://blog.blockstack.org/see-the-stacks-co-blog-for-latest-stacks-ecosystem-updates/</string>
-  <string name="sign_up_warning_message">Currently Blockstack is updating their services and creating new accounts is temporarily unavailable.</string>
+  <string name="sign_up_warning_message">Blockstack is currently updating their services, as such creating new accounts is temporarily unavailable.
+.</string>
 
   <!-- Main -->
   <string name="main_title">Your Files</string>
