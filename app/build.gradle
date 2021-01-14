@@ -108,8 +108,14 @@ dependencies {
   implementation "com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:$rxbinding_version"
 
   // Lists
-  implementation 'com.airbnb.android:epoxy:4.3.1'
-  kapt 'com.airbnb.android:epoxy-processor:4.3.1'
+  implementation ('com.airbnb.android:epoxy:4.3.1') {
+    exclude group: "org.jetbrains.kotlin", module: "kotlin-android-extensions-runtime"
+    exclude group: "org.jetbrains.kotlin", module: "kotlin-parcelize-runtime"
+  }
+  kapt ('com.airbnb.android:epoxy-processor:4.3.1') {
+    exclude group: "org.jetbrains.kotlin", module: "kotlin-android-extensions-runtime"
+    exclude group: "org.jetbrains.kotlin", module: "kotlin-parcelize-runtime"
+  }
 
   // Encryption
   implementation 'com.madgag.spongycastle:bcpkix-jdk15on:1.58.0.0'
