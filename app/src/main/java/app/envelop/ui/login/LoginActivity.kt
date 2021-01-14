@@ -44,9 +44,9 @@ class LoginActivity : BaseActivity() {
     container.addSystemWindowInsetToPadding(top = true, bottom = true)
 
     bannerBtn1
-      ?.clicksThrottled()
-      ?.bindToLifecycle(this)
-      ?.subscribe {
+      .clicksThrottled()
+      .bindToLifecycle(this)
+      .subscribe {
         startActivity(
           Intent(
             Intent.ACTION_VIEW,
@@ -56,9 +56,9 @@ class LoginActivity : BaseActivity() {
       }
 
     bannerBtn2
-      ?.clicksThrottled()
-      ?.bindToLifecycle(this)
-      ?.subscribe { banner.isVisible = false }
+      .clicksThrottled()
+      .bindToLifecycle(this)
+      .subscribe { banner.isVisible = false }
 
     login
       .clicksThrottled()
