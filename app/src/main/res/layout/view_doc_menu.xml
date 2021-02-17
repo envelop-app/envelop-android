@@ -28,7 +28,7 @@
       android:contentDescription="@null"
       android:padding="12dp"
       android:src="@drawable/ic_type_file"
-      android:tint="@color/colorOnSecondary"
+      app:tint="@color/colorOnSecondary"
       />
 
     <LinearLayout
