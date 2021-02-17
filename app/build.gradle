@@ -39,6 +39,9 @@ android {
     abortOnError true
     lintConfig file('lint.xml')
   }
+  androidExtensions {
+    experimental = true
+  }
   kapt {
     correctErrorTypes = true
     arguments {
