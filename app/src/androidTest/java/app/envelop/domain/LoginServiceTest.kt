@@ -25,18 +25,24 @@ class LoginServiceTest {
 
     @Test
     fun login() {
-        val result = finishLoginService.login()
-        verify(blockstackLoginMock).login()
+      finishLoginService.login()
+      verify(blockstackLoginMock).login()
     }
 
     @Test
     fun finishLogin() {
-        whenever(blockstackLoginMock.handlePendingSignIn(any())).thenReturn(
-            Single.just(Operation(UserData(JSONObject().put("username", "JohnDoe.blockstack.id"))))
-        )
+      val jsonObject = JSONObject().apply {
+        put("username", "JohnDoe.blockstack.id")
+        put("decentralizedID", "")
+        put("hubUrl", "")
+      }
 
-        val result = finishLoginService.finishLogin("/token1/token2/token3/token4").blockingGet()
-        assert(result.isSuccessful)
+      whenever(blockstackLoginMock.handlePendingSignIn(any())).thenReturn(
+        Single.just(Operation(UserData(jsonObject)))
+      )
+
+      val result = finishLoginService.finishLogin("/token1/token2/token3/token4").blockingGet()
+      assert(result.isSuccessful)
     }
 
     @Test
