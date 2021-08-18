@@ -1,5 +1,6 @@
 package app.envelop.data.repositories
 
+import android.annotation.SuppressLint
 import app.envelop.common.Operation
 import app.envelop.common.Optional
 import app.envelop.common.mapIfSuccessful
@@ -90,6 +91,7 @@ class RemoteRepository
       .mapIfSuccessful { list -> list.filter { it.startsWith(prefix) } }
 
   @Suppress("unused") // Useful for debugging
+  @SuppressLint("CheckResult")
   fun printListFiles() {
     getFilesList()
       .observeOnUI()

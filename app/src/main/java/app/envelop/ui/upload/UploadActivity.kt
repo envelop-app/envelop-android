@@ -1,5 +1,6 @@
 package app.envelop.ui.upload
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -15,6 +16,7 @@ import app.envelop.ui.share.ShareActivity
 import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class UploadActivity : BaseActivity() {
 
   @Inject

@@ -1,5 +1,6 @@
 package app.envelop.ui.share
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_share.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class ShareActivity : BaseActivity() {
 
   @Inject
