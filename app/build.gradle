@@ -15,8 +15,8 @@ android {
     applicationId 'app.envelop'
     minSdkVersion 21
     targetSdkVersion 30
-    versionCode 35
-    versionName '1.3.1'
+    versionCode 36
+    versionName '1.4.0'
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
   buildTypes {
@@ -83,7 +83,7 @@ dependencies {
 
   // Blockstack
   //noinspection GradleDependency
-  implementation 'com.github.blockstack:blockstack-android:0.6.1'
+  implementation "com.github.blocoio:blockstack-android:4af4ddf"
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.32'
