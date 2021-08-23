@@ -83,7 +83,7 @@ dependencies {
 
   // Blockstack
   //noinspection GradleDependency
-  implementation "com.github.blocoio:blockstack-android:5ef93a0"
+  implementation "com.github.blocoio:blockstack-android:a970880"
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.38.1'
