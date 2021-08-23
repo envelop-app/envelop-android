@@ -1,5 +1,6 @@
 package app.envelop.ui.upload
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import app.envelop.common.Optional
 import app.envelop.domain.PreUploadService
@@ -15,6 +16,7 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class UploadViewModel
 @Inject constructor(
   userService: UserService,
@@ -30,7 +32,6 @@ class UploadViewModel
   private val finish = PublishSubject.create<Finish>()
 
   init {
-
     userService
       .user()
       .filter { it is Optional.None }

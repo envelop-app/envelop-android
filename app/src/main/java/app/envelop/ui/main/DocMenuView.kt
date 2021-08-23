@@ -1,5 +1,6 @@
 package app.envelop.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -24,6 +25,7 @@ import com.trello.rxlifecycle3.android.lifecycle.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.view_doc_menu.view.*
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class DocMenuView
 @JvmOverloads
 constructor(

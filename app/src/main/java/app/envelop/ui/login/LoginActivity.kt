@@ -1,5 +1,6 @@
 package app.envelop.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -19,6 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.partial_banner.*
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class LoginActivity : BaseActivity() {
 
   @Inject

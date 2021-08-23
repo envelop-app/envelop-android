@@ -1,5 +1,6 @@
 package app.envelop.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
@@ -29,6 +30,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.shared_appbar.*
 import javax.inject.Inject
 
+@SuppressLint("CheckResult")
 class MainActivity : BaseActivity() {
 
   @Inject
@@ -175,12 +177,12 @@ class MainActivity : BaseActivity() {
       dummyItemView {
         id("top")
       }
-      docs.forEach { doc ->
+      for (doc in docs) {
         docItemView {
           id(doc.id)
           item(doc)
           clickListener { openDocMenu(doc) }
-        }
+          }
       }
     }
   }

@@ -15,7 +15,7 @@ open class BlockstackLogin
   private val activity: Activity
 ) {
 
-  open fun login() =  blockstackConnectProvider.get().connect(activity)
+  open fun login() =  blockstackConnectProvider.get().connect(activity, true)
 
   open fun handlePendingSignIn(token: String) = rxSingleToOperation {
     val result = blockstackProvider.get().handlePendingSignIn(token)
