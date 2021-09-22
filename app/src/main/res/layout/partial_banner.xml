@@ -23,18 +23,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/bannerBtn1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:textColor="@color/secondaryDark"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:text="@string/learn_more"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/bannerBtn2"
-            app:layout_constraintTop_toBottomOf="@+id/banner_message" />
-
-        <com.google.android.material.button.MaterialButton
             android:id="@+id/bannerBtn2"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textColor="@color/secondaryDark"

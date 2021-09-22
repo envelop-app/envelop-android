@@ -2,6 +2,8 @@
 
 # Android app 🤖
 
+DISCLAIMER: This project is no longer being maintained
+
 ![Tests status](https://github.com/envelop-app/envelop-android/workflows/test/badge.svg) 
 ![Lint status](https://github.com/envelop-app/envelop-android/workflows/lint/badge.svg)
 [![codecov](https://codecov.io/gh/envelop-app/envelop-android/branch/master/graph/badge.svg)](https://codecov.io/gh/envelop-app/envelop-android)

@@ -43,18 +43,6 @@ class LoginActivity : BaseActivity() {
 
     container.addSystemWindowInsetToPadding(top = true, bottom = true)
 
-    bannerBtn1
-      .clicksThrottled()
-      .bindToLifecycle(this)
-      .subscribe {
-        startActivity(
-          Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse(getString(R.string.learn_more_url))
-          )
-        )
-      }
-
     bannerBtn2
       .clicksThrottled()
       .bindToLifecycle(this)
