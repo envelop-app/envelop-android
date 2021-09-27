@@ -1,5 +1,6 @@
 package app.envelop.ui.main
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent

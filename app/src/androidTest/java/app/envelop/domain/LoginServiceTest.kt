@@ -32,7 +32,16 @@ class LoginServiceTest {
     @Test
     fun finishLogin() {
         whenever(blockstackLoginMock.handlePendingSignIn(any())).thenReturn(
-            Single.just(Operation(UserData(JSONObject().put("username", "JohnDoe.blockstack.id"))))
+            Single.just(
+              Operation(
+                UserData(
+                  JSONObject()
+                    .put("username", "JohnDoe.blockstack.id")
+                    .put("decentralizedID", "abc")
+                    .put("hubUrl", "abc")
+                )
+              )
+            )
         )
 
         val result = finishLoginService.finishLogin("/token1/token2/token3/token4").blockingGet()

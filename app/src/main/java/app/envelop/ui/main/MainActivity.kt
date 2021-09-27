@@ -175,12 +175,12 @@ class MainActivity : BaseActivity() {
       dummyItemView {
         id("top")
       }
-      docs.forEach { doc ->
+      for (doc in docs) {
         docItemView {
           id(doc.id)
           item(doc)
           clickListener { openDocMenu(doc) }
-        }
+          }
       }
     }
   }

@@ -6,5 +6,6 @@
     <issue id="GoogleAppIndexingApiWarning" severity="informational" />
     <issue id="TrustAllX509TrustManager" severity="informational" />
     <issue id="SelectableText" severity="informational" />
+    <issue id="NewerVersionAvailable" severity="informational" />
 
 </lint>
