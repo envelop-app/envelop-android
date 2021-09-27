@@ -26,7 +26,7 @@ open class UserRepository
   }
 
   fun user() = userPreference.asObservable().subscribeOn(Schedulers.io())!!
-  fun setUser(user: User?) = userPreference.set(Optional.create(user))
+  open fun setUser(user: User?) = userPreference.set(Optional.create(user))
 
   companion object {
     private const val KEY_USER = "user"
